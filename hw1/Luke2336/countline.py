@@ -1,4 +1,7 @@
-#!/usr/bin/env PYTHON_BIN
+#!/bin/bash
+''''$PATHON_BIN "countline.py countline.py"
+exit
+'''
 
 import sys
 import os.path
