@@ -7,11 +7,9 @@ elif [ $# -gt 1 ] ; then
 else
     fname=$1
     if [[ -f $fname ]] ; then
-        lines=0;
-        while read line; do
-            lines=$((lines + 1))
-# Arithmetic in bash uses $((...)) syntax.
-        done < $fname
+        lines=$( wc -l < $fname )
+# We can tell the shell to redirect the $fname file to standard input of the wc -l command.
+# This will give us the number of lines without the filename.
         echo "$lines lines in $fname"
     else
         echo "$fname not found"
