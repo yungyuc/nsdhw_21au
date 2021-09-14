@@ -1,4 +1,14 @@
-#!/usr/bin/env python3
+#!/usr/bin/env bash
+
+# run Bash script first
+
+""":"
+
+exec "$PYTHON_BIN" $0 $@
+
+":"""
+
+# run Python script next
 
 import sys
 import os.path
