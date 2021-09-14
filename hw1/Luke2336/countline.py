@@ -1,7 +1,5 @@
-#!/bin/bash
-''''$PATHON_BIN "countline.py countline.py"
-exit
-'''
+#!/usr/bin/env bash
+cat << END | exec $PYTHON_BIN - $@
 
 import sys
 import os.path
@@ -19,3 +17,4 @@ else:
         sys.stdout.write('{} lines in {}\n'.format(len(lines), fname))
     else:
         sys.stdout.write('{} not found\n'.format(fname))
+END
