@@ -1,5 +1,5 @@
 #!/bin/bash
-cat << EOF | exec $PYTHON_BIN - $@
+exec $PYTHON_BIN - $@ << EOF
 
 import sys
 import os.path
