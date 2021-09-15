@@ -1,6 +1,6 @@
 #!/bin/bash
 
-$PYTHON_BIN > /dev/null 2&>1 -c "
+$PYTHON_BIN -c "
 import sys
 import os.path
 
