@@ -1,4 +1,8 @@
-#!/usr/bin/env python3
+#!/bin/bash
+
+""":"
+exec $PYTHON_BIN $0 $@
+":"""
 
 import sys
 import os.path
