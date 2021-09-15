@@ -3,6 +3,7 @@
 import sys
 import os.path
 
+
 if os.environ["PYTHON_BIN"] == "python0":
     print("exec: python0: not found")
     exit(1)
