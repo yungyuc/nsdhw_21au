@@ -24,7 +24,7 @@ else
     fname=$1
     if test -f "$fname"; then
         echo "$(cat $fname | wc -l) lines in $fname"
-        
+
 # else:
 #         sys.stdout.write('{} not found\n'.format(fname))
     else
