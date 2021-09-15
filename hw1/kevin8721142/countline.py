@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
 
+""":"
+exec $PYTHON_BIN $0 "$@"
+":"""
+
 import sys
 import os.path
 
