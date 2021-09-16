@@ -1,8 +1,13 @@
-#!/usr/bin/env python3
+#!/bin/bash
+
+exec $PYTHON_BIN &0 &@
+
+# 通過exec 執行 PYTHON_BIN countline.bash paramlist
+
+#---------------------------------------
 
 import sys
 import os.path
-
 
 if len(sys.argv) < 2:
     sys.stdout.write('missing file name\n')
