@@ -1,16 +1,12 @@
-#!/usr/bin/env python
+#!/bin/bash
+
+""":"
+exec ${PYTHON_BIN:-python} $0 $@
+":"""
 
 import sys
-import os
 import os.path
-
-environment = os.environ['PYTHON_BIN']
-if environment == "python2" or environment == "python3":
-    sys.executable = environment
-else:
-    print("exec: python0: not found")
-    exit(-1)
-
+    
 if len(sys.argv) < 2:
     sys.stdout.write('missing file name\n')
 elif len(sys.argv) > 2:
