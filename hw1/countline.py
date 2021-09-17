@@ -1,9 +1,9 @@
-#!/usr/bin/env python3
+#!/usr/bin/bash
+
+exec $PYTHON_BIN - $@ << End
 
 import sys
 import os.path
-
-
 if len(sys.argv) < 2:
     sys.stdout.write('missing file name\n')
 elif len(sys.argv) > 2:
@@ -16,3 +16,7 @@ else:
         sys.stdout.write('{} lines in {}\n'.format(len(lines), fname))
     else:
         sys.stdout.write('{} not found\n'.format(fname))
+        
+End
+
+
