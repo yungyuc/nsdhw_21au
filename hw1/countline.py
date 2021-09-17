@@ -1,13 +1,4 @@
-#!/bin/bash
-''':'
-echo $0
-if [ -f $PYTHON_BIN ]
-then
-    PYTHON_BIN = python
-fi
-
-exec $PYTHON_BIN $0 $@
-':'''
+#!/usr/bin/env python3
 
 import sys
 import os.path
