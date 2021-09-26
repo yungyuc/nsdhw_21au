@@ -1,14 +1,12 @@
-   
 #!/bin/bash
 
+$PYTHON_BIN -c "
 import sys
 import os.path
 
 env = os.environ["PYTHON_BIN"]
 if env == "python2" or env == 'python3':
-    """:"
-    exec env $0 $@
-    ":"""
+    pass
 else:
     print("exec: {}: not found".format(env))
     sys.exit(1)
@@ -25,3 +23,4 @@ else:
         sys.stdout.write('{} lines in {}\n'.format(len(lines), fname))
     else:
         sys.stdout.write('{} not found\n'.format(fname))
+" $@
