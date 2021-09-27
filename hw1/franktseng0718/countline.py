@@ -1,15 +1,12 @@
 #!/bin/bash
 
+if [ "${PYTHON_BIN}" != "python2" ] && [ "${PYTHON_BIN}" != "python3" ]; then
+    echo "exec: ${PYTHON_BIN}: not found"
+    exit 1
+fi
 $PYTHON_BIN -c "
 import sys
 import os.path
-
-env = os.environ["PYTHON_BIN"]
-if env == "python2" or env == 'python3':
-    pass
-else:
-    print("exec: {}: not found".format(env))
-    sys.exit(1)
 
 if len(sys.argv) < 2:
     sys.stdout.write('missing file name\n')
