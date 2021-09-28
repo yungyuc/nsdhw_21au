@@ -1,5 +1,5 @@
 #!/bin/bash
-
+# For retry
 if [ $# -lt 1 ];then
 	echo "missing file name"
 elif [ $# -gt 1 ];then
