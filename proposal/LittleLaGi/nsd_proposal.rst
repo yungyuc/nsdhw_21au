@@ -33,38 +33,54 @@ System Architecture
 | 5. parent selection method (default = random selection)
 | 6. cross over method (default = single point crossover)
 | 7. mutation method (default = random mutation)
-
+|
 | **Output**
 | 1. last population: Show top individuals in the last population.
-| 2. fitness diagram		
+| 2. fitness diagram
+.. image:: image/fitness_diagram.png
+   :height: 100
+   :width: 200
+   :scale: 50
+   :alt: fitness diagram
 | 3. new solution rate diagram
-	
+.. image:: image/new_solution_rate_diagram.png
+   :height: 100
+   :width: 200
+   :scale: 50
+   :alt: new solution rate diagram
+|
 | **System Components**
 | 1. **Parser**: Python class. Checks the validity of input parameters and performs necessary transformations.
 | 2. **GA Wrapper**: Python class. Wrapper class for underlying C++ GA class.
 | 3. **Result**: Python class. Contain results returned from GA wrapper.
 | 4. **Printer**: Python class initialized with Result. Responsible for printing the results in specified forms.
 | 5. **GA**: C++ class. Perform GA configured with parameters processed by parseParams.
-	
+|	
 | **System Workflow**
+.. image:: image/system_workflow.png
+   :height: 100
+   :width: 200
+   :scale: 50
+   :alt: system workflow
+|
 | **Assumptions & Constraints**
 | 1. OMG supports a double vector for gene representation.
 | 2. Some parameter choices make implicit assumptions. E.g., Roulette Wheel Selection and Stochastic Universal Sampling require fitness to be a positive value. Failure to meet the requirements may cause exceptions.
 | 3. OMG provides limited parameter choices, which may not be able to model a real-world problem properly.
-
+|
 API Description
 ===============
 | **API for Parser class**
 | 1. __init__(params: dict):  Get the parameters from the user,  checks the validity, and perform necessary transformations. Raise exceptions if any check fails.
 | 2. getParams() -> params: dict: returns parsed parameters.
-
+|
 | **API for Printer class**
 | 1. __init__(result: Result)
 | 2. printTopNum(num: int): print out the top num individuals in last population.
 | 3. printTopPercent(percent: float): print out the top individuals  in last population.
 | 4. printFitness(): print out the fitness diagram.
 | 5. printNewSolutionRate(): print out the new solution rate diagram.
-
+|
 | **API for GA Wrapper class**
 | 1. __init__( params: dict): Create an instance of GA class with parameters provided by Parser class.
 | 2. run() -> result: Result: Perform GA. May raise exceptions.
@@ -73,14 +89,14 @@ Engineering Infrastructure
 ==========================
 | **Build System**
 | make
-
+|
 | **Testing Framework**
 | Python: pytest
 | C++: Google test
-
+|
 | **Version Control**
 | git
-
+|
 | **Description**
 |  The Makefile contains commands to build C++ programs and run OMG along with several unit tests automatically. As for version control, there will be several branches:
 | **master**: Tested, deployable version.
