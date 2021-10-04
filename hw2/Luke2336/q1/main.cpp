@@ -1,23 +1,48 @@
 #include<iostream>
+#include<vector>
 
 class Line
 {
 public:
-    Line();
-    Line(Line const & );
-    Line(Line       &&);
-    Line & operator=(Line const & );
-    Line & operator=(Line       &&);
-    Line(size_t size);
-    ~Line();
-    size_t size() const;
-    float & x(size_t it) const;
-    float & x(size_t it);
-    float & y(size_t it) const;
-    float & y(size_t it);
+    Line() {}
+    Line(Line const &line): X(line.X), Y(line.Y) {}
+    Line(Line &&line) : X(line.X), Y(line.Y) {}
+    Line & operator=(Line const &line) {
+        X = line.X;
+        Y = line.Y;
+        return *this;
+    }
+    Line & operator=(Line &&line) {
+        X = line.X;
+        Y = line.Y;
+        return line;
+    }
+    Line(size_t size) {
+        X.resize(size);
+        Y.resize(size);
+    }
+    ~Line() {
+        X.clear();
+        Y.clear();
+    }
+    size_t size() const {
+        return X.size();
+    }
+    float x(size_t it) const {
+        return X.at(it);
+    }
+    float & x(size_t it) {
+        return X.at(it);
+    }
+    float y(size_t it) const {
+        return Y.at(it);
+    }
+    float & y(size_t it) {
+        return Y.at(it);
+    }
 private:
-    // Member data.
-}; /* end class Line */
+    std::vector<float> X, Y;
+};
 
 int main(int, char **)
 {
