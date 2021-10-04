@@ -11,11 +11,14 @@ GA is inspired by evolutionary theory. In GA terminology, a solution vector is c
 
 This proposal proposes a project named Oh My Gene(OMG), which provides a high-level Python API to construct GA to solve multi-objective problems. Below is a diagram of GA’s general flow:
 
-
+.. image:: image/GA_general_flow.png
+   :height: 100
+   :width: 200
+   :scale: 50
+   :alt: GA general flow
 
 Prospective Users
 =================
-
 OMG targets users who need to solve multi-objective problems in specific fields. Users have to map the solution spaces of the problems into forms of chromosomes supported by OMG. After the encoding of a problem, the general GA  can be adapted to solve the transformed problem by tuning some parameters. E.g., generation number, mutation probability, fitness function choice, parent selection method, cross-over method, mutation method, etc.
 
 After the selection of parameters, OMG automatically creates an object of GA and runs it. The result will be shown on the screen for inspection after GA stops. Users can try out different parameter combinations to get the best version of GA that fits their needs by simply altering a few lines of Python code, OMG!
