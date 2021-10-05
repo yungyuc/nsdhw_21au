@@ -6,8 +6,9 @@ NAME = `python3-config --extension-suffix`
 CPP = _vector
 INCLUDE = `python3-config --includes`
 
-q2: $(CPP)
+q2: $(CPP).cpp
 	$(CXX) -O3 -Wall -shared -std=$(STD) -fPIC $(FPIC) $(CPP).cpp -o $(CPP)$(NAME) $(INCLUDE)
+
 clean:
 	rm -rf q2 ./__pycache__ *.so
 
