@@ -16,7 +16,7 @@ all: $(OBJ)
 	$(CC) $(FLAG) -o $@ -c $^
 
 clean:
-	rm -rf $(OBJ) main.out
+	rm -rf $(OBJ) main.out result.txt
 
 run:
 	./main.out
