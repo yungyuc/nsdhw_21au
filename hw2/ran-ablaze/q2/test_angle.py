@@ -1,7 +1,7 @@
 import numpy as np
 import math
 import pytest
-from vector import angle
+from _vector import angle
 
 class TestClass:
     def test_invalid(self):

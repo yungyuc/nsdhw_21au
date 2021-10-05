@@ -5,7 +5,7 @@ PYTHON = python3
 PYBIND = $(PYTHON) -m pybind11 --includes
 PYCONFIG = $(PYTHON)-config --extension-suffix
 
-SRC = vector
+SRC = _vector
 
 all: $(SRC).*.so
 
