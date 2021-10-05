@@ -10,7 +10,7 @@ SRC = _vector
 all: $(SRC).*.so
 
 $(SRC).*.so: $(SRC).cpp
-	$(CC) -o $(SRC)`$(PYCONFIG)` $(CFLAGS) `$(PYBIND)` $<
+	$(CC) -o $(SRC)`$(PYCONFIG)` $(CFLAGS) `$(PYBIND)` $< -I /usr/include/python3.8
 .PHONY: test
 test: all
 	pytest
