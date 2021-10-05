@@ -1,5 +1,9 @@
+PINC = `python3 -m pybind11 --includes`
+SUFFIX = `python3-config --extension-suffix`
+INC=$(INSTALL_PREFIX);
+
 all:
-	g++ -Wall -shared -std=c++11 -fPIC `python3 -m pybind11 --includes` _vector.cpp -o _vector`python3-config --extension-suffix`
+	g++ -Wall -shared -std=c++11 -fPIC $(PINC) _vector.cpp -o _vector$(SUFFIX) -I$(INC)
 
 clean:
 	rm -rf *.so ./__pycache__ ./.pytest_cache
