@@ -5,4 +5,4 @@ clean:
 	rm -rf *.so ./__pycache__ ./.pytest_cache
 
 test:
-	pytest
+	python3 -m pytest -v
