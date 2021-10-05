@@ -1,0 +1,20 @@
+CC = g++
+CFLAGS = -shared -O3 -Wall -std=gnu++14 -g -fPIC
+
+PYTHON = python3
+PYBIND = $(PYTHON) -m pybind11 --includes
+PYCONFIG = $(PYTHON)-config --extension-suffix
+
+SRC = vector
+
+all: $(SRC).*.so
+
+$(SRC).*.so: $(SRC).cpp
+	$(CC) -o $(SRC)`$(PYCONFIG)` $(CFLAGS) `$(PYBIND)` $<
+.PHONY: test
+test: all
+	pytest
+
+.PHONY: clean
+clean:
+	rm $(SRC).*.so
