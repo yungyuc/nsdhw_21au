@@ -26,5 +26,6 @@ int main(int, char **)
                   << " x = " << line2.x(it)
                   << " y = " << line2.y(it) << std::endl;
     }
+
     return 0;
 }
