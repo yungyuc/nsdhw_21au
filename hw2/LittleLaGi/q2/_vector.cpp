@@ -7,10 +7,15 @@
 using namespace std;
 namespace py = pybind11;
 
+bool testZeroLength(vector<double>&);
+
 double getAngle(vector<double> &a, vector<double> &b) {
     if (a.size() != b.size())
         return -1;
 
+    if (testZeroLength(a) || testZeroLength(b))
+        throw std::invalid_argument("zero length vector!");
+    
     long double len_a = 0;
     long double len_b = 0;
     for (auto e : a)
@@ -34,4 +39,11 @@ PYBIND11_MODULE(_vector, m) {
         "A function which calculates \
         the angle (in radians) between two vectors" //function doc string
        );
+}
+
+bool testZeroLength(vector<double>& vec){
+    for (auto e : vec)
+        if (e != 0.0)
+            return false;
+    return true;
 }

@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import _vector
+import pytest
 
 def test_1():
     x = _vector.getAngle([0.1, -13, 1.116], [-20, 15.214, -33.125])
@@ -27,5 +28,9 @@ def test_6():
     assert round(x, 2) == 3.14
 
 def test_7():
-    x = _vector.getAngle([12345, 12345], [24690, 24690])
-    assert round(x, 2) == 0.00
+    x = _vector.getAngle([1, 1], [-1, 1])
+    assert round(x, 2) == 1.57
+def test_8():
+    with pytest.raises(ValueError):
+        _vector.getAngle([0, 0], [1, 1])
+
