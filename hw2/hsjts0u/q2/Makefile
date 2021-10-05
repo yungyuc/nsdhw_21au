@@ -13,7 +13,7 @@ vecAng.o: _vector.cpp _vector.hpp
 	$(CXX) $(CFLAGS) -c $< -o $@
 
 test: $(TARGET)
-	pytest _vector_test.py
+	python -m pytest _vector_test.py
 
 clean: 
 	rm -f *.o $(TARGET)
