@@ -15,4 +15,4 @@ test: all
 
 .PHONY:clean
 clean:
-	$(RM) -r *.so __pycache__/
+	$(RM) -r *.so __pycache__/ .pytest*
