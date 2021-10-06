@@ -11,12 +11,12 @@ def test_1():
 
 def test_2():
 	theta = _vector.calAngle(1, 0, 1, 1)
-	ans = math.acos(math.sqrt(2))
+	ans = math.acos(math.sqrt(2)/2)
 	assert (ans - 1e-4 < theta and theta < ans + 1e-4)
 
 def test_3():
 	theta = _vector.calAngle(1, 0, -1, 1)
-	ans = math.acos(-math.sqrt(2))
+	ans = math.acos(-math.sqrt(2)/2)
 	assert (ans - 1e-4 < theta and theta < ans + 1e-4)
 
 def test_4():
@@ -26,10 +26,10 @@ def test_4():
 
 def test_5():
 	theta = _vector.calAngle(1, 1, -1, 1)
-	ans = math.acos(1)
+	ans = math.acos(0)
 	assert (ans - 1e-4 < theta and theta < ans + 1e-4)
 
 def test_6():
 	theta = _vector.calAngle(1, 0, 6, 8)
-	ans = math.acos(0.75)
+	ans = math.acos(0.6)
 	assert (ans - 1e-4 < theta and theta < ans + 1e-4)
