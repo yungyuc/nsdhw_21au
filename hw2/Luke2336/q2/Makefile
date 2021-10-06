@@ -8,7 +8,7 @@ all: $(TARGET)
 .PHONY: clean test
 
 $(TARGET): _angle.cpp
-	$(CXX) $(CFLAGS) $(INCLUDE) -shared -fPIC `python3 -m pybind11 --includes` _angle.cpp -o _angle`python3-config --extension-suffix` `python3-config --includes`
+	$(CXX) $(CFLAGS) -shared -fPIC `python3 -m pybind11 --includes` _angle.cpp -o _angle`python3-config --extension-suffix` `python3-config --includes`
 
 test: $(TARGET)
 	python3 -m pytest test.py -v

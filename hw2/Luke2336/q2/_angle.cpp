@@ -3,19 +3,22 @@
 
 namespace py = pybind11;
 
-inline double dot(const std::vector<double> &v1, const std::vector<double> &v2) {
-	return v1.at(0) * v2.at(0) + v1.at(1) * v2.at(1);
+inline double dot(int x1, int y1, int x2, int y2) {
+	return x1 * x2 + y1 * y2;
 }
 
-inline double len(const std::vector<double> &v) {
-	return sqrt(v.at(0) * v.at(0) + v.at(1) * v.at(1));
+inline double len(int x, int y) {
+	return sqrt(x * x + y * y);
 }
 
-double calAngle(const std::vector<double> &v1, const std::vector<double> &v2) {
-	return acos(dot(v1, v2) / len(v1) / len(v2));
+double calAngle(int x1, int y1, int x2, int y2) {
+  if ((x1 == 0 && y1 == 0) || (x2 == 0 && y2 == 0)) {
+    return 0;
+  }
+	return acos(dot(x1, y1, x2, y2) / len(x1, y1) / len(x2, y2));
 }
 
-PYBIND11_MODULE(_vector, m) {
+PYBIND11_MODULE(_angle, m) {
   m.doc() = "pybind11 example plugin";
   m.def("calAngle",
         &calAngle,
