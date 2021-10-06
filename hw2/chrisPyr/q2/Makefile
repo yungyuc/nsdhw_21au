@@ -7,7 +7,7 @@ SRC = angle
 all:$(SRC).*.so
 
 $(SRC).*.so: $(SRC).cpp
-	@$(CC) $(CFLAGS) `$(PYTHON) -m pybind11 --includes` $< -o $(SRC)`$(PYTHON)-config --extension-suffix`
+	@$(CC) $(CFLAGS) `$(PYTHON) -m pybind11 --includes` $< -o _vector`$(PYTHON)-config --extension-suffix`
 
 .PHONY:test
 test: all

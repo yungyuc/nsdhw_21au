@@ -20,7 +20,7 @@ float cal_angle(const std::vector<float> &x, const std::vector<float> &y){
   return angle_ra;
 }
 
-PYBIND11_MODULE(angle, m){
+PYBIND11_MODULE(_vector, m){
   m.doc() = "to calculate angle";
   m.def("cal_angle", &cal_angle, "calculate angle between two vectors");
 }
