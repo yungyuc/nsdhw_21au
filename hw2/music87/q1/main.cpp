@@ -10,19 +10,17 @@ public:
     Line() {} //basic constructor
     Line(Line const & other) {
         //copy constructor
-        //https://stackoverflow.com/questions/17027139/access-private-field-of-another-object-in-same-class
         m_coords.resize(other.m_coords.size(), 0);
         m_coords.assign(other.m_coords.begin(), other.m_coords.end());
     }
     Line(Line && other) : m_coords(other.m_coords.size(),0) { 
         //move constructor
-        //another writing style (colon) using the fill constructor of vector in STL container. refer to https://stackoverflow.com/questions/2785612/c-what-does-the-colon-after-a-constructor-mean
+        //another writing style (colon) using the fill constructor of vector in STL container
         m_coords.assign(other.m_coords.begin(), other.m_coords.end());
         other.m_coords.clear();
     }   
     Line & operator=(Line const & other){  
         //copy assignment operator
-	//https://www.geeksforgeeks.org/copy-constructor-vs-assignment-operator-in-c/
 	if (this == &other) {return *this;}
 	m_coords.resize(other.m_coords.size(), 0);
         m_coords.assign(other.m_coords.begin(), other.m_coords.end());

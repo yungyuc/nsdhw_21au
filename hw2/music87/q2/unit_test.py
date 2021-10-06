@@ -3,7 +3,7 @@ from _vector import compute_angle
 import math
 
 eps = 1e-2
-#https://www.omnicalculator.com/math/angle-between-two-vectors
+
 class TestClass:
     def test_other_angle1(self):
         assert abs(compute_angle([1, 2], [3, 4]) - 0.17985) < eps 

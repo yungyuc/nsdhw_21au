@@ -33,10 +33,3 @@ PYBIND11_MODULE(_vector, m){
 
 }
 
-/*int main(){
-    std::cout << "just for test" <<std::endl;
-    std::pair<float, float> vec1(1.0, 3.0);
-    std::pair<float, float> vec2(2.0, 5.0);
-    //(1,3), (2,5) -> 0.05876
-    std::cout << angle(vec1, vec2) << std::endl;
-}*/
