@@ -1,5 +1,5 @@
 CXX := g++
-CXXFLAGS := -std=c++14
+CXXFLAGS := -std=c++11
 WARNINGFLAGS := -Wall -Wextra
 SRC_DIRS := ./
 TARGET := main
