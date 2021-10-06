@@ -31,7 +31,7 @@ double angle_two_vec(std::vector<double> v1, std::vector<double> v2){
     return theta;
 }
 
-PYBIND11_MODULE(cal_vector, m) {
+PYBIND11_MODULE(_vector, m) {
     m.doc() = "calulate vector plugin";
     m.def("angle_two_vec", &angle_two_vec, "A function which calculates angle of two vectors");
 }

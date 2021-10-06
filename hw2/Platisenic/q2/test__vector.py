@@ -1,4 +1,4 @@
-import cal_vector
+import _vector
 import numpy as np
 import math
 import pytest
@@ -13,7 +13,7 @@ def test_angle_two_vec_random():
     costheta = dotProduct / (normvectorA * normvectorB)
     angle = np.arccos(costheta)
 
-    tested_angle = cal_vector.angle_two_vec(vectorA, vectorB)
+    tested_angle = _vector.angle_two_vec(vectorA, vectorB)
 
     assert math.isclose(angle, tested_angle, rel_tol=1e-03)
 
@@ -22,7 +22,7 @@ def test_angle_two_vec_right_angle():
     vectorA = [np.random.uniform(-100, 100), 0.0]
     vectorB = [0.0, np.random.uniform(-100, 100)]
 
-    tested_angle = cal_vector.angle_two_vec(vectorA, vectorB)
+    tested_angle = _vector.angle_two_vec(vectorA, vectorB)
 
     assert math.isclose(math.radians(90), tested_angle, rel_tol=1e-03)
 
@@ -31,7 +31,7 @@ def test_angle_two_vec_zero_angle():
     vectorA = [np.random.uniform(0, 100), 0.0]
     vectorB = [np.random.uniform(0, 100), 0.0]
 
-    tested_angle = cal_vector.angle_two_vec(vectorA, vectorB)
+    tested_angle = _vector.angle_two_vec(vectorA, vectorB)
 
     assert math.isclose(0.0, tested_angle, rel_tol=1e-03)
 
@@ -41,4 +41,4 @@ def test_angle_two_vec_invaild():
     vectorB = []
 
     with pytest.raises(ValueError):
-        cal_vector.angle_two_vec(vectorA, vectorB)
+        _vector.angle_two_vec(vectorA, vectorB)

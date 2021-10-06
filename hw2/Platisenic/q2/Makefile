@@ -6,13 +6,13 @@ PYCONFIG = python3-config --extension-suffix
 
 .PHONY: clean test default
 
-default: cal_vector.*.so
+default: _vector.*.so
 
-cal_vector.*.so: cal_vector.cpp
-	$(CC) $(CFLAGS) $(INCLUDE) `$(PYBIND)` $< -o cal_vector`$(PYCONFIG)`
+_vector.*.so: _vector.cpp
+	$(CC) $(CFLAGS) $(INCLUDE) `$(PYBIND)` $< -o _vector`$(PYCONFIG)`
 
 clean:
 	@rm *.so
 
-test:
+test: default
 	@pytest -vx
