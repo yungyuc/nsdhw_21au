@@ -22,7 +22,8 @@ run: all
 .PHONY: clean
 clean:
 	$(RM) $(EXEC) $(OBJS)
+
 .PHONY: check
-check:
+check: all
 	./$(EXEC) > $(OUTPUTFILE)
 
