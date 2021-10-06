@@ -11,11 +11,14 @@ float cal_angle(const std::vector<float> &x, const std::vector<float> &y){
     return -666;
   }
 
+  if(x == y){
+    return 0;
+  }
+
   float xdoty = x.at(0) * y.at(0) + x.at(1) * y.at(1);
   float costheta = xdoty / (x_length * y_length);
 
   float angle_ra = acos(costheta);
-  std::cout<<angle_ra<<std::endl;
 
   return angle_ra;
 }
