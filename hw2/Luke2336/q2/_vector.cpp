@@ -1,5 +1,4 @@
 #include <pybind11/pybind11.h>
-#include <vector>
 
 namespace py = pybind11;
 
@@ -18,7 +17,7 @@ double calAngle(int x1, int y1, int x2, int y2) {
 	return acos(dot(x1, y1, x2, y2) / len(x1, y1) / len(x2, y2));
 }
 
-PYBIND11_MODULE(_angle, m) {
+PYBIND11_MODULE(_vector, m) {
   m.doc() = "pybind11 example plugin";
   m.def("calAngle",
         &calAngle,
