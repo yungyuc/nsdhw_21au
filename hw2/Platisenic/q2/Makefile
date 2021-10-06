@@ -15,4 +15,4 @@ clean:
 	@rm *.so
 
 test: default
-	@pytest -vx
+	@python3 -m pytest -vx
