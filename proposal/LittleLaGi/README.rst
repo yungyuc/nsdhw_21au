@@ -1,6 +1,6 @@
 Basic Information
 =================
-https://github.com/LittleLaGi/nsdhw_21au/tree/LittleLaGi-proposal/proposal/LittleLaGi
+https://github.com/LittleLaGi/OhMyGene
 
 Problem to Solve
 ================
