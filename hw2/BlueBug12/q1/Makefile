@@ -2,28 +2,19 @@ CXX := g++
 CXXFLAGS := -std=c++11 
 EXE := main
 FILE := result.txt
+OBJ := main.o line.o
 
-#$(EXE): line.o main.o
-#	$(CXX) $(CXXFLAGS) $^ -o $@
+$(EXE): $(OBJ) 
+	$(CXX) $(CXXFLAGS) $^ -o $@
 
-#%.o:%.cpp line.hpp
-#	$(CXX) $(CXXFLAGS) $< -o $@
-
-
-$(EXE): main.o line.o
-	g++ main.o line.o -o $@
-
-line.o: line.cpp line.hpp
-	g++ -c line.cpp -o  $@
-
-main.o: main.cpp line.hpp
-	g++ -c main.cpp -o $@
+%.o: %.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 run:
-	./main
+	./$(EXE)
 
 check:
-	./main > $(FILE)
+	./$(EXE) > $(FILE)
 
 .PHONY: clean
 clean:
