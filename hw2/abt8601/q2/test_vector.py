@@ -1,5 +1,6 @@
 import math
 import random
+from typing import Tuple
 
 from _vector import angle_between_r2
 
@@ -18,7 +19,7 @@ def random_angle() -> float:
     return random.uniform(-math.pi, math.pi)
 
 
-def polar_to_cartesian(r: float, theta: float) -> tuple[float, float]:
+def polar_to_cartesian(r: float, theta: float) -> Tuple[float, float]:
     return (r * math.cos(theta), r * math.sin(theta))
 
 
