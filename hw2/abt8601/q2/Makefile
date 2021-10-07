@@ -23,7 +23,7 @@ $(MOD): vector_pybind.o vector.o
 	$(CXX) $(LDFLAGS) $^ $(LDLIBS) -shared -o $@
 
 test: $(MOD)
-	pytest
+	python3 -m pytest
 
 clean:
 	$(RM) *.d *.o $(MOD)
