@@ -13,6 +13,6 @@ run:
 	make
 
 test:
-	pytest
+	python3 -m pytest
 
 	
