@@ -4,13 +4,18 @@ https://github.com/LittleLaGi/OhMyGene
 
 Problem to Solve
 ================
-Multi-objective formulations are realistic models for many complex engineering optimization problems. Objectives under consideration usually conflict with each other. Possible solutions form a Pareto set. A Pareto optimal set is a set of solutions that are non-dominated with respect to each other. We can use multi-objective GA to get a set representing the Pareto optimal set well.
-
-
-GA is inspired by evolutionary theory. In GA terminology, a solution vector is called an individual or a chromosome, which normally corresponds to a unique solution x in the solution space. GA operates with a collection of chromosomes, called a population. The population is normally randomly initialized. As the search evolves, the population includes ﬁtter solutions, and eventually, it converges.
-
-This proposal proposes a project named Oh My Gene(OMG), which provides a high-level Python API to construct GA to solve multi-objective problems. Below is a diagram of GA’s general flow:
-
+| Multi-objective formulations are realistic models for many complex engineering optimization problems.
+| Objectives under consideration usually conflict with each other. Possible solutions form a Pareto set.
+| A Pareto optimal set is a set of solutions that are non-dominated with respect to each other. We can use multi-objective GA to get a set representing the Pareto optimal set well.
+|
+| GA is inspired by evolutionary theory. In GA terminology, a solution vector is called an individual or a chromosome, which normally corresponds to a unique solution x in the solution space.
+| GA operates with a collection of chromosomes, called a population.
+| The population is normally randomly initialized. As the search evolves, the population includes ﬁtter solutions, and eventually, it converges.
+|
+| This proposal proposes a project named Oh My Gene(OMG), which provides a high-level Python API to construct GA to solve multi-objective problems.
+|
+| Below is a diagram of GA’s general flow:
+|
 .. image:: image/GA_general_flow.png
    :height: 100
    :width: 200
@@ -19,9 +24,12 @@ This proposal proposes a project named Oh My Gene(OMG), which provides a high-le
 
 Prospective Users
 =================
-OMG targets users who need to solve multi-objective problems in specific fields. Users have to map the solution spaces of the problems into forms of chromosomes supported by OMG. After the encoding of a problem, the general GA  can be adapted to solve the transformed problem by tuning some parameters. E.g., generation number, mutation probability, fitness function choice, parent selection method, cross-over method, mutation method, etc.
-
-After the selection of parameters, OMG automatically creates an object of GA and runs it. The result will be shown on the screen for inspection after GA stops. Users can try out different parameter combinations to get the best version of GA that fits their needs by simply altering a few lines of Python code, OMG!
+| OMG targets users who need to solve multi-objective problems in specific fields. Users have to map the solution spaces of the problems into forms of chromosomes supported by OMG.
+|
+| After the encoding of a problem, the general GA  can be adapted to solve the transformed problem by tuning some parameters. E.g., generation number, mutation probability, fitness function choice, parent selection method, cross-over method, mutation method, etc.
+| After the selection of parameters, OMG automatically creates an object of GA and runs it. The result will be shown on the screen for inspection after GA stops.
+|
+| Users can try out different parameter combinations to get the best version of GA that fits their needs by simply altering a few lines of Python code, OMG!
 
 System Architecture
 ===================
