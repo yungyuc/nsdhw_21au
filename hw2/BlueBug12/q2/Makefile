@@ -2,7 +2,7 @@ CXX := g++
 CXXFLAGS := -O3 -Wall -shared -std=c++11 -fPIC
 
 all: main.cpp
-	$(CXX) $(CXXFLAGS) `python3 -m pybind11 --includes` main.cpp -o _vector`python3-config --extension-suffix`
+	$(CXX) $(CXXFLAGS) `python3 -m pybind11 --includes` main.cpp -o _vector`python3-config --extension-suffix` `python3-config --includes`
 
 test:
 	pytest vector_test.py
