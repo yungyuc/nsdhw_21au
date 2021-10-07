@@ -1,5 +1,5 @@
 all:
-	g++ -shared -std=c++11 -fPIC `python3 -m pybind11 --includes` _vector.cpp -o _vector`python3-config --extension-suffix`
+	g++ -shared -std=c++11 -fPIC `python3 -m pybind11 --includes` _vector.cpp -o _vector`python3-config --extension-suffix` `python3-config --includes`
 test:
 	python3 -m pytest
 clean:
