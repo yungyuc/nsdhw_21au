@@ -2,7 +2,7 @@
 
 import math
 import pytest
-from vecAngle import angle_between
+from _vector import angle_between
 
 def test_zero_length():
     v1 = [0, 0]

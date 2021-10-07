@@ -25,7 +25,7 @@ float angle_between(float x1, float y1, float x2, float y2)
     return theta;
 }
 
-PYBIND11_MODULE(vecAngle, m)
+PYBIND11_MODULE(_vector, m)
 {
     m.def("angle_between", &angle_between);
 }
