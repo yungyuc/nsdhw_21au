@@ -4,7 +4,7 @@ CXX := g++
 CXXFLAGS := -std=c++11 -Wall -Wextra -fPIC -shared
 
 pybind11 = python3 -m pybind11 --includes
-suffix = python-config --extension-suffix
+suffix = python3-config --extension-suffix
 FILE = _vector
 
 all: $(FILE).*.so
