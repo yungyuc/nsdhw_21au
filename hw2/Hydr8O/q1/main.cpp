@@ -9,6 +9,24 @@ class Line {
             yCoordinates = oldLine.yCoordinates;
         };
 
+        Line(Line &&oldLine) {
+            xCoordinates = std::move(oldLine.xCoordinates);
+            yCoordinates = std::move(oldLine.yCoordinates);
+        }
+
+        Line &Line::operator=(Line const &oldLine) {
+            if (this == &oldLine) { return *this; }
+            xCoordinates = oldLine.xCoordinates;
+            yCoordinates = oldLine.yCoordinates;
+
+        }
+
+        Line &Line::operator=(Line &&oldLine) {
+            if (this == &oldLine) { return *this; }
+            xCoordinates = std::move(oldLine.xCoordinates);
+            yCoordinates = std::move(oldLine.yCoordinates);
+        }
+
         Line(std::size_t size) {
             numberOfPoints = size;
             xCoordinates.resize(size);
