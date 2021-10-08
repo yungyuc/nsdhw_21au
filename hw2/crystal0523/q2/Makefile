@@ -13,7 +13,7 @@ $(FILE).*.so: $(FILE).cpp
 	$(CXX) $(CXXFLAGS) `$(pybind11)` $< -o $(FILE)`$(suffix)` -I /usr/include/python3.8
 
 test: all
-	pytest
+	py.test vector_test.py
 
 clean:
 	rm -rf *.so __pycache__  .pytest_cache
