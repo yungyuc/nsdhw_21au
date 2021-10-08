@@ -3,7 +3,7 @@ CC = g++
 CFLAGS = -Wall -std=gnu++14 -g
 INCLUDE = -Iinclude
 
-LINEDIR = lib/
+SRCDIR = lib/
 SRC := $(shell find $(LINEDIR) -name '*.cpp')
 
 EXEC = line
