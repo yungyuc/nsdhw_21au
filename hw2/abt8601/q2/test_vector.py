@@ -60,17 +60,34 @@ def test_random() -> None:
         assert abs(angle_between_r2(u, v) - abs(dtheta)) < ABS_TOL
 
 
-def test_same() -> None:
+def test_same_direction() -> None:
     N_TEST = 10000
     ABS_TOL = 1e-7
 
     for _ in range(N_TEST):
-        r = random_nonzero_length()
+        r1 = random_nonzero_length()
+        r2 = random_nonzero_length()
         theta = random_angle()
 
-        v = polar_to_cartesian(r, theta)
+        u = polar_to_cartesian(r1, theta)
+        v = polar_to_cartesian(r2, theta)
 
-        assert abs(angle_between_r2(v, v)) < ABS_TOL
+        assert abs(angle_between_r2(u, v)) < ABS_TOL
+
+
+def test_opposite_direction() -> None:
+    N_TEST = 10000
+    ABS_TOL = 1e-7
+
+    for _ in range(N_TEST):
+        r1 = random_nonzero_length()
+        r2 = random_nonzero_length()
+        theta = random_angle()
+
+        u = polar_to_cartesian(r1, theta)
+        v = polar_to_cartesian(r2, theta+math.pi)
+
+        assert abs(angle_between_r2(u, v) - math.radians(180)) < ABS_TOL
 
 
 def test_right_angle() -> None:
