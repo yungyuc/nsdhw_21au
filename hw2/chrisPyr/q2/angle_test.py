@@ -4,7 +4,7 @@ import math
 import random
 import numpy as np
 
-abs_val = 0.0001
+abs_val = 0.00001
 
 class TestGroup:
 
