@@ -14,14 +14,14 @@ class Line {
             yCoordinates = std::move(oldLine.yCoordinates);
         }
 
-        Line &Line::operator=(Line const &oldLine) {
+        Line &operator=(Line const &oldLine) {
             if (this == &oldLine) { return *this; }
             xCoordinates = oldLine.xCoordinates;
             yCoordinates = oldLine.yCoordinates;
 
         }
 
-        Line &Line::operator=(Line &&oldLine) {
+        Line &operator=(Line &&oldLine) {
             if (this == &oldLine) { return *this; }
             xCoordinates = std::move(oldLine.xCoordinates);
             yCoordinates = std::move(oldLine.yCoordinates);
