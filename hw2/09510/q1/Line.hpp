@@ -18,5 +18,4 @@ public:
     float & y(size_t it);//setter
 private:
     std::vector<std::pair < float,float> > m_coord;
-    // Member data.
 }; /* end class Line */

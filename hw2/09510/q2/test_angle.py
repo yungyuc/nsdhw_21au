@@ -2,7 +2,7 @@ import pytest
 import _vector
 import numpy as np
 import math
-
+# check invalid input
 def test_invalid_input():
 
     tolerant=0.0001
@@ -14,6 +14,7 @@ def test_invalid_input():
 
     assert ans == -1
 
+# check zero angle
 def test_zero_angle():
 
     tolerant=0.001
@@ -29,7 +30,7 @@ def test_zero_angle():
 
     assert  abs(ans-0) <= tolerant
 
-
+#check 90
 def test_right_angle():
 
     tolerant=0.001
@@ -41,7 +42,7 @@ def test_right_angle():
     ans=_vector.Angle(v1,v2)
     assert abs(ans - math.pi/2) < tolerant
 
-
+#check 180
 def test_180_angle():
     tolerant=0.001
 
