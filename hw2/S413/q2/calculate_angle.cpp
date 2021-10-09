@@ -10,7 +10,7 @@ float calculate_angle(std::vector<float> &a, std::vector<float> &b){
 	try{
 	
 		if(a.size() != b.size()){
-			throw ("Vectors must have same dimensions");
+			throw ("Vectors must have same dimensions.");
 		}
 
 		size_t dim = a.size();
