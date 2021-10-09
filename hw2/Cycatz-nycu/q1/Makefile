@@ -18,14 +18,14 @@ $(TAR_DIR)/$(TARGET): $(OBJECTS)
 $(TAR_DIR)/%.o: $(SRC_DIR)/%.$(SRC_EXT)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-run:
+run: $(TAR_DIR)/$(TARGET)
 	$(TAR_DIR)/$(TARGET)
 
-check:
+check: $(TAR_DIR)/$(TARGET)
 	$(TAR_DIR)/$(TARGET) > result.txt
 
 clean:
-	-rm $(TAR_DIR)/* 
+	-rm result.txt $(TAR_DIR)/* 
 
 # for debug 
 print-%:

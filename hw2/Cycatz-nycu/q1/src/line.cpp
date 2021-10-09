@@ -75,14 +75,6 @@ int main(int, char **)
     line.x(1) = 1; line.y(1) = 3;
     line.x(2) = 2; line.y(2) = 5;
 
-
-    for (size_t it=0; it<line.size(); ++it)
-    {
-        std::cout << "point " << it << ":"
-                  << " x = " << line.x(it)
-                  << " y = " << line.y(it) << std::endl;
-    }
-
     Line line2(line);
     line2.x(0) = 9;
 
