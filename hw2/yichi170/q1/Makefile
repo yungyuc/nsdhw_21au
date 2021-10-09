@@ -5,12 +5,16 @@ exe = main
 objs = *.o
 txt = result.txt
 
-%.o: %.cpp
-	$(CXX) $(CXXFLAGS) -c $^
+all: $(exe)
 
-$(exe): $(objs)
-# 	@ECHO *.o
-	$(CXX) $(CXXFLAGS) -o $@ $<
+Line.o: Line.cpp Line.hpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+main.o: main.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+$(exe): main.o Line.o
+	$(CXX) $(CXXFLAGS) $^ -o $@
 
 .PHONY: clean run check
 
