@@ -8,7 +8,7 @@ Line::Line(Line const &copy){
     this -> Y.assign(copy.Y.begin(), copy.Y.end());
 }
 
-Line::Line(Line const &move){
+Line::Line(Line &&move){
     this -> X.assign(move.X.begin(), move.X.end());
     this -> Y.assign(move.Y.begin(), move.Y.end());
 }
