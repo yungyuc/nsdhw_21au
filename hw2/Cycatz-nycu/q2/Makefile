@@ -23,7 +23,7 @@ $(TAR_DIR)/%.o: $(SRC_DIR)/%.$(SRC_EXT)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 test: $(TAR_DIR)/$(TARGET) $(TEST_SCRIPT)
-	pytest -v  
+	python3 -m pytest -v
 
 clean:
 	-rm -rf .pytest_cache .mypy_cache __pycache__ $(TAR_DIR)/$(TARGET) $(OBJECTS) 
