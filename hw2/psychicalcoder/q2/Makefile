@@ -7,8 +7,11 @@ all: %.so
 
 .PHONY: test
 test: %.so
-	pytest test_vector.py
+	python3 -m pytest test_vector.py -v
 
 .PHONY: clean
 clean:
 	rm -rf __pycache__ _vector*.so .pytest_cache
+
+localbuild:
+	g++ -Wall -shared -std=c++14 -fPIC `python3 -m pybind11 --includes` _vector.cpp -o _vector`python3-config --extension-suffix`
