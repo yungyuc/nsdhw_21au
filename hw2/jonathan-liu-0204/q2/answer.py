@@ -1,6 +1,6 @@
 import pytest
 import math
-from _vector import *
+from _vector import get_angle
 
 def test_zero_length():
     vector0 = [0, 0]
