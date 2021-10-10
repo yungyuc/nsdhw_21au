@@ -1,7 +1,7 @@
 #include <cstddef>
 #include <vector>
 
-class Line {
+class Line{
 
 public:
     Line();

@@ -21,7 +21,7 @@ Line & Line::operator=(Line const &copy_a){
     return *this;
 }
 
-Line & Line::operator=(Line const &move_a){
+Line & Line::operator=(Line &&move_a){
     if (this != &move_a){
         X = move_a.X;
         Y = move_a.Y;
