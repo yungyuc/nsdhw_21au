@@ -1,4 +1,5 @@
 from _vector import *
+import pytest
 import math
 
 def test_zero_length():
