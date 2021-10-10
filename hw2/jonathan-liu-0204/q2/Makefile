@@ -5,10 +5,10 @@ PYINCLUDE = `python3-config --includes`
 
 TARGET = _vector
 
-.PHONY: test clean
-
 $(TARGET): get_angle.cpp
-	g++ $(CFLAGS) -shared -fPIC $(PYFLAGS) get_angle.cpp -o $@$(PYCONFIG) $(PYINCLUDE)
+	g++ $(CFLAGS) -fPIC $(PYFLAGS) get_angle.cpp -o $@$(PYCONFIG) $(PYINCLUDE)
+
+.PHONY: test clean
 
 test: $(TARGET)
 	python3 -m pytest answer.py
