@@ -1,12 +1,12 @@
-from _vector import get_angle
+from _vector import *
 import math
 import pytest
 
 def test_zero_length():
     vector0 = [0, 0]
     vector1 = [3, 8]
-    with pytest.raises(ValueError):
-        get_angle(vector0[0], vector0[1], vector1[0], vector1[1])
+    result = get_angle(vector0[0], vector0[1], vector1[0], vector1[1])
+    assert math.isclose(result, -1)
     
 def test_zero_angle():
     vector0 = [1, 1]
