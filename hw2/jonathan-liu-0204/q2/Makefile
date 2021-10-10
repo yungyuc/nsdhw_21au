@@ -1,4 +1,4 @@
-CFLAGS = -shared --std=c++11 -FPIC -Wall -03
+CFLAGS = -shared --std=c++11 -FPIC -Wall -Wextra -Werror
 PYFLAGS = `python3 -m pybind11 --includes` -I /usr/include/python3.8
 PYCONFIG = `python3-config --extension-suffix`
 

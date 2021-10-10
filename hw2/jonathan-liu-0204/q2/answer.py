@@ -1,4 +1,4 @@
-import _vector
+from _vector import get_angle
 import math
 import pytest
 
