@@ -16,5 +16,5 @@ float calculate_angle(std::pair<float, float> v1, std::pair<float, float> v2) {
 
 PYBIND11_MODULE(_vector, m) {
     m.doc() = "calculates the angle (in radians) between two vectors in the 2-dimensional Cartesian coordinate system"; 
-    m.def("_vector", &calculate_angle, "function that calculate the angle");
+    m.def("calculate_angle", &calculate_angle, "function that calculate the angle");
 }
