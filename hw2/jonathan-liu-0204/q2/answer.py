@@ -6,7 +6,7 @@ def test_zero_length():
     vector0 = [0, 0]
     vector1 = [3, 8]
     with pytest.raises(ValueError):
-        _vector.get_angle(vector0[0], vector0[1], vector1[0], vector1[1])
+        get_angle(vector0[0], vector0[1], vector1[0], vector1[1])
     
 def test_zero_angle():
     vector0 = [1, 1]
