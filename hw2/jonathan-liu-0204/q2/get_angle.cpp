@@ -20,5 +20,5 @@ double get_angle(double x1, double y1, double x2, double y2){
 }
 
 PYBIND11_MODULE(_vector, m){
-    m.def("The angle in radians is: ", &get_angle);
+    m.def("get_angle", &get_angle);
 }
