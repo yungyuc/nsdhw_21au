@@ -3,21 +3,16 @@ CXXFLAGS = -std=c++11 -Wall -O3
 
 TARGET = main
 objs = *.o
-txt = result.txt
+OUTPUT = result.txt
 
-Line.o: Line.cpp Line.hpp
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+all:
+	g++ main.cpp Line.cpp -o main
 
-$(TARGET): main.cpp Line.o Line.hpp
-	$(CXX) $(CXXFLAGS) main.cpp Line.o -o $@
+run:
+	./main
 
-.PHONY: clean run check
-
-run: $(TARGET)
-	./$(TARGET)
-
-check: $(TARGET)
-	./$(TARGET) > $(txt)
+check:
+	./main > $(OUTPUT)
 
 clean:
-	rm -f $(objs) $(TARGET)
+	rm -f $(OUTPUT) main
