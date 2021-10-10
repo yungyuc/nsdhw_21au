@@ -27,5 +27,6 @@ def test_flat_angle(): #180
     vector0 = [6, 0]
     vector1 = [-4, 0]
     result = get_angle(vector0[0], vector0[1], vector1[0], vector1[1])
+    minus = math.pi
     abs_ans = abs(result - minus)
     assert abs_ans < 0.001
