@@ -5,7 +5,7 @@ export LC_ALL="en_US.UTF-8"
 
 test_path="$(realpath $(dirname ${BASH_SOURCE[0]}))"
 solution_path="$(realpath .)"
-tmp_dir=$(mktemp -d -t hw2-0716304)
+tmp_dir=$(mktemp -d -t hw2-XXXXXXXXXX)
 
 echo "test path: $test_path"
 echo "working directory: $tmp_dir"
