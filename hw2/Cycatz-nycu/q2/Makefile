@@ -1,5 +1,6 @@
 CXX = g++ 
-CXXFLAGS = -fPIC -Wall -Wextra -std=c++11 $(shell python3 -m pybind11 --includes)
+# CXXFLAGS = -fPIC -Wall -Wextra -std=c++11 $(shell python3 -m pybind11 --includes)
+CXXFLAGS = -fPIC -Wall -Wextra -std=c++11 -I /usr/include/python3.8
 LD_FLAGS = -shared
 
 SRC_EXT := cpp 
