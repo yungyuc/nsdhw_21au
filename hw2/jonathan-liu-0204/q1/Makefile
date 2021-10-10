@@ -1,11 +1,9 @@
 CXX = g++
-CXXFLAGS = -std=c++11 -g -Wall -O3
+CXXFLAGS = -std=c++11 -Wall -O3
 
 TARGET = main
 objs = *.o
 txt = result.txt
-
-all: $(exe)
 
 Line.o: Line.cpp Line.hpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
@@ -22,4 +20,4 @@ check: $(TARGET)
 	./$(TARGET) > $(txt)
 
 clean:
-	rm -f $(objs) $(exe)
+	rm -f $(objs) $(TARGET)
