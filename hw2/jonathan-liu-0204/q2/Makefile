@@ -1,12 +1,11 @@
-CFLAGS = -shared --std=c++11 -Wall -03
-PYFLAGS = `python3 -m pybind11 --includes`
+CFLAGS = -shared --std=c++11 -FPIC -Wall -03
+PYFLAGS = `python3 -m pybind11 --includes` -I /usr/include/python3.8
 PYCONFIG = `python3-config --extension-suffix`
-PYINCLUDE = `python3-config --includes`
 
 TARGET = _vector
 
 $(TARGET): get_angle.cpp
-	g++ $(CFLAGS) -fPIC $(PYFLAGS) get_angle.cpp -o $@$(PYCONFIG) $(PYINCLUDE)
+	g++ $< -o $@$(PYCONFIG) $(CFLAG) $(PYFLAGS)
 
 .PHONY: test clean
 
@@ -15,4 +14,4 @@ test: $(TARGET)
 
 clean:
 	rm -rf $(TARGET).*.so
-	rm -rf __pycache__/ .pytest_cache/
+	rm -rf __pycache__
