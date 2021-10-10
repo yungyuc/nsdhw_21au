@@ -15,5 +15,5 @@ test:
 	python3 -m pytest -v
 
 clean:
-	rm -rf _vector *.so
-	rm -rf __pycache__
+	rm -f _vector *.so
+	rm -rf __pycache__/
