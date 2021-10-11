@@ -40,6 +40,8 @@ API Description
 Engineering Infrastructure
 ==========================
 
+- Build System: Make
+- Version Control: Git
 
 Schedule
 ========
