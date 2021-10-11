@@ -46,6 +46,14 @@ Engineering Infrastructure
 Schedule
 ========
 
+- Week 1: [Python] Transfer the coordinate into PNG
+- Week 2: [C++] Implement forced-directed method
+- Week 3: [C++] Implement forced-directed method & [Makefile]
+- Week 4: [C++] Implement forced-directed method
+- Week 5: Integrate the c++ and python code
+- Week 6: [Python] Test the result of algorithm
+- Week 7: Prepare presentation
+- Week 8: Prepare presentation
 
 References
 ==========
