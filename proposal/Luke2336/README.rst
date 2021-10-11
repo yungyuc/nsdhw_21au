@@ -35,6 +35,7 @@ System Architecture
 API Description
 ===============
 
+``drawGraph('input.txt', 'output.png')``
 
 Engineering Infrastructure
 ==========================
