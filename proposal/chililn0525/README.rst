@@ -81,7 +81,7 @@ Schedule
 
 * 11/07-11/13: 
 
-  1.Implement Harmonic product spectrum.
+  1. Implement Harmonic product spectrum.
 
 * 11/14-11/20: 
 
