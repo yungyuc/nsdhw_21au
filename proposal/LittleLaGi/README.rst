@@ -107,7 +107,7 @@ Engineering Infrastructure
 |
 | **Description**
 |  The Makefile contains commands to build C++ programs and run OMG along with several unit tests automatically. As for version control, there will be several branches:
-| **master**: Tested, deployable version.
+| **main**: Tested, deployable version.
 | **fitness_function**: Choices for fitness function.
 | **parent_selection**: Choices for parent selection method.
 | **crossover**: Choices for cross-over method.
