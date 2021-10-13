@@ -111,5 +111,5 @@ Schedule
 
 References
 ----------------------------
-[1]: `Why outbreaks like coronavirus spread exponentially, and how to “flatten the curve”<https://www.washingtonpost.com/graphics/2020/world/corona-simulator/>`
-[2]: `https://github.com/paulvangentcom/python_corona_simulation<https://github.com/paulvangentcom/python_corona_simulation>`
+| [1]: Why outbreaks like coronavirus spread exponentially, and how to “flatten the curve”<https://www.washingtonpost.com/graphics/2020/world/corona-simulator/>
+| [2]: https://github.com/paulvangentcom/python_corona_simulation<https://github.com/paulvangentcom/python_corona_simulation>
