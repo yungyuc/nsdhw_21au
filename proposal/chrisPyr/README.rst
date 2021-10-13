@@ -19,7 +19,7 @@ Problem to Solve
 | The kind of problem is actually a N-Body problem. And there is no general solution to N-Body problem, we can only try to simulate it with a numerical method.
 | The simplest idea is to compute all interation force between each body, which is a Brute-force method.
 | By calculating the acceleration and velocity of each time step, we can predict the position of bodies next moment. However, in real life the acceleration and velocity changes even in each time step.
-| Although when time step is small enough, the results should be good enough. But we can try to use "Runge-Kuta Methods" to improve results.
+| Although when time step is small enough, the results should be good enough. But we can try to use "Runge-Kuta Methods"[5] to improve results.
 | In my plan, the final product should be able to show the orbits, periods of planets. And it can be compared with the real world data to prove the correctness and also incorrectness of Newtonian Mechanics.
 | And also do I want to add some intersting feature into it, e.g. users can add/delete planets into/in the system to see how the entire system changes.
 
@@ -34,9 +34,9 @@ Prospective Users
 System Architecture
 ===================
 
-| The default of building the system would create the solar system in a gif or mp4 format. I plan to use Python matplotlib to do the animatin creation part[5].
+| The default of building the system would create the solar system in a gif or mp4 format. I plan to use Python matplotlib to do the animatin creation part[6].
 | Users can add one or more planets by providing three parameters: intial velocity, position, and mass.
-| To build the solar system I also need information about solar system initial parameters, I plan to get the data from "JPL Horizon(NASA)"[6].
+| To build the solar system I also need information about solar system initial parameters, I plan to get the data from "JPL Horizon(NASA)"[7].
 
 Needed Parameters:
     - default(build a solar system)
@@ -113,5 +113,6 @@ References
 | [2]: http://vmm.math.uci.edu/odeandcm/PDF_Files/ChapterFirstPages/Chapt4Frst6Pages.pdf
 | [3]: https://aether.lbl.gov/www/classes/p10/gr/PrecessionperihelionMercury.htm
 | [4]: “Explanation of the Perihelion Motion of Mercury from General Relativity Theory”, 1915
-| [5]: https://zingale.github.io/astro_animations/
-| [6]: http://www.cyber-omelette.com/2017/02/RK4.html
+| [5]: http://www.cyber-omelette.com/2017/02/RK4.html
+| [6]: https://zingale.github.io/astro_animations/
+| [7]: https://ssd.jpl.nasa.gov/horizons/
