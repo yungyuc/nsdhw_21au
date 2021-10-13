@@ -5,7 +5,7 @@ NSD Term Project
 Basic Information
 ----------------------------
 | Github repository url:
-| `https://github.com/Eric860730/A-simple-virus-spread-simulation <https://github.com/Eric860730/A-simple-virus-spread-simulation>`
+| https://github.com/Eric860730/A-simple-virus-spread-simulation
 
 Problem to Solve
 ----------------------------
@@ -14,6 +14,7 @@ Problem to Solve
 | According to this article[1], the spread of COVID-19 is increasing exponentially.
 | In order to prevent the spread of COVID-19, each country/region has implemented many policies (e.g. quarantine, restriction of in-store dining, lockdown...).
 | These policies have produced different results in controlling the spread of COVID-19.
+
 
 | I want to simulate the impact of different policies on the spread of pandemic viruses.
  User can adjust parameters(e.g. virus infection rate, virus mortality rate...) and policy to observe the final result.
