@@ -54,10 +54,11 @@ Constraints:
     - we cannot perform real integration on computer, so the results may not be perfectly match the real world
 
 System Major Components
-| 1. Parameter Parser: Python, check validity of parameters
-| 2. Planet class: C++ class, store information of a planet, including mass, velocity, acceleration, position
-| 3. System class: C++ class, contains all planets object, and prvide operation for computing new position at each time step for each planet
-| 4. Animation Printer: Python, print the simulated trajectory
+
+| 1.Parameter Parser: Python, check validity of parameters
+| 2.Planet class: C++ class, store information of a planet, including mass, velocity, acceleration, position
+| 3.System class: C++ class, contains all planets object, and prvide operation for computing new position at each time step for each planet
+| 4.Animation Printer: Python, print the simulated trajectory
 
 API description
 ===============
