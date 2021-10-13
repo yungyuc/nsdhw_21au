@@ -5,7 +5,7 @@ NSD Term Project
 Basic Information
 ----------------------------
 | Github repository url:
-| `https://github.com/Eric860730/A-simple-virus-spread-simulation<https://github.com/Eric860730/A-simple-virus-spread-simulation>`
+| `https://github.com/Eric860730/A-simple-virus-spread-simulation <https://github.com/Eric860730/A-simple-virus-spread-simulation>`
 
 Problem to Solve
 ----------------------------
@@ -86,12 +86,15 @@ make
 
 Testing Framework
 ^^^^^^^^^^^^^^^^^^
-Python: pytest
-C++: Google test
-According to this article[1], these policies should show the following distribution(under same situation):
+| Python: pytest
+| C++: Google test
+| According to this article[1], these policies should show the following distribution(under same situation):
 1. Free: exponential curve (smallest variance)
+
 2. Attempted quarantine: flatten curve than Free (the second smallest variance)
+
 3. Moderate distancing: flatten curve than Attempted quarantine (the third smallest variance)
+
 4. Extensive distancing: flatten curve than Moderate distancing (largest variance)
 
 Version control
@@ -111,5 +114,5 @@ Schedule
 
 References
 ----------------------------
-| [1]: Why outbreaks like coronavirus spread exponentially, and how to “flatten the curve”<https://www.washingtonpost.com/graphics/2020/world/corona-simulator/>
-| [2]: <https://github.com/paulvangentcom/python_corona_simulation>
+| [1]: `Why outbreaks like coronavirus spread exponentially, and how to “flatten the curve” <https://www.washingtonpost.com/graphics/2020/world/corona-simulator/>`
+| [2]: https://github.com/paulvangentcom/python_corona_simulation
