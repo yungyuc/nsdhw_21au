@@ -37,9 +37,9 @@ The `comput` class represents the computations that share schedules up to a leve
 Workflow:
 
 1. Declare iterator variables
-1. Declare expressions
-1. Specify optimizations
-1. Generate code
+2. Declare expressions
+3. Specify optimizations
+4. Generate code
 
 API Description
 ===============
