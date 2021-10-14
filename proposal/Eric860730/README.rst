@@ -41,12 +41,13 @@ Input
 * choose policy (option, default = Free)
   Free, Attempted quarantine, Moderate distancing, Extensive distancing
 * custom policy (option, default = Free)
-  quarantine capacity (0 for no quarantine)
-  accept probability of quarantine
-  threshold of first human mobility (infected people, reduced mobility) (e.g. More than 10% of people are infected, and all people's activity is halved.)
-  threshold of second human mobility (infected people, reduced mobility) (Enhanced first human mobility)
-  threshold of free second human mobility (**percentage**) (if less than **percentage** poeple are infected, free the restriction of second human mobility)
-  threshold of free first human mobility (**percentage**) (if less than **percentage** poeple are infected, free the restriction of first human mobility)
+  
+  * quarantine capacity (0 for no quarantine)
+  * accept probability of quarantine
+  * threshold of first human mobility (infected people, reduced mobility) (e.g. More than 10% of people are infected, and all people's activity is halved.)
+  * threshold of second human mobility (infected people, reduced mobility) (Enhanced first human mobility)
+  * threshold of free second human mobility (**percentage**) (if less than **percentage** poeple are infected, free the restriction of second human mobility)
+  * threshold of free first human mobility (**percentage**) (if less than **percentage** poeple are infected, free the restriction of first human mobility)
 
 Output
 ^^^^^^^^^^^^
