@@ -12,21 +12,21 @@ The GitHub repository : https://github.com/chilin0525/autopitch
 Problem to Solve
 ================
 
-I had terrible experience of singing test in music class when I in senior high school. The teacher ask me go back to the sit and spend more time practicing after I just song first lyric of song. But the problem is that I cannot understand how bad of my performance since I cannot recognize the pitch. So I want to build a tool to tune pitch in real time. There are a software call **autotune** also can tune your pitch, but it need lots of experience and tune by manually.  This is why the project named **autopitch** since we can use the tool built by ourselves to tune the pitch and save next student cannot recognize the pitch! 
+I had a terrible experience of singing test in music class when I was a senior high school student. The teacher asked me go back to the sit and spend more time practicing after I just sang first lyric. But the problem is that I could not understand how bad of my performance since I could not recognize the pitch. So I want to build a tool to tune pitch in real time. There exist a software call **autotune** also can tune your pitch, but it needs many experiences and tuned manually.  This is why the project named **autopitch** since we can use the tool to tune the pitch automatically.
 
-The step to solve the problem:
+The steps to solve the problem:
 
-1. Receive and parse audio, we should understand how computer store these audio signal at first.
-2. We need recognizing the pitch, In audio signal processing call **pitch tracking algorithm** or **pitch detection algorithm**.
-3. Do pitch shift to tune your wrong pitch.
-4. Output correct pitch.
+1. Receive and parse audio files, we should understand how computer store audio signal at first.
+2. We need recognizing the pitch, in audio signal processing named **pitch tracking algorithm** or **pitch detection algorithm**.
+3. Do pitch shift to tune the wrong pitch.
+4. Output modified audio.
 
 There are two types of pitch tracking algorithm:
 
-1. Time-domain method: In time-domain method, **auto-correlation function(ACF)** is a classical method to do pitch tracking. Choosing the sample signal at first, and shift it from the sample signal we will get another signal, compare how similar between each other. If there are pretty similar, we can get the fundamental frequency. The disadvantage of time-domain method is that it **only suitable for monophonic signal** (just one voice).
-2. Frequency-domain methods: Convert the audio signal to frequency spectrum by FFT at first, and attempts to find fundamental frequency by the frequency spectrum. Frequency-domain methods is better than Time-domain method since **it can detect polyphonic audio signal**. But it also **need more computation** in process, which may be harmful to this project since we need doing pitch tracking in real time.
+1. Time-domain method: In time-domain method, **auto-correlation function(ACF)** is a classical method to do pitch tracking. Choosing the sample signal at first, and shift from the sample signal as another signal, compare how similar between each other. If there are pretty similar, we can get the fundamental frequency. The disadvantage of time-domain method is that it **only suitable for monophonic signal** (just one voice).
+2. Frequency-domain methods: Convert the audio signal to frequency spectrum by FFT first, and attempts to find fundamental frequency by the frequency spectrum. Frequency-domain methods is better than Time-domain method since **it can detect polyphonic audio signal**. But it also **needs more computation** in process, which may be harmful to this project since we need doing pitch tracking in real time.
 
-(In this project, I will implement two method simultaneously(**Yin algorithm[1]** for time-domain method, **Harmonic product spectrum[2]** for frequency-domain method) since I cannot predict which one is more suitable for the project.)
+(In this project, I will implement two method simultaneously (**Yin algorithm[1]** for time-domain method, **Harmonic product spectrum[2]** for frequency-domain method) since I cannot predict which one is more suitable for the project.)
 
 TBD: pitch shift
 
@@ -38,7 +38,7 @@ Prospective Users
 
 System Architecture
 ===================
-TBD: the following is a draft architecture
+TBD: the following is a draft of architecture. I will read from audio files first when developing, since real time audio I/O may be compicated. After I can read audio file, implement pitch tracking algorithm, pitch shift, and output to audio file, I will extend the project to real audio I/O finally.
 
 .. image:: https://i.imgur.com/dFNHcDN.png
   :width: 300px
