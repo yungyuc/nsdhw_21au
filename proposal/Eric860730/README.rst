@@ -1,5 +1,5 @@
 ============================
-NSD Term Project
+A simple virus spread simulation
 ============================
 
 Basic Information
@@ -32,13 +32,21 @@ System Architecture
 
 Input
 ^^^^^^^^^^^^
-* total number of people
-* moving speed of people
-* virus infection rate
-* virus mortality rate
-* recovery time
-* choose policy (Free, Attempted quarantine, Moderate distancing, Extensive distancing)
-* healthcare capacity (The mortality rate is halved.)
+* total number of people (option, default = 1000(<= 2000))
+* moving speed of people (option, default = 1)
+* virus infection rate (option, default = 70%)
+* virus mortality rate (option, default = 30%)
+* recovery time (option, default = 5 day)
+* healthcare capacity (option, default = The mortality rate is halved.)
+* choose policy (option, default = Free)
+  Free, Attempted quarantine, Moderate distancing, Extensive distancing
+* custom policy (option, default = Free)
+  quarantine capacity (0 for no quarantine)
+  accept probability of quarantine
+  threshold of first human mobility (infected people, reduced mobility) (e.g. More than 10% of people are infected, and all people's activity is halved.)
+  threshold of second human mobility (infected people, reduced mobility) (Enhanced first human mobility)
+  threshold of free second human mobility (**percentage**) (if less than **percentage** poeple are infected, free the restriction of second human mobility)
+  threshold of free first human mobility (**percentage**) (if less than **percentage** poeple are infected, free the restriction of first human mobility)
 
 Output
 ^^^^^^^^^^^^
@@ -60,10 +68,9 @@ System Workflow
 
 Constraints
 ^^^^^^^^^^^^^^^^^
-1. Users cannot add their own policies.
-2. Cannot simulate the spread of virus between countries. (For example, different regions use different policies to observe the results of the spread of the virus.)
-3. Cannot simulate the real situation of people moving. (Most people move regularly in daily life, but the movement of people is random during the simulation process.)
-4. Cannot see the death rate of each age. (I did not consider the age of the person in the simulation. If there is enough time, I will try to finish it.)
+1. Cannot simulate the spread of virus between countries. (For example, different regions use different policies to observe the results of the spread of the virus.)
+2. Cannot simulate the real situation of people moving. (Most people move regularly in daily life, but the movement of people is random during the simulation process.)
+3. Cannot see the death rate of each age. (I did not consider the age of the person in the simulation. If there is enough time, I will try to finish it.)
 
 API Description
 ----------------------------
@@ -101,6 +108,7 @@ Testing Framework
 Version control
 ^^^^^^^^^^^^^^^^^^
 git
+poetry (packaging and dependency management)
 
 Schedule
 ----------------------------
