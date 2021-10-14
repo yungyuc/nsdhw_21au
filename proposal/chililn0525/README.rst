@@ -113,4 +113,4 @@ References
 -----------
 
 1. [YIN, a fundamental frequency estimator for speech and music]:http://audition.ens.fr/adc/pdf/2002_JASA_YIN.pdf
-2. [Harmonic product spectrum]: rnnoildxnd re
+2. [Harmonic product spectrum]: http://musicweb.ucsd.edu/~trsmyth/analysis/Harmonic_Product_Spectrum.html
