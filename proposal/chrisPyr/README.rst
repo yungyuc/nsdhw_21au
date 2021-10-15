@@ -1,5 +1,5 @@
 ================
-NSD Term Project
+My Universe
 ================
 --------------------------
 chrisPyr @ 2021 NSD autumn
@@ -60,6 +60,7 @@ System Major Components
 | 3. System class: C++ class, contains all planets object, and prvide operation for computing new position at each time step for each planet
 | 4. ODE class: C++ class, contains several ODE integration methods for system class to call(I will implement Euler Method and Runge-Kutta Method at least)
 | 5. Animation Printer: Python, print the simulated trajectory
+
 
 | In ODE class, I will implement Runge-Kutta method in 4th order, and Runge-Kutta method is designed for initial value problem. The key idea of it is that it takes few acceleration values in each time step and average them.
 | More details about how to simulate a orbit by Runge-Kutta method: http://spiff.rit.edu/richmond/nbody/OrbitRungeKutta4.pdf
