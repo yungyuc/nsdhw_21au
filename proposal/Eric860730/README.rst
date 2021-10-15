@@ -67,17 +67,47 @@ Mathematical Model Description
 
 | When running the Mathematical model, this model updates the status of everyone after each time slice. The following is the calculation of the model.
 1. Check the status of everyone, find all infected poeple.
-2. According to the maximum scope of infection, find out all the people who are exposed to the risk of infection around the infected person.
-3. randomly produce a float number between 0 and 1, if the number less than virus infection rate, then this person is not infected. otherwise, change the status of this person to infected.
+2. According to those who are infected, find out all the people who are exposed to the risk of infection around the infected person.
+3. For those who are exposed at risk of infection
+
+* check infection or not
+    
+  randomly produce a infection number(float) between 0 and 1, if the infection number less than virus infection rate, then this person is not infected. Otherwise, change the status of this person to infected.
+
+4. For those who are already infected
+
+* check death or not
+    
+  randomly produce a death number(float) between 0 and 1, if the death number less than virus mortality rate, then survive. Otherwise, change this person status to death.
+
+* check recovery or not
+
+5. Summary the status of everyone
+
+* check whether the policy should be implemented.
+
+* if there is no one be infected, then terminate.
+
+6. For all survived people(at the end of update)
+
+* check the status of position
+
+  If there is a collision, change the direction randomly.
+
+* check the policy implement or not.
+
+| Execute above calculations at each time slice until there is no one be infected.
 
 Program Workflow
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-1. Prepare stage
+1. Initialization
 
-  * Set up an activity area and randomly assign poeple to the area.
-  * Set up all input parameters.
+* Set up an activity area and randomly assign poeple to the area.
+* Set up all input parameters.
 
-2. Runing model stage
+2. Run simulator(mathematic model)
+
+3. Print result
 
 System Components
 ^^^^^^^^^^^^^^^^^
