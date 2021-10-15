@@ -57,7 +57,11 @@ System Major Components
 | 1. Parameter Parser: Python, check validity of parameters
 | 2. Planet class: C++ class, store information of a planet, including mass, velocity, acceleration, position
 | 3. System class: C++ class, contains all planets object, and prvide operation for computing new position at each time step for each planet
-| 4. Animation Printer: Python, print the simulated trajectory
+| 4. ODE class: C++ class, contains several ODE integration methods for system class to call(I will implement Euler Method and Runge-Kutta Method at least)
+| 5. Animation Printer: Python, print the simulated trajectory
+
+| In ODE class, I will implement Runge-Kutta method in 4th order, and Runge-Kutta method is designed for initial value problem. The key idea of it is that it takes few acceleration values in each time step and average them.
+| More details about how to simulate a orbit by Runge-Kutta method: http://spiff.rit.edu/richmond/nbody/OrbitRungeKutta4.pdf
 
 API description
 ===============
@@ -74,7 +78,9 @@ API description
 
 - system::addPlanet(initial velocity, acceleration, mass): create a new planet in this System
 - system::rmPlanet(name): delete certain planet in this system
-- system::update(): compute position in next time step
+- system::update(): call ode method to update position
+- ode::euler(system): compute position by Euler Method
+- ode::RK4(system): compute position by Runge-Kutta Method
 
 
 
@@ -97,10 +103,10 @@ Schedule
 ========
 
 - Week 1: complete stucture of classes
-- Week 2: Brute-Force method of two-body system
-- Week 3: Brute-Force method of N-body system
-- Week 4: Runge-Kuta method of two-body system
-- Week 5: Runge-Kuta method of N-body system
+- Week 2: Brute-Force method(Euler Mehtod) of two-body system
+- Week 3: Brute-Force method(Euler Method) of N-body system
+- Week 4: Runge-Kutta method of two-body system
+- Week 5: Runge-Kutta method of N-body system
 - Week 6: Print results
 - Week 7: Use parallel techniques to speed up calculation
 - Week 8: Prepare presentation
