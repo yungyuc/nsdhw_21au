@@ -33,15 +33,18 @@ System Architecture
 Input
 ^^^^^^^^^^^^
 * total number of people (option, default = 1000(<= 2000))
+* init number of infected people (**percentage** or **int**) (option, default = 1%)
 * moving speed of people (option, default = 1)
 * virus infection rate (option, default = 70%)
 * virus mortality rate (option, default = 30%)
 * recovery time (option, default = 5 day)
 * healthcare capacity (option, default = The mortality rate is halved.)
 * choose policy (option, default = Free)
+
   Free, Attempted quarantine, Moderate distancing, Extensive distancing
+
 * custom policy (option, default = Free)
-  
+
   * quarantine capacity (0 for no quarantine)
   * accept probability of quarantine
   * threshold of first human mobility (infected people, reduced mobility) (e.g. More than 10% of people are infected, and all people's activity is halved.)
@@ -56,6 +59,25 @@ Output
 * The number of uninfected people.
 * The number of recovered people.
 * The number of death people.
+
+Mathematical Model Description
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+| This is a dynamicial system. A dynamic system is a fixed rule that describes how all points in a fixed space change over time.
+| First of all, I will give an activity area, and a dot represents a person. I will use input parameters to init everyone's status and build my mathematical model.
+
+| When running the Mathematical model, this model updates the status of everyone after each time slice. The following is the calculation of the model.
+1. Check the status of everyone, find all infected poeple.
+2. According to the maximum scope of infection, find out all the people who are exposed to the risk of infection around the infected person.
+3. randomly produce a float number between 0 and 1, if the number less than virus infection rate, then this person is not infected. otherwise, change the status of this person to infected.
+
+Program Workflow
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1. Prepare stage
+
+  * Set up an activity area and randomly assign poeple to the area.
+  * Set up all input parameters.
+
+2. Runing model stage
 
 System Components
 ^^^^^^^^^^^^^^^^^
@@ -124,5 +146,5 @@ Schedule
 
 References
 ----------------------------
-| [1]: `Why outbreaks like coronavirus spread exponentially, and how to “flatten the curve” <https://www.washingtonpost.com/graphics/2020/world/corona-simulator/>`
+| [1]: `Why outbreaks like coronavirus spread exponentially, and how to “flatten the curve” <https://www.washingtonpost.com/graphics/2020/world/corona-simulator/>`__
 | [2]: https://github.com/paulvangentcom/python_corona_simulation
