@@ -21,7 +21,7 @@ The structure has a scheduling language featuring novel commands for targeting m
 Prospective Users
 =================
 
-Almost all loops in a majority of High Performance Computing programs and deep learning.
+Almost all loops in a majority of High Performance Computing programs and deep learning. Users don't need to know how to optimize their code, they just need to tell my API how they want to optimize!
 
 System Architecture
 ===================
