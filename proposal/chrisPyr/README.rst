@@ -7,6 +7,7 @@ chrisPyr @ 2021 NSD autumn
 
 Basic Information
 =================
+Project Github Link: https://github.com/chrisPyr/My_Universe
 
 Problem to Solve
 ================
