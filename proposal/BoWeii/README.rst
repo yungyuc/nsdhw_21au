@@ -7,6 +7,8 @@ Basic information (including the GitHub repository)
 Job-shop scheduling or the job-shop problem (JSP) is an optimization
 problem in computer science and operations research.
 
+I would try to use genetic-algorithm solve the JSP.
+
 **GitHub repository**: https://github.com/BoWeii/job-shop-scheduling 
 
 Problem to solve
