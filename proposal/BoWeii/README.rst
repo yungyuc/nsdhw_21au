@@ -35,8 +35,9 @@ System architecture
    1. population size
    2. crossover rate 
    3. mutation rate 
-   4. processing table for Jobs/Operations
-   5. machine sequence table for Jobs/Operations
+   4. number of iteration
+   5. processing table for Jobs/Operations
+   6. machine sequence table for Jobs/Operations
    
 -  **Python:**
 
@@ -47,7 +48,17 @@ System architecture
 
 -  **C++:**  
 
-   Responsibility for all of Genetic-Algorithm working
+   All of Genetic-Algorithm working
+   
+   1. make the problem could be a representation to solved
+   2. make evaluation function, In our case, the fitness of each individual is evaluated as the following total elapsed time of the corresponding schedule:
+      f(Si) = max{ ft(j) | 1<= j <= N}  Where ft(j) is the finishing time of job j.
+   3.	make a Crossover, delete relatively excessive genes or to add relatively necessary genes to make them become to the legal offsprings.
+   4.	make a Mutation: generate randomly two positions in the list and exchange their genes, and if the two genes are same one, retry to select new positions.
+   5.	select the best pop-size individuals conforming their fitness for next generation
+   6.	keep the best individual
+
+     
 
 -  **Workflow:** 
 |image1|
@@ -95,11 +106,11 @@ Schedule
 ========
 
 - Week 1: create the structure and environment in python and c++
-- Week 2: implement the function of genetic algorithm
-- Week 3: implement the function of genetic algorithm
-- Week 4: implement the function of genetic algorithm
-- Week 5: implement the function of genetic algorithm
-- Week 6: implement the function of genetic algorithm
+- Week 2: implement the **Gen_init_group()**
+- Week 3: implement the **Evaluate()** and **Keep_best()**
+- Week 4: implement the **Crossover()**
+- Week 5: implement the **Mutation()** 
+- Week 6: implement the **Elitist_select()** and check the correctness of some unit_test 
 - Week 7: output the result as Grantt-Chart
 - Week 8: prepare presentation
 
