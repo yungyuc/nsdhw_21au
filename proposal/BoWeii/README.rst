@@ -30,7 +30,7 @@ need this algorithm
 
 System architecture
 ===================
--  **Parameters and datas**
+-  **Requure parameters and datas**
 
    1. population size
    2. crossover rate 
@@ -40,8 +40,9 @@ System architecture
    
 -  **Python:**
 
-   1. Initialize the informantion and parameters 
-   2. Render the result as Gantt Chart
+   1. initialize the informantion and parameters 
+   2. output the time consume
+   3. render the result as Gantt Chart
 
 
 -  **C++:**  
@@ -111,4 +112,4 @@ References
 | [3]: https://plotly.com/python/
 
 .. |image0| image:: https://i.imgur.com/XMlXh4Z.png
-.. |image1| image:: https://i.imgur.com/CFasA9G.jpg
+.. |image1| image:: https://i.imgur.com/YCJHWZh.jpg
