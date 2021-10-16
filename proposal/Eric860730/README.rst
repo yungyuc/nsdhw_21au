@@ -32,18 +32,18 @@ System Architecture
 
 Input
 ^^^^^^^^^^^^
-* total number of people (option, default = 1000(<= 2000))
-* init number of infected people (**percentage** or **int**) (option, default = 1%)
-* moving speed of people (option, default = 1)
-* virus infection rate (option, default = 70%)
-* virus mortality rate (option, default = 30%)
-* recovery time (option, default = 5 day)
-* healthcare capacity (option, default = The mortality rate is halved.)
-* choose policy (option, default = Free)
+* total number of people (optional, default = 1000(<= 2000))
+* init number of infected people (**percentage** or **int**) (optional, default = 1%)
+* moving speed of people (optional, default = 1)
+* virus infection rate (optional, default = 70%)
+* virus mortality rate (optional, default = 30%)
+* recovery time (optional, default = 5 day)
+* healthcare capacity (optional, default = The mortality rate is halved.)
+* choose policy (optional, default = Free)
 
   Free, Attempted quarantine, Moderate distancing, Extensive distancing
 
-* custom policy (option, default = Free)
+* custom policy (optional, default = Free)
 
   * quarantine capacity (0 for no quarantine)
   * accept probability of quarantine
@@ -132,6 +132,11 @@ API Description
 
 2. Simulator:
    simulateVirusSpread(parameters: parser's results): According to the user's input, the spread of the virus is simulated.
+   customizePolicy(order=int, total_people=int, infected_poeple=int, recovered_people=int, dead_poeple=int, infection_rate=float, mortality_rate=float, recovered_time=int, people_speed=int, healthcare_cap=int, quarantine_cap=int, quarantine_accept=float)
+   * order : The order in which policy is executed. -1 indicates the policy implemented at the beginning.
+   * policy trigger conditions(Enter at least one) : total_people=int, infected_poeple=int, recovered_people=int, dead_poeple=int
+   * all changeable parameters : other parameters.
+   
 
 3. Printer:
    printSpreadProcess(): Use animation to print the virus spreading process.
