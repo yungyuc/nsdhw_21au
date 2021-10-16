@@ -128,10 +128,13 @@ Constraints
 API Description
 ----------------------------
 1. Parser:
+   
    getParameters(): Returns parsed parameters.
 
 2. Simulator:
+   
    simulateVirusSpread(parameters: parser's results): According to the user's input, the spread of the virus is simulated.
+   
    customizePolicy(order=int, total_people=int, infected_poeple=int, recovered_people=int, dead_poeple=int, infection_rate=float, mortality_rate=float, recovered_time=int, people_speed=int, healthcare_cap=int, quarantine_cap=int, quarantine_accept=float)
    * order : The order in which policy is executed. -1 indicates the policy implemented at the beginning.
    * policy trigger conditions(Enter at least one) : total_people=int, infected_poeple=int, recovered_people=int, dead_poeple=int
@@ -139,8 +142,11 @@ API Description
    
 
 3. Printer:
+   
    printSpreadProcess(): Use animation to print the virus spreading process.
+   
    printSpreadDistribution(): Print the distribution graph of virus spread.
+   
    printConclusion(): Print the number of uninfected people, recovered people and death people.
 
 Engineering Infrastructure
@@ -166,6 +172,7 @@ Testing Framework
 Version control
 ^^^^^^^^^^^^^^^^^^
 git
+
 poetry (packaging and dependency management)
 
 Schedule
