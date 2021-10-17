@@ -7,7 +7,7 @@ There are some methods for the computation of derivatives in computer programs. 
 
 ### Numerical differentiation
 Use the formula below to calculate the derivative  of a function.<br /><br />
-![](https://latex.codecogs.com/svg.image?\lim_{h%20\to%200}%20\frac{f(x+h)-f(x)}{h}%20=%208)<br /><br />
+![](https://latex.codecogs.com/svg.image?\lim_{h%20\to%200}%20\frac{f(x+h)-f(x)}{h}%20)<br /><br />
 It is easy to implement, just substitute **h** with a small number like ![](https://latex.codecogs.com/svg.image?10^{-6}). Since **h** is too small and we substitute **h** with a finite number, computers will end up facing [Round-off error](https://en.wikipedia.org/wiki/Round-off_error) and [Truncation error](https://en.wikipedia.org/wiki/Truncation_error).
 
 ### Automatic differentiation
