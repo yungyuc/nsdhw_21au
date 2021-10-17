@@ -68,25 +68,31 @@ Schedule
  Make sure that everything has been installed properly.
  
 * Week 2
-
+ Get familiar with the tools.
 
 * Week 3
+ Implement image pre-processing stage.
  
+ Write tests for the stage and conduct testing with different inputs.
 
 * Week 4
+ Implement text data retrieval stage.
  
+ Write tests for the stage and conduct testing different inputs.
 
 * Week 5
-
+ Pipe the results from the image pre-processing into text data retrieval.
+ 
+ Write tests for the whole pipeline and conduct testing different inputs.
 
 * Week 6
-
+ Implement build workflow.
 
 * Week 7
-
+ Conduct final testing with python.
  
 * Week 8
-
+ Make the project presentation.
 
 References
 ==========
