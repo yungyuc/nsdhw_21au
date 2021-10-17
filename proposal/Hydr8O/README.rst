@@ -45,8 +45,12 @@ System Architecture
 
 Overall Workflow
 ----------------
+Image preprocessing:
 .. image:: ./images/image-preprocessing.png
  :align: center
+
+Text data extraction:
+.. image:: ./images/text-extraction.png
 
 API Description
 ===============
@@ -82,3 +86,4 @@ Schedule
 
 
 References
+==========
