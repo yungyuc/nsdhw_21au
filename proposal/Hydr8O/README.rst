@@ -63,8 +63,10 @@ Schedule
 ========
 
 * Week 1
+ Set up the environment with all required dependencies.
  
-
+ Make sure that everything has been installed properly.
+ 
 * Week 2
 
 
