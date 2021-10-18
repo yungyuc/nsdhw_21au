@@ -72,6 +72,7 @@ Pipeline: Image -> ImagePreprocessor -> EdgeDetector -> ContourDetector -> Docum
 Usage example:
 
 document_warper = DocumentWarper(image)
+
 top_down_view_document = document_warper.warp()
 
  preprocessed_image = document_warper.get_preprocessed_image() #for debugging
@@ -86,6 +87,22 @@ text = text_retriever.retrieve()
 
 Engineering Infrastructure
 ==========================
+
+Version Control
+---------------
+
+Build system will leverage make tool and pybind.
+
+Testing will be conducted using pytest.
+
+Documentation will be created and formated using Sphinx.
+
+New version will be released after completion of major steps, namely:
+
+1. Finish image pre-processing.
+2. Finish text retrieval.
+3. Finish python binding.
+4. Finish final testing.
 
 Schedule
 ========
