@@ -18,6 +18,10 @@ The Simple Polyhedral Structure tries to use C++ to construct a simple API to ex
 
 The structure has a scheduling language featuring novel commands for targeting multiple high performance architectures. It is designed to enable easy integration of code generators for new architectures.
 
+The focus of the implementation is to treat the loop structure as a polygon structure and to do a mapping transformation of this structure.
+
+.. image:: affine_transformation.JPG
+
 Prospective Users
 =================
 
@@ -94,7 +98,6 @@ Engineering Infrastructure
 ==========================
 
 I plan to use google test as my testing framework.
-
 
 Schedule
 ========
