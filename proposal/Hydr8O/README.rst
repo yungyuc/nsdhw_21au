@@ -53,19 +53,22 @@ Text data extraction:
 
 .. image:: ./images/text-extraction.png
 
+Modularization
+--------------
+Software consists of 5 modules each responsible for its own task:
+
+1. ImagePreprocessor - initial preprocessing(gray-scale conversion, noise reduction).
+ 
+2. EdgeDetector - edge detection in an image.
+ 
+3. ContourDetector - contour detection in an image.
+ 
+4. DocumentWarper - extract document from an image and warp it so that it is in a top-down view. Calls functions from 1-3. Stores results of 1-3 for debugging purposes.
+ 
+5. TextRetriever - retrieve text information from an image.
+
 API Description
 ===============
-API consists of 5 classes each responsible for its own task:
-
- 1. ImagePreprocessor - initial preprocessing(gray-scale conversion, noise reduction).
- 
- 2. EdgeDetector - edge detection in an image.
- 
- 3. ContourDetector - contour detection in an image.
- 
- 4. DocumentWarper - extract document from an image and warp it so that it is in a top-down view. Calls functions from 1-3. Stores results of 1-3 for debugging purposes.
- 
- 5. TextRetriever - retrieve text information from an image.
  
 Pipeline: Image -> ImagePreprocessor -> EdgeDetector -> ContourDetector -> DocumentWarper -> TextRetriever
  
@@ -87,9 +90,6 @@ text = text_retriever.retrieve()
 
 Engineering Infrastructure
 ==========================
-
-Version Control
----------------
 
 Build system will leverage make tool and pybind.
 
