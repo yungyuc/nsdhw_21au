@@ -55,6 +55,29 @@ Text data extraction:
 
 API Description
 ===============
+API consists of 5 classes each responsible for its own task:
+
+ 1. ImagePreprocessor - initial preprocessing(gray-scale conversion, noise reduction).
+ 2. EdgeDetector - edge detection in an image.
+ 3. ContourDetector - contour detection in an image.
+ 4. DocumentWarper - extract document from an image and warp it so that it is in a top-down view. Calls functions from 1-3. Stores results of 1-3 for debugging purposes.
+ 5. TextRetriever - retrieve text information from an image.
+ 
+Pipeline: Image -> ImagePreprocessor -> EdgeDetector -> ContourDetector -> DocumentWarper -> TextRetriever
+ 
+Usage example:
+
+document_warper = DocumentWarper(image)
+top_down_view_document = document_warper.warp()
+
+ preprocessed_image = document_warper.get_preprocessed_image() #for debugging
+ 
+ edge_image = document_warper.get_edge_image() #for debugging
+ 
+ contour_image = document_warper.get_contour_image() #for debugging
+
+text_retriever = TextRetriever(top_down_view_document)
+text = text_retriever.retrieve()
 
 Engineering Infrastructure
 ==========================
