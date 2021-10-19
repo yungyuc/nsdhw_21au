@@ -6,13 +6,13 @@
 
 * Problem To Solve
 
-  3D models nowadays can be very detailed and complicated, however rendering
+  3D models nowadays can be very detailed and complicated. However rendering
   these models requires a lot of computing resources, espically when there are
   multiple light sources. In many scenarios, there is no need to use such
-  realistic model. Users can *downgrade* their complicate model without breaking
-  the shape of the object.
+  realistic models. Users can *downgrade* their complicate model without intensively
+  breaking the contour of the object.
 
-  The algorithm which I would like to use is [[http:www.cs.cmu.edu/~garland/Papers/quadrics.pdf][Surface Simplification Using Quadric Error Metrics]]
+  The algorithm I would like to use is [[http:www.cs.cmu.edu/~garland/Papers/quadrics.pdf][Surface Simplification Using Quadric Error Metrics]]
   published by Garland and Heckbert in 1997. This method is an iterative edge
   contraction algorithm that makes it easy to set up different simplification
   level. In brief, we gradually replace two close vertices with a new one. The
