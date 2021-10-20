@@ -9,7 +9,7 @@
   3D models nowadays can be very detailed and complicated. However rendering
   these models requires a lot of computing resources, espically when there are
   multiple light sources. In many scenarios, there is no need to use such
-  realistic models. Users can *downgrade* their complicate model without intensively
+  realistic models. Users can simplify their complicate model without intensively
   breaking the contour of the object.
 
   The algorithm I would like to use is [[http:www.cs.cmu.edu/~garland/Papers/quadrics.pdf][Surface Simplification Using Quadric Error Metrics]]
@@ -23,9 +23,10 @@
 
 * Perspective users
 
-  For those who want to create low-poly art, they can easily generate one with
-  an existing 3d model. 3D game developers can reduce the computer load by
-  replacing some less important models with simplier ones.
+  + For those who want to create low-poly art, they can easily generate one with
+    an existing 3d model.
+  + 3D game developers can reduce the computer load by
+    replacing some less important models with simplier ones.
   
 * System Architecture
 
@@ -49,7 +50,7 @@
 * Engineering Infrastructure
 
 *** Test
-   + It still don't have any idea about how to automatically test the soundness of
+   + I still don't have any idea about how to automatically test the soundness of
      my implementation.
    + I plan to use Googletest as the C++ unit test framwork for the calculation
      functions such as linear system solver and cross product.
