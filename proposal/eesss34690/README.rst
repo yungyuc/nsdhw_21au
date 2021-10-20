@@ -59,7 +59,13 @@ After the computation of FFT, the data can be displayed by using ``view``.
 API description
 ===============
 
-(TODO)
+Some parameters are needed for the API
+1. ```N```: size of the input vector
+2. ```n```: exponent in base 4
+3. ```Y```: output vector
+4. ```X```: input vector
+For instance, to calculate ```64``` sample points of frequency ```4```, with input ```X``` signal, we can get sample output ```Y``` by calling:
+```FFT(64, 4, Y, X)```
 
 Engineering infrastructure
 ==========================
@@ -73,15 +79,12 @@ integration.
 Schedule
 ========
 
-(TODO)
 The development of the project will take 8 weeks:
 
-* Week 1: 
-* Week 2: 
-* Week 3: 
-* Week 4: 
-* Week 5:
-* Week 6: 
-* Week 7: 
-* Week 8: 
+* Week 1: Building DFT structure for usage
+* Week 2, 3: Optimize with initial value, construct buffer
+* Week 4, 5: Do ```cache optimization``` by using blocking
+* Week 6: Finish Makefile and using python for testing
+* Week 7: Validation with other tools
+* Week 8: (Optional for presentation or schedule delay)
 
