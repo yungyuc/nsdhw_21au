@@ -14,7 +14,7 @@ Many companies in various industries store data about different procedures in a 
 
 However, there are a big chunk of unstructured data in the form of paper documents that is needed to be converted into structured format manually.
 
-The goal of this project is to automate manual data retrieval from the paper sources.
+The goal of this project is to automate manual data retrieval from the paper sources (OCR).
 
 Methods Description
 -------------------
