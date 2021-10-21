@@ -39,7 +39,7 @@ The government or those companies who want to limit the number of people in the 
 
 ## System Architecture
 
-<img src="https://github.com/secondlevel/practices/blob/hw3/secondlevel/img/System_Architecture.jpg" width="850" title="System Architecture" hspace="80" />
+<img src="https://github.com/secondlevel/nsdhw_21au/blob/secondlevel-proposal-submission/proposal/secondlevel/img/System_Architecture.jpg" width="850" title="System Architecture" hspace="80" />
 
 ## API Description
 
