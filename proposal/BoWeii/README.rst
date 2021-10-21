@@ -32,12 +32,12 @@ System architecture
 ===================
 -  **Requure parameters and datas**
 
-   1. population size
+   1. population size 
    2. crossover rate 
    3. mutation rate 
    4. number of iteration
-   5. processing table for Jobs/Operations
-   6. machine sequence table for Jobs/Operations
+   5. processing table for Jobs/Operations (Job size <=1000)
+   6. machine sequence table for Jobs/Operations (machine size <=100)
    
 -  **Python:**
 
