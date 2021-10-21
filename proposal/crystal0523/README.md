@@ -1,6 +1,6 @@
 # Fourier Transform for Image Processing
 ## Basic Information
-* GitHub repository: https://github.com/crystal0523/nsdhw_21au/tree/crystal0523-proposal-submission/proposal/crystal0523
+* GitHub repository: TODO
 ## Problem to Solve
 
 The Fourier Transform is used in a wide range of image applications, which transform the signal from time domain to frequency domain, such as image analysis, image filtering, image reconstruction and image compression.
@@ -8,7 +8,7 @@ The Fourier Transform is used in a wide range of image applications, which trans
 The formula of 2-D Discrete Fourier Transform for an M*N image:
 > $\dfrac{1}{M*N}\sum_{x=0}^{M-1}\sum_{y=0}^{N-1}f(x,y)e^{-i2\pi[\dfrac{ux}{M}+\dfrac{vy}{N}]}$, for u = 0..M-1, v = 0..N-1
 ## Prospective Users
-People who would like to do some image processing tricks.
+People who would like to do image processing tricks which are based on frequency domain.
 ## System Architecture
 ![](https://i.imgur.com/KtVQwGY.png)
 
