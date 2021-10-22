@@ -26,7 +26,6 @@ jobs:
         fetch-depth: 1
 
     - name: dependency (ubuntu)
-      if: matrix.os != 'macos-latest'
       run: |
         sudo apt-get -qy install python python3
 
