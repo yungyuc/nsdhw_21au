@@ -22,9 +22,13 @@ In order to achieve this goal, the methods can be divided into five parts:
 2. Camera calibration: Undistort the image which is shown below. The picture on the left is the case of "Normal", the picture in the middle is the case of "Positive Radial Distortation", and the picture on the right is the case of "Negative Radial Distortation".
 
 <p float="center">
+  
   <img src="https://github.com/secondlevel/nsdhw_21au/blob/secondlevel-proposal-submission/proposal/secondlevel/img/camera_calibration_normal.png" width="250" title="Normal image" hspace="35" />
+  
   <img src="https://github.com/secondlevel/nsdhw_21au/blob/secondlevel-proposal-submission/proposal/secondlevel/img/camera_calibration_positive.png" width="280" title="Positive radial image" hspace="30" />
+  
   <img src="https://github.com/secondlevel/nsdhw_21au/blob/secondlevel-proposal-submission/proposal/secondlevel/img/camera_calibration_negative.png" width="250" title="Negative radial image" hspace="40" /> 
+  
 </p>
 
 3. Object tracking: Tracking the people that exists in the video through "YOLOv4" and "Deep-Sort".
