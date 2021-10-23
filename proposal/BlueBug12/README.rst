@@ -7,7 +7,7 @@ Basic information
 | SAAF is a user-friendly framework that helps users to develop a simulated-annealing based algorithm easily, and provides some related 
 | function to show the execution result.
 
-The GitHub repository :
+The GitHub repository : https://github.com/BlueBug12/SAAF
 
 Problem to solve
 =================
