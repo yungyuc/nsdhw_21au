@@ -13,7 +13,7 @@ Problem to solve
 =================
 | In the computer science domain, there are plenty of problems that have been proved to be **NP-complete**. As we know, there is still no 
 | polynomial-time algorithm to solve those problems efficiently. Therefore, heuristic algorithms become useful when we are dealing with
-| them, and **simulated-annealing**( **SA** for short) is one of the well-known and effective heuristic algorithm. The name of the algorithm comes
+| them, and **simulated-annealing** ( **SA** for short) is one of the well-known and effective heuristic algorithm. The name of the algorithm comes
 | from annealing in metallurgy, a technique involving heating and cooling of a material to change its physical properties. The first step 
 | is to heat up a material until it reaches an annealing temperature, then cool it down slowly in order to change the material to a desired
 | structure. The "heat up and cool down" process is actually the key idea of SA algorithm. It provides a effective way to a approximate 
