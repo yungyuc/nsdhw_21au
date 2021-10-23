@@ -55,11 +55,11 @@ API description
 
  logger(period: int) # print out SA information
 
- acceptance(delta_erengy: float, temperature: float) # set the corresponding parameters for acceptance probability function
+ acceptance(delta_erengy: float, temperature: float, alpha: float) # set the corresponding parameters for acceptance probability function
 
  resultOutput() # show the final result (on terminal)
 
- historyDiagram() # plot the SA history
+ historyDiagram(title: str) # plot the SA history
 
  writeResult(file_name: str) # output the result to a file
  
