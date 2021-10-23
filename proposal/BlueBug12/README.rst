@@ -11,9 +11,9 @@ The GitHub repository : https://github.com/BlueBug12/SAAF
 
 Problem to solve
 =================
-| In the computer science domain, there are plenty of problems that have been proved to be NP-complete. As we know, there is still no 
+| In the computer science domain, there are plenty of problems that have been proved to be **NP-complete**. As we know, there is still no 
 | polynomial-time algorithm to solve those problems efficiently. Therefore, heuristic algorithms become useful when we are dealing with
-| them, and simulated-annealing( SA for short) is one of the well-known and effective heuristic algorithm. The name of the algorithm comes
+| them, and **simulated-annealing**( **SA** for short) is one of the well-known and effective heuristic algorithm. The name of the algorithm comes
 | from annealing in metallurgy, a technique involving heating and cooling of a material to change its physical properties. The first step 
 | is to heat up a material until it reaches an annealing temperature, then cool it down slowly in order to change the material to a desired
 | structure. The "heat up and cool down" process is actually the key idea of SA algorithm. It provides a effective way to a approximate 
@@ -71,67 +71,50 @@ API description
 
  terminalCondition(*args, **kwargs) # set the terminal condition
 
-
-
-
 Engineering infrastructure
 ==========================
 * languages: 
-
 	* C++11 
 	* Python 3.9.5
 
 * build system 
-
 	* GNU Make
 
 * testing framework
-
 	* C++: GoogleTest
 	* Python: pytest
 
 * Version control
-
  	* git
-
-
-
 
 Schedule
 =================
 * week1(10/25 - 10/31): build prototype code(only using Python)
-
 	* design data structure
 	* parameter parser
 	* initial state setting
 	* implement acceptance and randomRange function 
 
 * week2(11/1  - 11/7 ):  build prototype code(only using Python)
-
 	* design SA kernel 
 	* example for user-defined function
 
 * week3(11/8  - 11/14):  build prototype code(only using Python)
-
 	* implement output functions
 	* verify result
 
 * week4(11/15 - 11/21): split and implement hybrid architecture 
-
 	* define the C++ packages
 	* implement all necessary function with C++
 
 * week5(11/22 - 11/28): split and implement hybrid architecture 
-
 	* implement all necessary function with C++
 
 * week6(11/29 - 12/5 ): verify and test result
-	
 	* combine the whole architecture
 	* use the framework to solve some NP-complete problem as demonstration
 
 * week7(12/6  - 12/12):	verify and test result
-
 	* use the framework to solve some NP-complete problem as demonstration
 	* collect the experiment results
 
