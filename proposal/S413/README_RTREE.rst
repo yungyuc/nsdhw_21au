@@ -49,10 +49,10 @@ A documentation page will provide some examples on usage.
 Schedule
 --------
 
-*Week 1: Read on Implementations of R-Tree (R+, R*)
-*Week 2: Program Structure of R-Tree
-*Week 3: Program access/delete/... functions
-*Week 4: Continue with Work from Previous Week
-*Week 5: Start binding to Python and begin tests
-*Week 6: Continue tests and implement other access/storing algorithms
-*Week 7: Further tests and fixing algorithms
+* Week 1: Read on Implementations of R-Tree (R+, R*)
+* Week 2: Program Structure of R-Tree
+* Week 3: Program access/delete/... functions
+* Week 4: Continue with Work from Previous Week
+* Week 5: Start binding to Python and begin tests
+* Week 6: Continue tests and implement other access/storing algorithms
+* Week 7: Further tests and fixing algorithms

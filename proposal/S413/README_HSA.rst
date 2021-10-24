@@ -57,10 +57,10 @@ have been compared before as well).
 Schedule
 --------
 
-*Week 1: Research Harmony Search Algorithm
-*Week 2: Write Harmony Search Algorithm Class
-*Week 3: Write Objective Function Class
-*Week 4: Integrate both and catch up on any leftover work
-*Week 5: Start testing Harmony Search Algorithm
-*Week 6: Consider Harmony Search Algorithm Variations 
-*Week 7: Further tests and leftover work
+* Week 1: Research Harmony Search Algorithm
+* Week 2: Write Harmony Search Algorithm Class
+* Week 3: Write Objective Function Class
+* Week 4: Integrate both and catch up on any leftover work
+* Week 5: Start testing Harmony Search Algorithm
+* Week 6: Consider Harmony Search Algorithm Variations 
+* Week 7: Further tests and leftover work
