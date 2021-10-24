@@ -48,6 +48,7 @@ A documentation page will provide some examples on usage.
 
 Schedule
 --------
+
 *Week 1: Read on Implementations of R-Tree (R+, R*)
 *Week 2: Program Structure of R-Tree
 *Week 3: Program access/delete/... functions

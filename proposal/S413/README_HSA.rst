@@ -56,6 +56,7 @@ have been compared before as well).
 
 Schedule
 --------
+
 *Week 1: Research Harmony Search Algorithm
 *Week 2: Write Harmony Search Algorithm Class
 *Week 3: Write Objective Function Class
