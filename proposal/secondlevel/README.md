@@ -9,6 +9,7 @@ The dataset is as follows https://data.mendeley.com/datasets/xh6m6gxhvj/1
 ## Problem to Solve
 
 In recent years, due to the outbreak of COVID-19 epidemic, the mortality rate is very high all over the world. Because the virus spreads through the air, social distance, that is, the social distance between people, has become one of the ways to prevent the virus from spreading too fast. However, due to the lack of human resources, people can not always monitor whether there are people who violate this social distance. 
+
 In order to solve this problem, the goal of this proposal is to automatically detect the social distance between people, and return the detected report to warn the person who violates this rule. The report contains some information about time, number of people, and personal identity, and the report can be used to track the infection history.
 
 ## Methods Description
