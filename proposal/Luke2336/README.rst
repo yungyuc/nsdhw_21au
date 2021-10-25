@@ -28,8 +28,10 @@ System Architecture
       - k = C * sqrt(area / n), C is a constant found experimentally
       - d is the distance between two nodes
       - Attractive forces: fa(d) = d^2 / k
+         - If vertex A is incident to vertex B, there is an attractive between A and B.
       - Repulsive forces: fr(d) = -k^2 / d
    - For each iteration, it will spend O(n^2) time adjusting the forces and the positions of vertices.
+   - I would like to adjust the positions of vertices for 1000 iterations.
 - Flow chart
 .. image:: Flow1.png
    :height: 50
@@ -47,7 +49,7 @@ API Description
    - For 2 ~ m + 1 lines, there are two integer a and b, which means there is an edge between vertex a and b.
 - Output format
    - There are n lines.
-   - Each line contains a 2D coordinate of the vertex i.
+   - Each line contains a 2D integer coordinate of the vertex i.
 
 Engineering Infrastructure
 ==========================
@@ -56,6 +58,7 @@ Engineering Infrastructure
 - Version Control: Git
 - Test: GoogleTest / Pytest
    - Segments should not be overlapping.
+      - Since the coordinates are all integer, we can do segment-overlapped test in O(m log m).
    - Graph using for testing:
       - Complete graphs
       - Petersen graph
