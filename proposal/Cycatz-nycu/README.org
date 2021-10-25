@@ -76,8 +76,8 @@ I wonder which library I should use to integrate Python with C++, ~pybind~ or ~c
 | Week 8 | [Presentation Preparation]                                                |
 
 ** Reference 
-http://paulbourke.net/dataformats/asciiart/
-https://github.com/RameshAditya/asciify
-https://github.com/LettError/coverage
-https://github.com/7sDream/fontfor
-https://simoncozens.github.io/fonts-and-layout/
++ http://paulbourke.net/dataformats/asciiart/
++ https://github.com/RameshAditya/asciify
++ https://github.com/LettError/coverage
++ https://github.com/7sDream/fontfor
++ https://simoncozens.github.io/fonts-and-layout/
