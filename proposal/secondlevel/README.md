@@ -110,14 +110,15 @@ This project will be completed by executing the following steps:
 
 ## Schedule
 
-| Week | Schedule |
+| Week | Schedule |                                                                                                     
 | ------------- | ------------- |
-| Week 1  | 1. Environment Construct<br /> 2. Implement VideoSplitter<br /> 3. Testing VideoSplitter |
-| Week 2  | Familiar with the tools and method(include yolo, deepsort, camera calibration) |
-| Week 3  | 1. Implement CameraCalibratior<br /> 2. Testing CameraCalibrator  |
-| Week 4  | Implement yolov4+deepsort|
-| Week 5  | 1. Implement SocialDistanceCalculator<br /> 2. Testing SocialDistanceCalculator  |
-| Week 6  | 1. Implement the function which write the information to the report<br /> 2. Testing function   |
+| Week 1  | 1. Environment Construct<br />2. Familiar with the camera calibration method<br />|
+| Week 2  | Familiar with the tools|
+| Week 3  | Implement VideoSplitter | 
+| Week 3  | Implement VideoSplitter |
+| Week 4  | Implement CameraCalibratior |
+| Week 5  | Implement CameraCalibratior  |
+| Week 6  | Testing function   |
 | Week 7  | Build Workflow|
 | Week 8  | Project Presentation  |
 
