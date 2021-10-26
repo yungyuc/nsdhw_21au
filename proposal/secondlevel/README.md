@@ -112,8 +112,8 @@ This project will be completed by executing the following steps:
 
 | Week | Schedule |                                                                                                     
 | ------------- | ------------- |
-| Week 1  | 1. Environment Construct<br />2. Familiar with the camera calibration method<br />|
-| Week 2  | Familiar with the tools|
+| Week 1  | 1. Environment Construct<br />2. Familiar with the camera calibration method<br />3. Familiar with the Video split method<br /> |
+| Week 2  | 1. Familiar with the tools<br />2. Familiar with the camera calibration method<br />3. Familiar with the Video split method<br /> |
 | Week 3  | Implement VideoSplitter | 
 | Week 3  | Implement VideoSplitter |
 | Week 4  | Implement CameraCalibratior |
