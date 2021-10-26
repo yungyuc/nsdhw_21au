@@ -1,0 +1,5 @@
+matrix multiplication performance
+Take best score among 5 trials
+naive method : 2.4596636220812798 seconds
+tile method  : 0.5027945800684392 seconds
+tile method is 79.56% faster than naive one
