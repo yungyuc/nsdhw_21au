@@ -21,7 +21,7 @@ Data scientists, scientists, and enthusiasts that are willing to explore spectro
 
 The module should be compatible with NumPy arrays
 
-![ramanflow_flowchart.jpeg](../_resources/ramanflow_flowchart.jpeg)
+![ramanflow_flowchart.jpeg](./ramanflow_flowchart.jpeg)
 
 # API Description
 
