@@ -5,8 +5,8 @@
 
 #include <mkl.h>
 #include <iostream>
-#include <sstream>
-#include <iomanip>
+#include <algorithm>
+#include <iterator>
 #include <vector>
 #include <stdexcept>
 #include <functional>
@@ -25,7 +25,7 @@ public:
 	Matrix(Matrix const & other) : m_nrow(other.m_nrow), m_ncol(other.m_ncol)
 	{
 		reset_buffer(other.m_nrow, other.m_ncol);
-		strcpy_s(m_buffer, other.m_ncol * other.m_nrow , other.m_buffer);
+		copy(begin(m_buffer), end(m_buffer), begin(other.m_buffer));
 	}
 
 	Matrix & operator=(Matrix const & other)
@@ -35,7 +35,7 @@ public:
 		{
 			throw out_of_range("number of elements mismatch");
 		}
-		strcpy_s(m_buffer, other.m_ncol * other.m_nrow , other.m_buffer);
+		copy(begin(m_buffer), end(m_buffer), begin(other.m_buffer));
 		return *this;
 	}
 
@@ -71,35 +71,14 @@ public:
 	size_t nrow() const { return m_nrow; }
 	size_t ncol() const { return m_ncol; }
 
-	bool operator== (const Matrix & other)
-	{
-		if (this == &other) { return true; }
-		if (m_nrow != other.nrow() || m_ncol != other.ncol()) { return false; }
-
-		const size_t len = m_nrow*m_ncol;
-		bool flag = true;
-
-		for (size_t i=0; i<len; ++i)
-		{
-			if( m_buffer[i] != other.buffer(i))
-			{
-				flag = false;
-				break;
-			}
-		}
-
-		return ( flag ? true : false );
-	}
-
-	Matrix transpose() const;
 	void init(const double v) {for (size_t i=0; i<m_nrow*m_ncol; ++i) { m_buffer[i] = v; } }
 
 public:
 
 	size_t index(size_t const row, size_t const col) const
 	{
-		if ( m_nrow<row || m_ncol<col) { throw out_of_range("Matrix index out of range"); }
-		return row + col * m_nrow;
+		if ( m_nrow<row || m_ncol<col) { throw out_of_range("Index out of range"); }
+		return row * m_ncol + col;
 	}
 
 	void reset_buffer(const size_t nrow,const size_t ncol)
@@ -118,19 +97,42 @@ public:
 	// delete unnessary variables
 };
 
+bool operator== (Matrix const & mat1, Matrix const & mat2)
+{
+    if ((mat1.ncol() != mat2.ncol()) && (mat1.nrow() != mat2.ncol()))
+    {
+        return false;
+    }
+    if (equal(begin(mat1.m_buffer), end(mat1.m_buffer), begin(mat2.m_buffer)))
+    	return true;
+	return false;
+}
+
+bool operator!= (Matrix const & mat1, Matrix const & mat2)
+{
+    return !(mat1 == mat2);
+}
+
+void validate_multiplication(Matrix const & mat1, Matrix const & mat2)
+{
+    if (mat1.ncol() != mat2.nrow())
+    {
+        throw out_of_range(
+            "the number of first matrix column "
+            "differs from that of second matrix row");
+    }
+}
+
 /*
  *  Direct naive matrix multiplication.
  */
-Matrix * multiply_naive(const Matrix & mat1, const Matrix & mat2)
+Matrix multiply_naive(const Matrix & mat1, const Matrix & mat2)
 {
 	//std::cout<<"muliply_naive start"<<std::endl;
 
-	if (mat1.ncol() != mat2.nrow())
-	{
-		throw out_of_range("the number of first matrix column differs from that of second matrix row");
-	}
+	validate_multiplication(mat1, mat2);
 
-	Matrix * ret = new Matrix(mat1.nrow(), mat2.ncol());
+	Matrix ret(mat1.nrow(), mat2.ncol());
 
 	const size_t nrow1 = mat1.nrow();
 	const size_t ncol1 = mat1.ncol();
@@ -145,7 +147,7 @@ Matrix * multiply_naive(const Matrix & mat1, const Matrix & mat2)
 			for (size_t k=0; k<ncol1; ++k){
 				v += mat1.buffer(base1 + k) * mat2.buffer(k*ncol2 + j);
 			}
-			(*ret).buffer(base1 + j) = v;
+			ret.buffer(base1 + j) = v;
 		}
 	}
 	return ret;
@@ -177,12 +179,7 @@ void process_tile(Matrix * ret, const Matrix & mat1, const Matrix & mat2, const 
 
 Matrix * multiply_tile(const Matrix & mat1, const Matrix & mat2, const size_t tsize)
 {
-	//std::cout<<"multiply_itle start"<<std::endl;
-
-	if (mat1.ncol() != mat2.nrow())
-	{
-		throw out_of_range("the number of first matrix column differs from that of second matrix row");
-	}
+	validate_multiplication(mat1, mat2);
 
 	if (tsize <= 0 || mat1.nrow()<=tsize || mat1.ncol()<=tsize || mat2.ncol()<=tsize) { return multiply_naive(mat1, mat2); }
 
@@ -289,7 +286,7 @@ Matrix * multiply_mkl(const Matrix & mat1, const Matrix & mat2)
 
 	mkl_set_num_threads(1);
 
-	Matrix * ret = new Matrix(mat1.nrow(), mat2.ncol());
+	Matrix ret(mat1.nrow(), mat2.ncol());
 
 	cblas_dgemm(
 		CblasRowMajor,
@@ -304,8 +301,8 @@ Matrix * multiply_mkl(const Matrix & mat1, const Matrix & mat2)
 		mat2.m_buffer,
 		mat2.ncol(),
 		0.0,
-		(*ret).m_buffer,
-		(*ret).ncol()
+		ret.m_buffer,
+		ret.ncol()
 		);
 	return ret;
 }
