@@ -9,9 +9,9 @@ Github repository: https://github.com/music87/nsd-project-option-pricer
 #### Problem to Solve ####
 
 Black Scholes model is the earliest, fundamental closed-form algorithm for pricing European call option. It makes some unrealistic assumptions such as stock price should follow geometric Brownian motion and the implied volatility should be constant. To tackle the limitation, stochastic volatility models like Variance Gamma, Heston, and Bates grow up. However, these models usually need lots of time to do the calibration i.e. for every option with n different strike prices, the bias (can be measured by mean square error) between option market price and option model price should be minimized that usually has to take another n steps to compute. 
-$$
-MSE = \frac{1}{\text{number of options}}\sum_\text{options}\frac{(\text{option market price } - \text{ option model price})^2}{\text{market price}}
-$$
+
+<img src="proposal_image/calibration.png" alt="calibration"  />
+
 Hence, Carr and Maden develop a fast Fourier transform (FFT) method for option pricing in 1999 which overall only takes nlog⁡n steps. If the close form of the characteristic function of the stock log price's risk-neutral density function is known, FFT method can give a more efficient way to compute the option price than those stochastic volatility models. This project's purpose is to implement the FFT option pricing method. Since most of the implementation only uses high-level language like python and Matlab, here I will use low-level language C++ to implement and optimize it. The program will finally bind to python for python users.
 
 #### Perspective Users ####
@@ -22,104 +22,32 @@ Someone who is interested in the financial application of fast fourier transform
 
 #### System Architecture ####
 
-``` mermaid
-graph TD
-E(Black Scholes model) -.- A
-F(Heston model) -.- A
-G(Bates model) -.- A
-A(Characteristic function Φ)
---> 
-B(Fourier transform Ψ)
--->
-C(FFT option pricer)
---> 
-D{{Call option price}}
-```
+<img src="proposal_image/system_architecture.png" alt="system_architecture"  />
 
 
 
 1. get the characteristic function $\phi_T(x)$ of stock log price
 
    > eg. the characteristic function from Black Scholes model is 
-   > $$
-   > \begin{align}
-   > \phi_T(x) &= \exp\left((s+rT-\frac{\sigma^2}{2}T) ix-0.5x^2\sigma^2\right), \\
-   > &\text{ where }  \left \{\begin{aligned}
-   > s& \text{ is stock log price}\\
-   > r& \text{ is stock risk free rate}\\
-   > \sigma& \text{ is stock price volatility}, \\
-   > T& \text{ means time to maturity}
-   > \end{aligned} \right.
-   > \end{align}
-   > $$
+   > 
+   > <img src="proposal_image/characteristic_function_black_scholes.png" alt="characteristic_function_black_scholes"  />
+   > 
    > eg. the characteristic function from Heston model is
-   > $$
-   > \begin{align}
-   > \phi_T(x) &= \frac{\exp\{ \frac{k\sigma_\mu t (k-i\rho \sigma_\sigma x)}{\sigma_\sigma^2} + ixtr + ixs_0 \}}{(\cosh \frac{\gamma t}{2} + \frac{k-i \rho \sigma_\sigma x}{\gamma} \sinh \frac{\gamma t}{2})^{\frac{2k\sigma_\mu}{\sigma_\sigma^2}}} \cdot 
-   > \exp \left\{ - \frac{(x^2 + ix)\sigma_0}{\gamma \coth \frac{\gamma t}{2}+ k - i \rho \sigma_\sigma x}  \right\}\\
-   > &\text{where }  \left\{ \begin{aligned}
-   > \gamma &=\sqrt{\sigma_\sigma^2 (x^2 + ix) + (k-i\rho \sigma_\sigma x)^2}\\
-   > s_0 &\text{ is the initial value of stock log price}\\
-   > \sigma_0 &\text{ is the initial value of stock price volatility}\\
-   > k & \text{ is the speed of mean reversion for }\sigma_\mu\\
-   > \sigma_\mu& \text{ is the annual average of stock price volatility}\\
-   > \sigma_\sigma& \text{ is the volatility of stock price volatility(standard deviation)}\\
-   > \rho & \text{ is the correlation between stock price's Wiener process and stock price volatility's Wiener process}\\
-   > T& \text{ means time to maturity}
-   > \end{aligned} \right.
-   > \end{align}
-   > $$
+   > 
+   > ![characteristic_function_heston](proposal_image/characteristic_function_heston.png)
+   > 
    > eg. the characteristic function from Bates model is
-   > $$
-   > \begin{align}
-   > \phi(x) &= \phi^D(x) \phi^J(x)\\
-   > \phi^D(x) &= \frac{\exp \{ \frac{k \sigma_\mu t (k-i\rho \sigma_\sigma x)}{\sigma_\sigma^2} + ixt(r-\lambda_{\text{Possion}} B) + ixs_0\}}{(\cosh \frac{\gamma t}{2}+\frac{k-i\rho \sigma_\sigma x}{\gamma}\sinh \frac{\gamma t}{2})^{\frac{2k\sigma_\mu}{\sigma_\sigma^2}}}
-   > \cdot \exp \left \{  - \frac{(x^2 + ix)\sigma_0}{\gamma \coth \frac{\gamma t}{2} + k-i\rho \sigma_\sigma x} \right \}\\
-   > \phi^J(x) &= \exp{ \left \{  t \lambda_{\text{Possion}} ( e^{-A^2 x^2/2 + i(\ln(1+B)-\frac{1}{2} A^2)x} -1)  \right\}}\\
    > 
-   > &\text{where }  \left\{ \begin{aligned}
-   > \gamma &=\sqrt{\sigma_\sigma^2 (x^2 + ix) + (k-i\rho \sigma_\sigma x)^2}\\
-   > s_0 &\text{ is the initial value of stock log price}\\
-   > \sigma_0 &\text{ is the initial value of stock price volatility}\\
-   > k & \text{ is the speed of mean reversion for }\sigma_\mu\\
-   > \sigma_\mu& \text{ is the annual average of stock price volatility}\\
-   > \sigma_\sigma& \text{ is the volatility of stock price volatility(standard deviation)}\\
-   > \rho & \text{ is the correlation between stock price's Wiener process and stock price volatility's Wiener process}\\
-   > A &\text{ and } B \text{ are the parameters of jump process}\\
-   > \lambda_\text{Possion}& \text{ is the parameter of Possion process}\\
-   > T& \text{ means time to maturity}
-   > 
-   > \end{aligned} \right.
-   > \end{align}
-   > $$
-
+   > ![characteristic_function_bates](proposal_image/characteristic_function_bates.png)
+   
 2. Fourier transform modified call option price to get $\psi_T(x)$
 
-   > $$
-   > \psi_T(x) =\frac{e^{-rT}\phi_T(x-(\alpha+1)i)}{\alpha^2+\alpha-x^2+i(2\alpha+1)x}
-   > $$
-
+   > <img src="proposal_image/Fourier_transform.png" alt="Fourier_transform"  />
+   
 3. price call option using FFT can be computed using the following formula
 
-   > $$
-   > \begin{align}
-   > C(k_u) &= \frac{\exp(-\alpha k_u)}{\pi} \sum_{j=1}^N e^{-i \frac{2\pi}{N}(j-1)(u-1)}e^{ibv_j}\psi(v_j)\frac{\eta}{3}(3+(-1)^j-\delta_{j-1})\\
-   > \text{where }&\left\{\begin{aligned}
-   > \text{K }&\text{is strike price}, \text{S is stock price}\\
-   > \alpha& \text{ is a constant eg. }\alpha = 1.5\\
-   > N& \text{ is a large number eg. } N=10^{15}\\
-   > \eta& \text{ is a small number eg. } \eta=0.25\\
-   > k&=\log K, s=\log S \\
-   > \eta \lambda &= \frac{2\pi}{N}\\
-   > b&=\frac{1}{2}N\lambda\\
-   > k_u&=-b+\lambda(u-1), \text{ for }u = 1,...,N\\
-   > v_j&=\eta(j-1) \\
-   > \delta_n &=1 \text{ if } n=0 \\
-   > \delta_n &=0 \text{ if } n≠0 \\
-   > \end{aligned}\right.
-   > \end{align}
-   > $$
-
+   > <img src="proposal_image/FFT_option_pricer.png" alt="FFT_option_pricer"  />
+   
    
 
 #### API Description ####
