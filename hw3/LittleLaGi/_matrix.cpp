@@ -91,8 +91,8 @@ Matrix multiply_tile(Matrix &m1, Matrix &m2, const size_t tsize){
         for (size_t jt = 0; jt < m2.ncol; jt += tsize){
             for (size_t kt = 0; kt < m1.ncol; kt += tsize){
                 for (size_t i = 0; i < tsize && it + i < m1.nrow; ++i){
-                    for (size_t j = 0; j < tsize && jt + j < m2.ncol; ++j){
-                        for (size_t k = 0; k < tsize && kt + k < m1.ncol; ++k){
+                    for (size_t k = 0; k < tsize && kt + k < m1.ncol; ++k){
+                        for (size_t j = 0; j < tsize && jt + j < m2.ncol; ++j){
                             m(it + i, jt + j) += m1(it + i, kt + k) * m2(kt + k, jt + j);
                         }
                     }
