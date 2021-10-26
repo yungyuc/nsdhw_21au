@@ -68,6 +68,7 @@ size_t calc_nflo(Matrix const & mat1, Matrix const & mat2){
 Matrix multiply_naive(Matrix &m1, Matrix &m2){
     if (m1.ncol != m2.nrow)
         throw std::runtime_error("m1.ncol != m2.nrow");
+
     Matrix m(m1.nrow, m2.ncol);
 
     for (size_t i = 0; i < m1.nrow; ++i){
@@ -85,7 +86,7 @@ Matrix multiply_naive(Matrix &m1, Matrix &m2){
 
 Matrix multiply_tile(Matrix &m1, Matrix &m2, const size_t tsize){
     Matrix m(m1.nrow, m2.ncol);
-    
+
     for (size_t it = 0; it < m1.nrow; it += tsize){
         for (size_t jt = 0; jt < m2.ncol; jt += tsize){
             for (size_t kt = 0; kt < m1.ncol; kt += tsize){
