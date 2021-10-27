@@ -111,7 +111,7 @@ class TestMatrix:
         mat1, mat2, *_ = self.make_matrices(500)
         ratio0, time0 = self.check_tile(mat1, mat2, 0)
         ratio16, time16 = self.check_tile(mat1, mat2, 16)
-        assert ratio16/ratio0 < 0.8
+        assert ratio16/ratio0 < 0.1
         ratio17, time17 = self.check_tile(mat1, mat2, 17)
         assert ratio17/ratio0 < 0.8
         ratio19, time19 = self.check_tile(mat1, mat2, 19)

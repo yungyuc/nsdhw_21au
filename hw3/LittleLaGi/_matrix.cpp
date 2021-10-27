@@ -87,20 +87,24 @@ Matrix multiply_naive(Matrix &m1, Matrix &m2){
 Matrix multiply_tile(Matrix &m1, Matrix &m2, const size_t tsize){
     Matrix m(m1.nrow, m2.ncol);
 
-    for (size_t it = 0; it < m1.nrow; it += tsize){
-        for (size_t jt = 0; jt < m2.ncol; jt += tsize){
-            for (size_t kt = 0; kt < m1.ncol; kt += tsize){
-                for (size_t i = 0; i < tsize && it + i < m1.nrow; ++i){
-                    for (size_t k = 0; k < tsize && kt + k < m1.ncol; ++k){
-                        for (size_t j = 0; j < tsize && jt + j < m2.ncol; ++j){
-                            m(it + i, jt + j) += m1(it + i, kt + k) * m2(kt + k, jt + j);
+    const size_t N = m1.ncol;
+    for (size_t it = 0; it < N; it += tsize){
+        for (size_t jt = 0; jt < N; jt += tsize){
+            for (size_t kt = 0; kt < N; kt += tsize){
+                for (size_t i = 0; i < tsize && it + i < N; ++i){
+                    const size_t m_i = it + i;
+                    for (size_t k = 0; k < tsize && kt + k < N; ++k){
+                        const size_t m2_k = kt + k;
+                        const double m1_tmp = m1(it + i, kt + k);
+                        for (size_t j = 0; j < tsize && jt + j < N; ++j){
+                            m(m_i, jt + j) += m1_tmp * m2(m2_k, jt + j);
                         }
                     }
                 }
             }
         }
     }
-
+    
     return m;
 }
 
