@@ -25,7 +25,7 @@ public:
 	Matrix(Matrix const & other) : m_nrow(other.m_nrow), m_ncol(other.m_ncol)
 	{
 		reset_buffer(other.m_nrow, other.m_ncol);
-		copy(begin(m_buffer), end(m_buffer), begin(other.m_buffer));
+		memcpy(m_buffer, other.m_buffer, sizeof(m_buffer));
 	}
 
 	Matrix & operator=(Matrix const & other)
@@ -35,7 +35,7 @@ public:
 		{
 			throw out_of_range("number of elements mismatch");
 		}
-		copy(begin(m_buffer), end(m_buffer), begin(other.m_buffer));
+		memcpy(m_buffer, other.m_buffer, sizeof(m_buffer));
 		return *this;
 	}
 
@@ -103,7 +103,7 @@ bool operator== (Matrix const & mat1, Matrix const & mat2)
     {
         return false;
     }
-    if (equal(begin(mat1.m_buffer), end(mat1.m_buffer), begin(mat2.m_buffer)))
+    if (equal(begin(&(mat1.m_buffer)), end(&(mat1.m_buffer)), begin(&(mat2.m_buffer))))
     	return true;
 	return false;
 }
