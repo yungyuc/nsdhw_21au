@@ -25,7 +25,7 @@ public:
 	Matrix(Matrix const & other) : m_nrow(other.m_nrow), m_ncol(other.m_ncol)
 	{
 		reset_buffer(other.m_nrow, other.m_ncol);
-		memcpy(m_buffer, other.m_buffer, sizeof(m_buffer));
+		memcpy(m_buffer, other.m_buffer, sizeof m_buffer);
 	}
 
 	Matrix & operator=(Matrix const & other)
@@ -35,7 +35,7 @@ public:
 		{
 			throw out_of_range("number of elements mismatch");
 		}
-		memcpy(m_buffer, other.m_buffer, sizeof(m_buffer));
+		memcpy(m_buffer, other.m_buffer, sizeof m_buffer);
 		return *this;
 	}
 
@@ -71,7 +71,7 @@ public:
 	size_t nrow() const { return m_nrow; }
 	size_t ncol() const { return m_ncol; }
 
-	void init(const double v) {for (size_t i=0; i<m_nrow*m_ncol; ++i) { m_buffer[i] = v; } }
+	void initial(const double v) {for (size_t i=0; i<m_nrow*m_ncol; ++i) { m_buffer[i] = v; } }
 
 public:
 
@@ -103,9 +103,17 @@ bool operator== (Matrix const & mat1, Matrix const & mat2)
     {
         return false;
     }
-    if (equal(begin(&(mat1.m_buffer)), end(&(mat1.m_buffer)), begin(&(mat2.m_buffer))))
-    	return true;
-	return false;
+    for (size_t i=0; i<mat1.nrow(); ++i)
+    {
+        for (size_t j=0; j<mat1.ncol(); ++j)
+        {
+            if (mat1.m_buffer[i, j] != mat2.m_buffer[i, j])
+            {
+                return false;
+            }
+        }
+    }
+    return true;
 }
 
 bool operator!= (Matrix const & mat1, Matrix const & mat2)
@@ -177,16 +185,14 @@ void process_tile(Matrix * ret, const Matrix & mat1, const Matrix & mat2, const 
 	}
 }
 
-Matrix * multiply_tile(const Matrix & mat1, const Matrix & mat2, const size_t tsize)
+Matrix * multiply_tile(const Matrix & mat1, const Matrix & mat2, const size_t bck_size)
 {
 	validate_multiplication(mat1, mat2);
 
-	if (tsize <= 0 || mat1.nrow()<=tsize || mat1.ncol()<=tsize || mat2.ncol()<=tsize) { return multiply_naive(mat1, mat2); }
+	if (bck_size <= 0 || mat1.nrow()<=bck_size || mat1.ncol()<=bck_size || mat2.ncol()<=bck_size) { return multiply_naive(mat1, mat2); }
 
-	Matrix colmat2 = Matrix(mat2.nrow(), mat2.ncol());
-
-	Matrix * ret = new Matrix(mat1.nrow(), mat2.ncol());
-	(*ret).init(0.0);
+	Matrix ret(mat1.nrow(), mat2.ncol());
+	ret.initial(0.0);
 
 	const size_t nrow1 = mat1.nrow();
 	const size_t ncol1 = mat1.ncol();
@@ -197,7 +203,12 @@ Matrix * multiply_tile(const Matrix & mat1, const Matrix & mat2, const size_t ts
 	const size_t ntcol2 = ncol2/tsize;
 	const size_t ntcol1 = ncol1/tsize;
 
+	const size_t rem_nrow1 = nrow1 % tsize;
+	const size_t rem_ncol2 = ncol2 % tsize;
+	const size_t rem_ncol1 = ncol1 % tsize;
+
 	// rowmajor to colmajor
+	double * col_buf = nullptr;
 	//std::cout<<"multiply_itle rowmajor to colmajor"<<std::endl;
 	for (size_t i=0; i<nrow2; ++i)
 	{
@@ -206,10 +217,6 @@ Matrix * multiply_tile(const Matrix & mat1, const Matrix & mat2, const size_t ts
 			colmat2.buffer(j*nrow2 + i) = mat2.buffer(i*ncol2 + j);
 		}
 	}
-
-	const size_t remnrow1 = nrow1 % tsize;
-	const size_t remncol2 = ncol2 % tsize;
-	const size_t remncol1 = ncol1 % tsize;
 
 	//std::cout<<"multiply_itle multiply"<<std::endl;
 	for (size_t i=0; i<ntrow1; ++i)
