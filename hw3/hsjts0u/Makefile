@@ -1,7 +1,7 @@
 CXX = g++
 CFLAGS = --std=c++11 -Wall -O3
 INCLUDES = $(shell python3 -m pybind11 --includes) $(shell python3-config --includes) 
-MKL_INC = -I${MKLROOT}/include
+MKL_INC = -I${MKLROOT}/include/mkl
 MKL_LIB = -L${MKLROOT}/lib/intel64 -lblas
 OUT = _matrix$(shell python3-config --extension-suffix)
 TARGET = main
