@@ -70,7 +70,7 @@ API description
 ================
 python API:
 
-    recommend(user_ids: list[int], input_file: str, output_file: str, k)
+    recommend(user_ids: list[int], input_file: str, output_file: str, k: int)
 
 k: 'k' nearest neighbor
 
@@ -92,7 +92,8 @@ week1:
     prototype on C++
 
 week2:
-    prototype on C++ / implement LSH
+    prototype on C++
+    implement LSH
 
 week3:
     implement LSH
@@ -104,7 +105,8 @@ week5:
     aggregate result from LSH with user-item matrix to recommend
 
 week6:
-    aggregate result from LSH with user-item matrix to recommend / python11 python API
+    aggregate result from LSH with user-item matrix to recommend
+    python11 python API
 
 week7:
     prepare presentation
@@ -116,5 +118,7 @@ week8:
 References
 ==========
 https://en.wikipedia.org/wiki/Collaborative_filtering
+
 https://github.com/bowbowbow/CollaborativeFiltering
+
 https://github.com/cchatzis/Nearest-Neighbour-LSH
