@@ -87,16 +87,18 @@ Matrix multiply_naive(Matrix &m1, Matrix &m2){
 Matrix multiply_tile(Matrix &m1, Matrix &m2, const size_t tsize){
     Matrix m(m1.nrow, m2.ncol);
 
-    const size_t N = m1.ncol;
-    for (size_t it = 0; it < N; it += tsize){
-        for (size_t jt = 0; jt < N; jt += tsize){
-            for (size_t kt = 0; kt < N; kt += tsize){
-                for (size_t i = 0; i < tsize && it + i < N; ++i){
+    const size_t nrow1 = m1.nrow;
+    const size_t ncol1 = m1.ncol;
+    const size_t ncol2 = m2.ncol;
+    for (size_t it = 0; it < nrow1; it += tsize){
+        for (size_t jt = 0; jt < ncol2; jt += tsize){
+            for (size_t kt = 0; kt < ncol1; kt += tsize){
+                for (size_t i = 0; i < tsize && it + i < nrow1; ++i){
                     const size_t m_i = it + i;
-                    for (size_t k = 0; k < tsize && kt + k < N; ++k){
+                    for (size_t k = 0; k < tsize && kt + k < ncol1; ++k){
                         const size_t m2_k = kt + k;
                         const double m1_tmp = m1(it + i, kt + k);
-                        for (size_t j = 0; j < tsize && jt + j < N; ++j){
+                        for (size_t j = 0; j < tsize && jt + j < ncol2; ++j){
                             m(m_i, jt + j) += m1_tmp * m2(m2_k, jt + j);
                         }
                     }
