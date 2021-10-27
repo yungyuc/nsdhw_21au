@@ -1,10 +1,11 @@
 #include "Mat.hpp"
 #include <iostream>
+#include <ctime>
 
 int main() {
   using namespace std;
-  Matrix A(10, 20);
-  Matrix B(20, 30);
+  Matrix A(1000, 2000);
+  Matrix B(2000, 3000);
 
   for (int i = 0; i < 10; ++i) {
     for (int j = 0; j < 20; ++j) {
@@ -18,7 +19,19 @@ int main() {
     }
   }
 
+  time_t cur_time;
+  time_t fin_time;
+  time(&cur_time);
   Matrix C = multiply_naive(A, B);
-  cout << C << endl;
+  time(&fin_time);
+  cout<< (fin_time - cur_time)<<endl;
+
+
+  //cout << C << endl;
+  time(&cur_time);
+  C = multiply_tile(A,B);
+  time(&fin_time);
+  cout<< (fin_time - cur_time)<<endl;
+  //cout << C << endl;
   return 0;
 }
