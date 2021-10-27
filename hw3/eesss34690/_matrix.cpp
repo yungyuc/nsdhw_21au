@@ -3,7 +3,6 @@
 #include <pybind11/operators.h>
 #include <tuple>
 
-#include <mkl.h>
 #include <iostream>
 #include <algorithm>
 #include <iterator>
@@ -22,13 +21,13 @@ public:
 		reset_buffer(nrow, ncol);
 	}
 
-	Matrix(Matrix const & other) : m_nrow(other.m_nrow), m_ncol(other.m_ncol)
+	Matrix(Matrix  & other) : m_nrow(other.m_nrow), m_ncol(other.m_ncol)
 	{
 		reset_buffer(other.m_nrow, other.m_ncol);
 		memcpy(m_buffer, other.m_buffer, sizeof m_buffer);
 	}
 
-	Matrix & operator=(Matrix const & other)
+	Matrix & operator=(Matrix  & other)
 	{
 		if (this == &other) { return *this; }
 		if (m_nrow != other.m_nrow || m_ncol != other.m_ncol)
@@ -57,21 +56,23 @@ public:
 		return * this;
 	}
 
+	Matrix()
+	{
+		reset_buffer(0, 0);
+	}
 	~Matrix()
 	{
 		reset_buffer(0, 0);
 	}
 
-	double   operator() (const size_t row, const size_t col) const { return m_buffer[index(row, col)]; }
-	double & operator() (const size_t row, const size_t col)       { return m_buffer[index(row, col)]; }
+	double & operator() ( size_t row,  size_t col)   { return m_buffer[index(row, col)]; }
 
-	double   buffer(const size_t idx) const { return m_buffer[idx]; }
-	double & buffer(const size_t idx)       { return m_buffer[idx]; }
+	double & buffer( size_t idx)       { return m_buffer[idx]; }
 
-	size_t nrow() const { return m_nrow; }
-	size_t ncol() const { return m_ncol; }
+	size_t nrow()  { return m_nrow; }
+	size_t ncol()  { return m_ncol; }
 
-	void initial(const double v, size_t nrow, size_t ncol)
+	void initial( double v, size_t nrow, size_t ncol)
 	{
 		m_nrow = nrow;
 		m_ncol = ncol;
@@ -80,7 +81,7 @@ public:
 			m_buffer[i] = v; 
 		} 
 	}
-	Matrix transpose() const
+	Matrix transpose() 
 	{
 		Matrix ret(nrow(), ncol());
 
@@ -94,18 +95,43 @@ public:
 
 		return ret;
 	}
+
+	bool operator== (Matrix  & mat2)
+	{
+		if ((ncol() != mat2.ncol()) && (nrow() != mat2.ncol()))
+		{
+			return false;
+		}
+		for (size_t i=0; i<nrow(); ++i)
+		{
+			for (size_t j=0; j<ncol(); ++j)
+			{
+				if ((*this)(i, j) != mat2(i, j))
+				{
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
+	bool operator!= (Matrix  & mat2)
+	{
+		return !((*this) == mat2);
+	}
+
 public:
 
-	size_t index(size_t const row, size_t const col) const
+	size_t index(size_t  row, size_t  col) 
 	{
 		if ( m_nrow<row || m_ncol<col) { throw out_of_range("Index out of range"); }
 		return row * m_ncol + col;
 	}
 
-	void reset_buffer(const size_t nrow,const size_t ncol)
+	void reset_buffer( size_t nrow, size_t ncol)
 	{
 		if (m_buffer) { delete[] m_buffer; }
-		const size_t nelement = nrow * ncol;
+		 size_t nelement = nrow * ncol;
 		if (nelement) { m_buffer = new double[nelement]; }
 		else          { m_buffer = nullptr; }
 		m_nrow = nrow;
@@ -118,29 +144,6 @@ public:
 	// delete unnessary variables
 };
 
-bool operator== (Matrix const & mat1, Matrix const & mat2)
-{
-    if ((mat1.ncol() != mat2.ncol()) && (mat1.nrow() != mat2.ncol()))
-    {
-        return false;
-    }
-    for (size_t i=0; i<mat1.nrow(); ++i)
-    {
-        for (size_t j=0; j<mat1.ncol(); ++j)
-        {
-            if (mat1.buffer(i, j) != mat2.buffer(i, j))
-            {
-                return false;
-            }
-        }
-    }
-    return true;
-}
-
-bool operator!= (Matrix const & mat1, Matrix const & mat2)
-{
-    return !(mat1 == mat2);
-}
 
 class multiply_tile
 {
@@ -149,20 +152,20 @@ public:
 	Matrix ret;
 	Matrix trans_mat2;
 	size_t bck_tile;
-	const size_t nrow1;
-	const size_t ncol1;
-	const size_t nrow2;
-	const size_t ncol2;
+	size_t nrow1;
+	size_t ncol1;
+	size_t nrow2;
+	size_t ncol2;
 
-	const size_t bck_row1;
-	const size_t bck_col2;
-	const size_t bck_col1;
+	size_t bck_row1;
+	size_t bck_col2;
+	size_t bck_col1;
 
-	const size_t rem_row1;
-	const size_t rem_col2;
-	const size_t rem_col1;
+	size_t rem_row1;
+	size_t rem_col2;
+	size_t rem_col1;
 public:
-	multiply_tile(const Matrix & in_1, const Matrix & in_2)
+	multiply_tile( Matrix & in_1,  Matrix & in_2)
 	{
 		validate_multiplication(in_1, in_2);
 		mat1 = in_1;
@@ -170,20 +173,20 @@ public:
 
 		nrow1 = mat1.nrow();
 		ncol1 = mat1.ncol();
-		nrow2 = mat2.nrow();
-		ncol2 = mat2.ncol();
+		nrow2 = in_2.nrow();
+		ncol2 = in_2.ncol();
 
-		bck_row1 = nrow1/bck_size;
-		bck_col2 = ncol2/bck_size;
-		bck_col1 = ncol1/bck_size;
+		bck_row1 = nrow1 / bck_tile;
+		bck_col2 = ncol2 / bck_tile;
+		bck_col1 = ncol1 / bck_tile;
 
-		rem_row1 = nrow1 % bck_size;
-		rem_col2 = ncol2 % bck_size;
-		rem_col1 = ncol1 % bck_size;
+		rem_row1 = nrow1 % bck_tile;
+		rem_col2 = ncol2 % bck_tile;
+		rem_col1 = ncol1 % bck_tile;
 
-		ret.initial(0.0, mat1.nrow(), mat2.ncol());
+		ret.initial(0.0, mat1.nrow(), in_2.ncol());
 	}
-	void validate_multiplication(const Matrix & in_1, const Matrix & in_2)
+	void validate_multiplication( Matrix & in_1,  Matrix & in_2)
 	{
 		if (in_1.ncol() != in_2.nrow())
 		{
@@ -192,26 +195,26 @@ public:
 				"differs from that of second matrix row");
 		}
 	}
-	void bck_tile(const size_t i_tsize, const size_t j_tsize, const size_t k_tsize, 
-		const size_t itsize, const size_t jtsize, const size_t ktsize)
+	void block_op( size_t i_tsize,  size_t j_tsize,  size_t k_tsize, 
+		 size_t itsize,  size_t jtsize,  size_t ktsize)
 	{
 		for (size_t ti=0; ti<itsize; ++ti)
 		{
-			const size_t ibase = (i_tsize + ti)*ncol1 + k_tsize;
+			 size_t ibase = (i_tsize + ti)*ncol1 + k_tsize;
 			for (size_t tj=0; tj<jtsize; ++tj)
 			{
-				const size_t jbase = (j_tsize + tj)*nrow2 + k_tsize;
-				const size_t ret_ij = (i_tsize + ti)*ncol2 + j_tsize + tj;
+				 size_t jbase = (j_tsize + tj)*nrow2 + k_tsize;
+				 size_t ret_ij = (i_tsize + ti)*ncol2 + j_tsize + tj;
 				double v = 0;
 				for (size_t tk=0; tk<ktsize; ++tk)
 				{
-					v += mat1.buffer(ibase + tk)*mat2.buffer(jbase + tk);
+					v += mat1.buffer(ibase + tk)*trans_mat2.buffer(jbase + tk);
 				}
 				ret.buffer(ret_ij) += v;
 			}
 		}
 	}
-	Matrix multiply(const Matrix & mat1, const Matrix & mat2, const size_t bck_size)
+	Matrix multiply( Matrix & mat1,  Matrix & mat2,  size_t bck_size)
 	{
 		for (size_t i=0; i<bck_row1; ++i)
 		{
@@ -219,57 +222,57 @@ public:
 			{
 				for (size_t k=0; k<bck_col1; ++k)
 				{
-					bck_tile(i*tsize, j*tsize, k*tsize, tsize, tsize, tsize);
+					block_op(i*bck_tile, j*bck_tile, k*bck_tile, bck_tile, bck_tile, bck_tile);
 
 				}
-				if(remncol1)
+				if(rem_col1)
 				{
-					const size_t k = ntcol1;
-					bck_tile(i*tsize, j*tsize, k*tsize, tsize, tsize, remncol1);
+					 size_t k = bck_col1;
+					block_op(i*bck_tile, j*bck_tile, k*bck_tile, bck_tile, bck_tile, bck_tile);
 				}
 			}
-			if (remncol2)
+			if (rem_col2)
 			{
-				const size_t j = ntcol2;
-				for (size_t k=0; k<ntcol1; ++k)
+				 size_t j = bck_col2;
+				for (size_t k=0; k<bck_col1; ++k)
 				{
-					bck_tile(i*tsize, j*tsize, k*tsize, tsize, remncol2, tsize);
+					block_op(i*bck_tile, j*bck_tile, k*bck_tile, bck_tile, rem_col2, bck_tile);
 				}
-				if(remncol1)
+				if(rem_col1)
 				{
-					size_t k = ntcol1;
-					bck_tile(i*tsize, j*tsize, k*tsize, tsize, remncol2, remncol1);
+					size_t k = bck_col1;
+					block_op(i*bck_tile, j*bck_tile, k*bck_tile, bck_tile, rem_col2, rem_col1);
 				}
 			}
 
 		}
-		if (remnrow1)
+		if (rem_row1)
 		{
-			const size_t i = ntrow1;
-			for (size_t j=0; j<ntcol2; ++j)
+			size_t i = bck_row1;
+			for (size_t j=0; j<bck_col2; ++j)
 			{
-				for (size_t k=0; k<ntcol1; ++k)
+				for (size_t k=0; k<bck_col1; ++k)
 				{
-					bck_tile(ret, mat1, colmat2, ncol1, nrow2, ncol2, i*tsize, j*tsize, k*tsize, remnrow1, tsize, tsize);
+					block_op(i*bck_tile, j*bck_tile, k*bck_tile, rem_row1, bck_tile, bck_tile);
 
 				}
-				if(remncol1)
+				if(rem_col1)
 				{
-					const size_t k = ntcol1;
-					bck_tile(ret, mat1, colmat2, ncol1, nrow2, ncol2, i*tsize, j*tsize, k*tsize, remnrow1, tsize, remncol1);
+					 size_t k = bck_col1;
+					block_op(i*bck_tile, j*bck_tile, k*bck_tile, rem_row1, bck_tile, rem_col1);
 				}
 			}
-			if (remncol2)
+			if (rem_col2)
 			{
-				const size_t j = ntcol2;
-				for (size_t k=0; k<ntcol1; ++k)
+				 size_t j = bck_col2;
+				for (size_t k=0; k<bck_col1; ++k)
 				{
-					bck_tile(ret, mat1, colmat2, ncol1, nrow2, ncol2, i*tsize, j*tsize, k*tsize, remnrow1, remncol2, tsize);
+					block_op(i*bck_tile, j*bck_tile, k*bck_tile, rem_row1, rem_col2, bck_tile);
 				}
-				if(remncol1)
+				if(rem_col1)
 				{
-					size_t k = ntcol1;
-					bck_tile(ret, mat1, colmat2, ncol1, nrow2, ncol2, i*tsize, j*tsize, k*tsize, remnrow1, remncol2, remncol1);
+					size_t k = bck_col1;
+					block_op(i*bck_tile, j*bck_tile, k*bck_tile, rem_row1, rem_col2, rem_col1);
 				}
 			}
 		}
@@ -278,7 +281,7 @@ public:
 
 };
 
-Matrix multiply_naive(const Matrix & mat1, const Matrix & mat2)
+Matrix multiply_naive( Matrix & mat1,  Matrix & mat2)
 {
 	//std::cout<<"muliply_naive start"<<std::endl;
 
@@ -291,13 +294,13 @@ Matrix multiply_naive(const Matrix & mat1, const Matrix & mat2)
 
 	Matrix ret(mat1.nrow(), mat2.ncol());
 
-	const size_t nrow1 = mat1.nrow();
-	const size_t ncol1 = mat1.ncol();
-	const size_t ncol2 = mat2.ncol();
+	 size_t nrow1 = mat1.nrow();
+	 size_t ncol1 = mat1.ncol();
+	 size_t ncol2 = mat2.ncol();
 
 	for (size_t i=0; i<nrow1; ++i)
 	{
-		const size_t base1 = i * ncol1;
+		 size_t base1 = i * ncol1;
 		for (size_t j=0; j<ncol2; ++j)
 		{
 			double v = 0;
@@ -310,11 +313,11 @@ Matrix multiply_naive(const Matrix & mat1, const Matrix & mat2)
 	return ret;
 }
 
-
 /*
  * Use MKL for the matrix matrix multiplication.
  */
-Matrix * multiply_mkl(const Matrix & mat1, const Matrix & mat2)
+/*
+Matrix * multiply_mkl( Matrix & mat1,  Matrix & mat2)
 {
 	//std::cout<<"multiply_mkl start"<<std::endl;
 
@@ -340,30 +343,30 @@ Matrix * multiply_mkl(const Matrix & mat1, const Matrix & mat2)
 		);
 	return ret;
 }
-
+*/
 PYBIND11_MODULE(_matrix, m)
 {
 	m.doc() = "pybind11 matrix multiplication test";
 	m.def("multiply_naive", & multiply_naive, "naive method");
-	m.def("multiply_mkl", & multiply_mkl, "use mkl");
+	//m.def("multiply_mkl", & multiply_mkl, "use mkl");
 	py::class_<Matrix>(m, "Matrix")
-		.def(py::init<const size_t, const size_t>())
+		.def(py::init< size_t,  size_t>())
 		.def(py::init<>())
 		.def_property_readonly("nrow", &Matrix::nrow)
 		.def_property_readonly("ncol", &Matrix::ncol)
-		.def("__getitem__", [](const Matrix & mat, size_t r, size_t c) -> double
+		.def("__getitem__", []( Matrix & mat, size_t r, size_t c) -> double
 		{
 			return mat(r, c);
 		})
-		.def("__setitem__", [](Matrix & mat, size_t r, size_t c, const double & v)
+		.def("__setitem__", [](Matrix & mat, size_t r, size_t c,  double & v)
 		{
 			//std::cout<<"setitem:start"<<std::endl;
 			mat(r, c) = v;
 		})
-		.def("__eq__", &Matrix::operator==)
+		.def("__eq__", &Matrix::operator==);
 		;
 	py::class_<multiply_tile>(m, "multiply_tile")
-		.def(py::init<>())
+		.def(py::init<Matrix & ,  Matrix & >())
 		.def("multiply", &multiply_tile::multiply)
 	;
 }
