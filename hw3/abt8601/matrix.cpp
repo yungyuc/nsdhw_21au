@@ -75,6 +75,10 @@ size_t Matrix::nrow() const noexcept { return m_nrow; }
 
 size_t Matrix::ncol() const noexcept { return m_ncol; }
 
+const double *Matrix::data() const noexcept { return m_elems; }
+
+double *Matrix::data() noexcept { return m_elems; }
+
 double Matrix::operator[](const std::pair<size_t, size_t> ix) const noexcept {
   const size_t i = ix.first, j = ix.second;
   return m_elems[i * m_ncol + j];

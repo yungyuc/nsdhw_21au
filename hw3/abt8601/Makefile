@@ -3,17 +3,20 @@ MOD = $(MOD_NAME)$(shell python3-config --extension-suffix)
 
 CPPFLAGS_DEFAULT = -DNDEBUG
 
-CXXFLAGS_BASE  = -std=c++11 -pedantic -Wall -Wextra -Werror $(shell python3-config --includes)
-CXXFLAGS_DEBUG = -g -fsanitize=address -fsanitize=undefined
+CXXFLAGS_BASE    = -std=c++11 -pedantic -Wall -Wextra -Werror $(shell python3-config --includes)
+CXXFLAGS_DEBUG   = -g -fsanitize=address -fsanitize=undefined
+CXXFLAGS_DEFAULT = -O3 -funroll-loops -march=native
 
+LDLIBS_BASE  = -lmkl_rt
 LDLIBS_DEBUG = -lasan -lubsan
 
 ifdef DEBUG
 	CXXFLAGS = $(CXXFLAGS_BASE) $(CXXFLAGS_DEBUG)
-	LDLIBS   = $(LDLIBS_DEBUG)
+	LDLIBS   = $(LDLIBS_BASE) $(LDLIBS_DEBUG)
 else
 	CPPFLAGS = $(CPPFLAGS_DEFAULT)
-	CXXFLAGS = $(CXXFLAGS_BASE)
+	CXXFLAGS = $(CXXFLAGS_BASE) $(CXXFLAGS_DEFAULT)
+	LDLIBS   = $(LDLIBS_BASE)
 endif
 
 .PHONY: all test clean

@@ -23,9 +23,9 @@ PYBIND11_MODULE(_matrix, m) {
   m.def("multiply_naive", &multiply_naive,
         "Multiply two matrices using the naive method", "a"_a, "b"_a,
         py::pos_only());
-  m.def("multiply_tile", &multiply_naive,
+  m.def("multiply_tile", &multiply_tile,
         "Multiply two matrices using the tiling method", "a"_a, "b"_a,
-        py::pos_only());
-  m.def("multiply_mkl", &multiply_naive, "Multiply two matrices using MKL",
-        "a"_a, "b"_a, py::pos_only());
+        py::pos_only(), "tile_size"_a);
+  m.def("multiply_mkl", &multiply_mkl, "Multiply two matrices using MKL", "a"_a,
+        "b"_a, py::pos_only());
 }

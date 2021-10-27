@@ -20,6 +20,8 @@ public:
 
   size_t nrow() const noexcept;
   size_t ncol() const noexcept;
+  const double *data() const noexcept;
+  double *data() noexcept;
 
   double operator[](std::pair<size_t, size_t>) const noexcept;
   double &operator[](std::pair<size_t, size_t>) noexcept;

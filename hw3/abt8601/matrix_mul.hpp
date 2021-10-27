@@ -5,7 +5,7 @@
 #include "matrix.hpp"
 
 Matrix multiply_naive(const Matrix &a, const Matrix &b);
-Matrix multiply_tile(const Matrix &a, const Matrix &b);
+Matrix multiply_tile(const Matrix &a, const Matrix &b, size_t tile_size);
 Matrix multiply_mkl(const Matrix &a, const Matrix &b);
 
 #endif
