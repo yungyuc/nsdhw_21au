@@ -1,7 +1,7 @@
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 #include <pybind11/operators.h>
-#include <tuple>
+#include <utility>
 
 #include <iostream>
 #include <algorithm>
@@ -165,7 +165,7 @@ public:
 	size_t rem_col2;
 	size_t rem_col1;
 public:
-	multiply_tile( Matrix & in_1,  Matrix & in_2)
+	multiply_tile( Matrix & in_1,  Matrix & in_2, size_t block_size)
 	{
 		validate_multiplication(in_1, in_2);
 		mat1 = in_1;
@@ -175,6 +175,7 @@ public:
 		ncol1 = mat1.ncol();
 		nrow2 = in_2.nrow();
 		ncol2 = in_2.ncol();
+		bck_tile = block_size;
 
 		bck_row1 = nrow1 / bck_tile;
 		bck_col2 = ncol2 / bck_tile;
@@ -214,7 +215,7 @@ public:
 			}
 		}
 	}
-	Matrix multiply( Matrix & mat1,  Matrix & mat2,  size_t bck_size)
+	Matrix multiply()
 	{
 		for (size_t i=0; i<bck_row1; ++i)
 		{
@@ -354,19 +355,18 @@ PYBIND11_MODULE(_matrix, m)
 		.def(py::init<>())
 		.def_property_readonly("nrow", &Matrix::nrow)
 		.def_property_readonly("ncol", &Matrix::ncol)
-		.def("__getitem__", []( Matrix & mat, size_t r, size_t c) -> double
+		.def("__getitem__", [](const Matrix & mat, size_t idx) -> double
 		{
-			return mat(r, c);
+			return mat.m_buffer[idx];
 		})
-		.def("__setitem__", [](Matrix & mat, size_t r, size_t c,  double & v)
+		.def("__setitem__", [](Matrix & mat, size_t idx, const double & v)
 		{
-			//std::cout<<"setitem:start"<<std::endl;
-			mat(r, c) = v;
+			mat.m_buffer[idx] = v;
 		})
 		.def("__eq__", &Matrix::operator==);
 		;
 	py::class_<multiply_tile>(m, "multiply_tile")
-		.def(py::init<Matrix & ,  Matrix & >())
+		.def(py::init<Matrix & ,  Matrix & , size_t>())
 		.def("multiply", &multiply_tile::multiply)
 	;
 }

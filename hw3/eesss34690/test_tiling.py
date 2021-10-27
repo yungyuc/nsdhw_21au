@@ -3,12 +3,11 @@ import numpy.testing as npt
 import _matrix as m
 import timeit
 
-size = 100  ## for basic test
+size = 1000  ## for basic test
 
 def copy_matrix(mat1, mat2, nrow, ncol):
-    for i in range(nrow):
-        for j in range(ncol):
-            mat1[i, j] = mat2[i, j]
+    for i in range(nrow*ncol):
+        mat1[i] = mat2[i]
 
 def np_matrix(nrow, ncol):
     mat = np.arange(nrow*ncol, dtype=np.float) - int(nrow*ncol/2)
@@ -69,8 +68,11 @@ def test_naive():
 
 
 def test_tile():
+    print("start tile")
     mat1 = m.Matrix(size, size)
+    print("1")
     mat2 = m.Matrix(size, size)
+    print("2")
     np_mat = np_matrix(size, size)
 
     copy_matrix(mat1, np_mat, size, size)
@@ -90,14 +92,13 @@ import _matrix as m
 SIZE = 1000 ## for performance test
 mat1 = m.Matrix(SIZE, SIZE)
 mat2 = m.Matrix(SIZE, SIZE)
-for i in range(SIZE):
-    for j in range(SIZE):
-        mat1[i, j] = i * SIZE + j + 1
-        mat2[i, j] = i * SIZE + j + 1
+for i in range(SIZE* SIZE):
+    mat1[i] = i + 1
+    mat2[i] = i + 1
 '''
 
     naive = timeit.Timer('m.multiply_naive(mat1, mat2)', setup=setup)
-    tile = timeit.Timer('m.multiply_tile(mat1, mat2, 8)', setup=setup)
+    tile = timeit.Timer('m.multiply_tile(mat1, mat2, 8).multiply()', setup=setup)
 
     repeat = 5
 
