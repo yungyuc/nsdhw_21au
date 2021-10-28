@@ -2,31 +2,13 @@
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 #include <pybind11/operators.h>
+#include <iostream>
 
 namespace py = pybind11;
 
-Matrix::Matrix(const Matrix &other) {
-  this->m_row = other.m_row;
-  this->m_col = other.m_col;
-  for (size_t i = 0; i < m_row; ++i) {
-    for (size_t j = 0; j < m_col; ++j) {
-      this->getpos(i, j) = other.getdata(i, j);
-    }
-  }
-}
-
-//Matrix &Matrix::operator=(Matrix &&other) {
-//
-//  std::swap(m_row, other.m_row);
-//  std::swap(m_col, other.m_col);
-//  std::swap(data, other.data);
-//  return *this;
-//}
 
 Matrix &Matrix::operator=(const Matrix &other){
-  this->m_row = other.m_row;
-  this->m_col = other.m_col;
-  this->data = other.data;
+  data = other.data;
   return *this;
 }
 
@@ -42,7 +24,12 @@ bool Matrix::operator==(const Matrix &other) const{
 }
 
 Matrix multiply_naive(Matrix &A_mat, Matrix &B_mat) {
+  if(A_mat.col() != B_mat.row()){
+    throw std::runtime_error("dimension not match");
+  }
+
   Matrix res(A_mat.row(), B_mat.col());
+
   for (size_t i = 0; i < A_mat.row(); ++i) {
     for (size_t j = 0; j < B_mat.col(); ++j) {
       double result = 0;
@@ -79,7 +66,7 @@ Matrix multiply_tile(Matrix &A_mat, Matrix &B_mat, size_t tile_size){
 return res;
 }
 
-Matrix multiply_mkl(Matrix &A_mat, Matrix &B_mat){
+Matrix multiply_mkl(Matrix const &A_mat, Matrix const &B_mat){
     mkl_set_num_threads(1);
 
     Matrix ret(A_mat.row(), B_mat.col());
@@ -89,17 +76,17 @@ Matrix multiply_mkl(Matrix &A_mat, Matrix &B_mat){
         CblasRowMajor /* const CBLAS_LAYOUT Layout */
       , CblasNoTrans /* const CBLAS_TRANSPOSE transa */
       , CblasNoTrans /* const CBLAS_TRANSPOSE transb */
-      , A_mat.m_row /* const MKL_INT m */
-      , B_mat.m_col /* const MKL_INT n */
-      , A_mat.m_col /* const MKL_INT k */
+      , A_mat.row() /* const MKL_INT m */
+      , B_mat.col() /* const MKL_INT n */
+      , A_mat.col() /* const MKL_INT k */
       , 1.0 /* const double alpha */
       , A_mat.data /* const double *a */
-      , A_mat.m_col /* const MKL_INT lda */
+      , A_mat.col() /* const MKL_INT lda */
       , B_mat.data /* const double *b */
-      , B_mat.m_col /* const MKL_INT ldb */
+      , B_mat.col() /* const MKL_INT ldb */
       , 0.0 /* const double beta */
       , ret.data /* double * c */
-      , ret.m_col /* const MKL_INT ldc */
+      , ret.col() /* const MKL_INT ldc */
     );
     return ret;
 }
@@ -112,7 +99,6 @@ PYBIND11_MODULE(_matrix, m){
     .def(py::init<size_t , size_t >())
     .def_property_readonly("nrow", &Matrix::row)
     .def_property_readonly("ncol", &Matrix::col)
-    .def("assign", &Matrix::operator=)
     .def(py::self == py::self)
     .def("__setitem__", [](Matrix &mat, std::pair<size_t, size_t> id, double val){
           mat.getpos(id.first, id.second) = val;

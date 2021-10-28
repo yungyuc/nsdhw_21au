@@ -21,11 +21,12 @@ public:
     }
   };
 
-  ~Matrix() { delete []data; };
+  //~Matrix() {
+  //  if(data){
+  //  delete []data;}
+  //};
 
-  Matrix(const Matrix &other);
-
-//  Matrix &operator=(Matrix &&other);
+  //Matrix(Matrix &other) = default;
   Matrix &operator=(const Matrix &other);
   bool operator==(const Matrix &other)const;
 
@@ -39,13 +40,13 @@ public:
     return os;
   }
 
-  size_t row() { return m_row; }
-  size_t col() { return m_col; }
+  size_t row()const { return m_row; }
+  size_t col() const{ return m_col; }
   double getdata(size_t row, size_t col)const { return data[row * m_col + col]; }
   double &getpos(size_t row, size_t col) { return data[row * m_col + col]; }
   friend Matrix multiply_naive(Matrix &A_mat, Matrix &B_mat);
   friend Matrix multiply_tile(Matrix &A_mat, Matrix &B_mat, size_t tile_size);
-  friend Matrix multiply_mkl(Matrix &A_mat, Matrix &B_mat);
+  friend Matrix multiply_mkl(Matrix const &A_mat, Matrix const &B_mat);
 };
 
 #endif
