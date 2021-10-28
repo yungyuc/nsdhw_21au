@@ -38,8 +38,8 @@ class Matrix {
 Matrix::Matrix(const vector<vector<double>> &m) {
   m_nrow = m.size();
   m_ncol = m[0].size();
-  for (auto &r : m) {
-    copy(r.begin(), r.end(), back_inserter(m_buffer));
+  for (auto &i: m) {
+    m_buffer.insert(end(m_buffer), begin(i), end(i));
   }
 }
 
@@ -79,7 +79,7 @@ Matrix multiply_naive(const Matrix &m1, const Matrix &m2) {
 
 Matrix multiply_tile(const Matrix &m1, const Matrix &m2, size_t tsize) {
   if (m1.ncol() != m2.nrow()) {
-    throw std::out_of_range(
+    throw out_of_range(
         "the number of first matrix column "
         "differs from that of second matrix row");
   }
@@ -113,7 +113,7 @@ Matrix multiply_tile(const Matrix &m1, const Matrix &m2, size_t tsize) {
 
 Matrix multiply_mkl(const Matrix &m1, const Matrix &m2) {
   if (m1.ncol() != m2.nrow()) {
-    throw std::out_of_range(
+    throw out_of_range(
         "the number of first matrix column "
         "differs from that of second matrix row");
   }
@@ -150,8 +150,8 @@ PYBIND11_MODULE(_matrix, m) {
       .def_property_readonly("ncol", &Matrix::ncol)
       .def("__eq__", &Matrix::operator==)
       .def("__getitem__",
-           [](const Matrix &m, std::array<int, 2> idx) { return m(idx[0], idx[1]); })
-      .def("__setitem__", [](Matrix &m, std::array<int, 2> idx, double v) {
-        m(idx[0], idx[1]) = v;
+           [](const Matrix &m, array<int, 2> idx) { return m(idx[0], idx[1]); })
+      .def("__setitem__", [](Matrix &m, array<int, 2> idx, double val) {
+        m(idx[0], idx[1]) = val;
       });
 }
