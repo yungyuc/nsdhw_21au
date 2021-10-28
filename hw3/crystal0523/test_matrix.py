@@ -95,7 +95,7 @@ class Test_matrix(unittest.TestCase):
 
         ns = dict(_matrix=_matrix, mat1=mat1, mat2=mat2, tsize=tsize)
         t_tile = timeit.Timer(tile_str, globals=ns)
-        t_mkl = timeit.Timer('_matrix.multiply_mkl(mat1, maat2)', globals=ns)
+        t_mkl = timeit.Timer('_matrix.multiply_mkl(mat1, mat2)', globals=ns)
 
         time_tile = min(t_tile.repeat(10, 1))
         time_mkl = min(t_mkl.repeat(10, 1))
