@@ -67,6 +67,11 @@ Matrix multiply_tile(const Matrix &a, const Matrix &b, const size_t tile_size) {
 Matrix multiply_mkl(const Matrix &a, const Matrix &b) {
   check_mul_arg(a, b);
 
+  if (a.ncol() == 0)
+    return Matrix::zeros(a.nrow(), b.ncol());
+  if (b.ncol() == 0)
+    return Matrix(a.nrow(), 0);
+
   Matrix c(a.nrow(), b.ncol());
 
   cblas_dgemm(/*Layout=*/CblasRowMajor, /*transa=*/CblasNoTrans,
