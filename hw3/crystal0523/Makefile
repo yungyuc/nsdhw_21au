@@ -4,7 +4,7 @@ CFLAG =: -Wall -std=c++11 -O3 -m64 -fPIC -shared
 
 pybind11 = python3 -m pybind11 --includes
 suffix = python3-config --extension-suffix
-FILE = _vector
+FILE = _matrix
 
 MKL_LIB_DIR=/usr/lib/x86_64-linux-gnu
 MKL_LIBS=$MKL_LIB_DIR/libmkl_def.so
