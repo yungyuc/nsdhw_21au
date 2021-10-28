@@ -1,44 +1,27 @@
-FAGS ?=
+CXX = g++
 
-UNAME_S := $(shell uname -s)
+INCLUDE_DIRS = /usr/include/mkl
+MKL_DIR = /usr/lib/x86_64-linux-gnu
 
-ifeq ($(UNAME_S),Darwin)
-MKLROOT ?= /opt/intel/mkl
-MKLEXT ?= a
-CXXFLAGS :=
-endif
+MKLFLAGS = ${MKL_DIR}/libmkl_def.so \
+	${MKL_DIR}/libmkl_avx2.so \
+	${MKL_DIR}/libmkl_core.so \
+	${MKL_DIR}/libmkl_intel_lp64.so \
+	${MKL_DIR}/libmkl_sequential.so
 
-ifeq ($(UNAME_S), Linux)
-MKLROOT ?= /usr/lib/x86_64-linux-gnu
-MKLEXT ?= so
-CXXFLAGS := -Wl,--no-as-needed
-endif
+CXXFLAGS = -O3 -Wl,--no-as-needed -shared -std=c++11 -fPIC -I${INCLUDE_DIRS} ${MKLFLAGS} -ldl -lpthread -lm
 
-MKLLINKLINE := \
-	${MKLROOT}/libmkl_def.${MKLEXT} \
-	${MKLROOT}/libmkl_intel_lp64.${MKLEXT} \
-	${MKLROOT}/libmkl_sequential.${MKLEXT} \
-	${MKLROOT}/libmkl_core.${MKLEXT} \
-	${MKLROOT}/libmkl_avx2.${MKLEXT} \
-	-lpthread -lm -ldl
+MODULE = _matrix
+SOFILE = ${MODULE}${shell python3-config --extension-suffix}
 
-MKLFLAGS := ${CXXFLAGS} \
-	-I/usr/include/mkl \
-	${MKLLINKLINE}
+.PHONY: all
+all: ${SOFILE}
 
-CXX := g++
+${SOFILE}: matrix.cpp
+	${CXX} `python3 -m pybind11 --includes` $< -o $@ ${CXXFLAGS}
 
-PYBIND := -O3 -Wall -shared -std=c++11 \
-	-fPIC `python3 -m pybind11 --includes` _matrix.cpp \
-	-o _matrix`python3-config --extension-suffix`
-
-
-target: 
-	${CXX} ${PYBIND} ${MKLFLAGS}
-
-.PHONY:clean test
-test: target
+test: ${SOFILE}
 	pytest
 
 clean:
-	rm -rf _matrix*.so performance.txt __pycache__
+	rm -rf *.so __pycache__ .pytest_cache performance.txt
