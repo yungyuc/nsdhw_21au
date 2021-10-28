@@ -1,4 +1,4 @@
-from _matrix import Matrix, multiply_naive, multiply_tile, mulyiply_mkl
+import _matrix
 import timeit
 import unittest
 
@@ -142,7 +142,7 @@ class Test_matrix(unittest.TestCase):
             w.write(f'{naivesec} seconds\n')
 
             w.write(f'Start multiply_tile (repeat={repeat}), take ')
-            tilesec = (tile.repeat(repeat=repeat, number=1)
+            tilesec = tile.repeat(repeat=repeat, number=1)
             w.write(f'{tilesec} seconds\n')
 
             w.write(f'Start multiply_mkl (repeat={repeat}), take ')
