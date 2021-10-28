@@ -21,5 +21,5 @@ test:
 	$(PYTHON) -m pytest
 
 clean:
-	rm *.o $(FILE) *.so __pycache__  .pytest_cache performance.txt
+	rm -f *.o $(FILE) *.so __pycache__  .pytest_cache performance.txt
 
