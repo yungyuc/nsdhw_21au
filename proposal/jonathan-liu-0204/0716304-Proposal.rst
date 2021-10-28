@@ -55,7 +55,9 @@ Engineering infrastructure
 ===================
 
 Tree constructing: C++
+
 Tree visualizing: Python
+
 Frontend website 
 - Platform: WordPress
     - FREE.
