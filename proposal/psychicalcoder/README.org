@@ -2,7 +2,7 @@
 
 * Basic Information
   
-  The GitHub repository: TODO
+  The GitHub repository: https://github.com/psychicalcoder/polylower.git
 
 * Problem To Solve
 
@@ -44,6 +44,7 @@
    the input mesh. The allow_unconnected option allows the algorithm to contract
    two vertices that do not form an edge.
 
+   
 *** save_wavefront(filename, vertices, faces)
    This function save the mesh to a new file in wavefront object format.
 
@@ -61,6 +62,16 @@
    + Git
   
   
-* Schedule 
+* Schedule
 
-  TODO
+  |--------+----------------------------------------------------------------------------|
+  | Week   | What to do                                                                 |
+  |--------+----------------------------------------------------------------------------|
+  | Week 1 | Implement wavefront format parser and saver                                |
+  | Week 2 | Implement triangulation                                                    |
+  | Week 3 | Implement linear system solver and linear algebra tools like cross product |
+  | Week 4 | Keep implement the above components and write unit tests for them.         |
+  | Week 5 | Implement the main algorithm                                               |
+  | Week 6 | Implement the main algorithm and write tests                               |
+  | Week 7 | Prepare the presentation                                                   |
+  | Week 8 | Prepare the presentation                                                   |
