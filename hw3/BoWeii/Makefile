@@ -8,9 +8,11 @@ MKL_LIBS=${MKL_LIB_DIR}/libmkl_def.so \
 		${MKL_LIB_DIR}/libmkl_avx2.so \
 		${MKL_LIB_DIR}/libmkl_core.so \
 		${MKL_LIB_DIR}/libmkl_intel_lp64.so \
-		${MKL_LIB_DIR}/libmkl_sequential.so
+		${MKL_LIB_DIR}/libmkl_sequential.so \
+		-lpthread -lm -ldl \
+	     -lblas -lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -liomp5
 all:
-	${CXX} $(CXXFLAGS) -I /usr/include/mkl ${MKL_LIBS} $(PYBIND) _matrix.cpp -o _matrix$(PYCONFIG) -I /usr/include/python3.8
+	${CXX} $(CXXFLAGS) -I/usr/include/mkl ${MKL_LIBS} $(PYBIND) _matrix.cpp -o _matrix$(PYCONFIG) -I/usr/include/python3.8
 test:
 	python3 -m pytest -v -s
 
