@@ -181,11 +181,11 @@ for it in range(size):
         naivesec = minsec = min(naive.repeat(repeat=repeat, number=1))
         w.write(f'{minsec} seconds\n')
 
-        #w.write(f'Start multiply_mkl (repeat={repeat}), take min = ')
-        #mklsec = minsec = min(mkl.repeat(repeat=repeat, number=1))
-        #w.write(f'{minsec} seconds\n')
+        w.write(f'Start multiply_mkl (repeat={repeat}), take min = ')
+        mklsec = minsec = min(mkl.repeat(repeat=repeat, number=1))
+        w.write(f'{minsec} seconds\n')
 
-        #w.write('MKL speed-up over naive: %g x\n' % (naivesec/mklsec))
+        w.write('MKL speed-up over naive: %g x\n' % (naivesec/mklsec))
 
 if __name__ == '__main__':
     benchmark()

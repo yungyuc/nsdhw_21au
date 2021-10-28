@@ -52,13 +52,13 @@ Matrix multiply_tile(Matrix const & mat1, Matrix const & mat2, size_t tsize)
 
 }
 
-Matrix& multiply_mkl(Matrix const & mat1, Matrix const & mat2)
+Matrix multiply_mkl(Matrix const & mat1, Matrix const & mat2)
 {
     
     double alpha = 1.0;
     double beta = 0.0;
 
-    Matrix *ret = new Matrix(mat1.nrow(), mat2.ncol());
+    Matrix ret = Matrix(mat1.nrow(), mat2.ncol());
 
     cblas_dgemm(
         CblasRowMajor,
@@ -73,10 +73,10 @@ Matrix& multiply_mkl(Matrix const & mat1, Matrix const & mat2)
         mat2.get_buffer(),
         mat2.ncol(),
         beta,
-        ret->get_buffer(),
-        ret->ncol()
+        ret.get_buffer(),
+        ret.ncol()
     );
 
-    return *ret;
+    return ret;
 
 }
