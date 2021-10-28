@@ -1,6 +1,6 @@
 .PHONY: all test clean
 
-CC = ~/llvm-12.0.0/build/bin/clang++
+CC = clang++
 CFLAGS = -Wall -std=c++11 -O3 -m64 -fPIC -shared
 
 #MKLROOT = /usr/lib/x86_64-linux-gnu/
