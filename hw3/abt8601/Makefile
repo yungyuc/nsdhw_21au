@@ -23,7 +23,7 @@ endif
 
 all: $(MOD)
 
-$(MOD): build/matrix_pybind.o build/matrix.o build/matrix_mul.o
+$(MOD): build/matrix_pybind.o build/matrix_mul.o
 	$(CXX) $(LDFLAGS) $^ $(LDLIBS) -shared -o $@
 
 build/%.o: %.cpp | build
