@@ -1,7 +1,7 @@
 .PHONY: clean, test
 
-INC=/home/egor/intel/oneapi/mkl/2021.4.0/include
-MKLROOT=/home/egor/intel/oneapi/mkl/2021.4.0
+INC=/usr/include/mkl
+MKLROOT=/usr/lib/x86_64-linux-gnu -lblas
 SOURCE_FILE_NAME = _matrix
 FILE_NAME = $(SOURCE_FILE_NAME)$(shell python3-config --extension-suffix)
 
