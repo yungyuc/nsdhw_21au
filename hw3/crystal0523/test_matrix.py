@@ -1,6 +1,9 @@
 import _matrix
 import timeit
 import unittest
+import sys
+import os
+
 
 class Test_matrix(unittest.TestCase):
 
