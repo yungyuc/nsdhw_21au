@@ -1,11 +1,22 @@
-CXX = g++
+CXX = clang++
 TARGET = _matrix
-CFLAG = -O3 -Wall -shared -std=c++11 -fPIC
+CFLAG = -O3 -Wall -m64 -shared -std=c++11 -fPIC
 PYINCLUDE = `python3-config --includes` -Iextern/pybind11/include
 PYSUFFIX = `python3-config --extension-suffix`
 MKLINCLUDE = -I/usr/include/mkl
-MKLLIBS = -L/usr/lib/x86_64-linux-gnu/mkl -lblas
-TESTFILE = ./validate.py #unit_test.py
+MKLLIBDIR=/usr/lib/x86_64-linux-gnu
+#MKLLIBS=${MKLLIBDIR}/libmkl_def.so \
+	${MKLLIBDIR}/libmkl_avx2.so \
+	${MKLLIBDIR}/libmkl_core.so \
+	${MKLLIBDIR}/libmkl_intel_lp64.so \
+	${MKLLIBDIR}/libmkl_sequential.so \
+	-lpthread -lm -ldl \
+        -lblas -lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -liomp5
+
+MKLLIBS=-L/usr/lib/x86_64-linux-gnu/mkl -lblas
+
+
+TESTFILE = unit_test.py #./validate.py
 
 .PHONY: run check clean
 
@@ -17,7 +28,6 @@ $(TARGET): $(TARGET).cpp
 #run: $(TARGET).cpp
 #	g++ -O3 -Wall -std=c++11 -fPIC $(PYINCLUDE) $(MKLINCLUDE) $< -o $(TARGET) $(MKLLIBS) 
 #	./$(TARGET)
-	
 
 test: $(TARGET) 
 	python3 -m pytest -v -q $(TESTFILE)

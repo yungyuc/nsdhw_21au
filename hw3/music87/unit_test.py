@@ -55,6 +55,7 @@ for i in range(n):
             print(f"multiply_tile takes {tile_sec} seconds", file=fin)
             print(f"multiply_naive takes {naive_sec} seconds", file=fin)
             print(f"multiply_mkl takes {mkl_sec} seconds", file=fin)
-            print("MKL speed-up over naive: %g x\n" % (naive_sec/mkl_sec), file=fin)
+            print("MKL speed-up over naive: %g x" % (naive_sec/mkl_sec), file=fin)
+            print("128 tile speed-up over naive: %g x" % (naive_sec/tile_sec), file=fin)
 
 
