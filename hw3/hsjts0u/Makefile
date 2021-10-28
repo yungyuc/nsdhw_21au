@@ -19,4 +19,4 @@ clean:
 	rm -rf __pycache__ .pytest_cache
 
 test: $(TARGET)
-	python -m pytest _matrix_test.py
+	python -m pytest ../validate.py

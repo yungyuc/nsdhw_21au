@@ -17,7 +17,14 @@ public:
         delete [] m_buffer;
     }
 
-    
+    bool operator== (Matrix const &M) const 
+    {
+        for (size_t i = 0; i < m_nrow; i++) 
+            for (size_t j = 0;j < m_ncol; j++)
+                if (m_buffer[i*m_ncol + j] != M(i, j)) return false;
+                
+        return true;
+    }
     double   operator() (size_t row, size_t col) const { return m_buffer[row*m_ncol + col]; }
     double & operator() (size_t row, size_t col)       { return m_buffer[row*m_ncol + col]; }
     double * get_buffer() const { return m_buffer; }
