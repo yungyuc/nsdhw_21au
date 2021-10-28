@@ -123,7 +123,7 @@ class Test_matrix(unittest.TestCase):
         else:
             assert True
      
-     def test_performance(self):
+    def test_performance(self):
         size = 1000
         mat1, mat2, mat3, *_ = self.make_matrices(size)
 
@@ -139,7 +139,7 @@ class Test_matrix(unittest.TestCase):
 
             w.write(f'Start multiply_naive (repeat={repeat}), take ')
             naivesec = naive.repeat(repeat=repeat, number=1)
-            w.write(f'{minsec} seconds\n')
+            w.write(f'{naivesec} seconds\n')
 
             w.write(f'Start multiply_tile (repeat={repeat}), take ')
             tilesec = (tile.repeat(repeat=repeat, number=1)
