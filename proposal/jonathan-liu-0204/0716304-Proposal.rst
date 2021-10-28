@@ -26,7 +26,9 @@ System architecture
 ===================
 
 Backend
+
 - To ensure the tree user input is visualized properly, I must have a flawless Red-Black Tree constructed in the backend.
+
 - The tree should strictly follow the following rules:
     - Every node has a colour either red or black.
     - The root of the tree is always black.
@@ -37,7 +39,8 @@ Frontend
 - Since I want all the people learning data structure can use this visualizing tool, I'll deploy this on my own website.
 
 - User Interface
--- Although there's actually a few tree visualization tool in the community, in my opinion, most of them are not such user friendly. 
+
+  - Although there's actually a few tree visualization tool in the community, in my opinion, most of them are not such user friendly. 
 Hence, aiming to make Red-Black Tree easier to understand, User Interface will probably be a big part that I'll focus on.
 
 ===================
