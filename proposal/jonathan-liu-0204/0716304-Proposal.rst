@@ -36,12 +36,12 @@ Backend
     - Every path from a node (including root) to any of its descendants NULL nodes has the same number of black nodes.
 
 Frontend
+
 - Since I want all the people learning data structure can use this visualizing tool, I'll deploy this on my own website.
 
 - User Interface
 
-  - Although there's actually a few tree visualization tool in the community, in my opinion, most of them are not such user friendly. 
-Hence, aiming to make Red-Black Tree easier to understand, User Interface will probably be a big part that I'll focus on.
+  - Although there's actually a few tree visualization tool in the community, in my opinion, most of them are not such user friendly. Hence, aiming to make Red-Black Tree easier to understand, User Interface will probably be a big part that I'll focus on.
 
 ===================
 API description
@@ -60,10 +60,10 @@ Tree visualizing: Python
 
 Frontend website 
 - Platform I'll use: WordPress
--- FREE.
--- Highly customizable and user-friendly.
--- Being "responsive", which mean it’ll also work on smartphones & tablets.
--- Help available from the community
+  - FREE.
+  - Highly customizable and user-friendly.
+  - Being "responsive", which mean it’ll also work on smartphones & tablets.
+  - Help available from the community
 
 ===================
 Schedule
