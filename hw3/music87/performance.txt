@@ -1,0 +1,5 @@
+multiply_tile takes 7.0148669350892305 seconds
+multiply_naive takes 10.991162003949285 seconds
+multiply_mkl takes 0.04203545022755861 seconds
+MKL speed-up over naive: 261.474 x
+
