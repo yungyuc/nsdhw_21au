@@ -162,7 +162,6 @@ class Test_GEMM:
                 m1[i,j] = 8.0
                 m2[i,j] = 8.0
         assert(compareMat(m1,m2,m,n))
-        #assert(m1==m2)
 
 
     def test_matrix_multiply_small_size(self):
