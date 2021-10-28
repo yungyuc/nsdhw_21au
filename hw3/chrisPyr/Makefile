@@ -17,7 +17,7 @@ all:
 
 
 test: $(SRC).*.so
-	python3 -m pytest -v test.py
+	python3 -m pytest -v test_matrix.py
 
 
 $(SRC).*.so: $(SRC).cpp
