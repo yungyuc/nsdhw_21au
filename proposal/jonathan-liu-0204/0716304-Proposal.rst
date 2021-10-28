@@ -60,15 +60,16 @@ Engineering infrastructure
 ===================
 
 Tree constructing: C++
+
 Tree visualizing: Python
 
 Frontend website 
 
-- Platform I'll use: WordPress
-    - FREE.
-    - Highly customizable and user-friendly.
-    - Being "responsive", which mean it’ll also work on smartphones & tablets.
-    - Help available from the community
+Platform I'll use - WordPress
+ - FREE.
+ - Highly customizable and user-friendly.
+ - Being "responsive", which mean it’ll also work on smartphones & tablets.
+ - Help available from the community
 
 ===================
 Schedule
