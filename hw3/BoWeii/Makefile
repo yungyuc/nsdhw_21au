@@ -17,4 +17,4 @@ test:
 	python3 -m pytest -v -s
 
 clean:
-	rm -rf *.so __pycache__ ../.pytest_cache .pytest_cache ../.vscode performance.txt
+	rm -rf *.so __pycache__ .pytest_cache performance.txt
