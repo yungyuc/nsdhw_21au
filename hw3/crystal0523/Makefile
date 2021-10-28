@@ -18,7 +18,7 @@ MKL_LIBS=${MKL_LIB_DIR}/libmkl_def.so \
 OPT=-O3 -m64
 
 all:
-	$(CXX) ${CFLAG} ${MKL_LIBS} $(INCLUDES) _matrix.cpp -o _matrix$(SUFFIX) -I/usr/include/python3.8 
+	$(CXX) ${CFLAG} $(INCLUDES) _matrix.cpp -o _matrix$(SUFFIX) -I/usr/include/python3.8 ${MKL_LIBS}
 	
 
 test: all
