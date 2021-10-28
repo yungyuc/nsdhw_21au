@@ -148,6 +148,7 @@ Matrix multiply_tile(Matrix const & mat1, Matrix const & mat2, size_t size)
  */
 Matrix multiply_mkl(Matrix const & mat1, Matrix const & mat2)
 {
+    mkl_set_num_threads(1);
     
     Matrix mat3(mat1.nrow(), mat2.ncol());
 

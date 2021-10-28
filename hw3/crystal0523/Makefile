@@ -19,5 +19,8 @@ all:
 test: all
 	python3 -m pytest test_matrix.py
 
+benchmark:
+	python3 benchmark.py
+
 clean:
 	rm -rf *.so __pycache__ ../.pytest_cache .pytest_cache ../.vscode performance.txt

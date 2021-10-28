@@ -123,34 +123,63 @@ class Test_matrix(unittest.TestCase):
         else:
             assert True
      
-    def test_performance(self):
-        size = 1000
-        mat1, mat2, mat3, *_ = self.make_matrices(size)
 
-        naive = timeit.Timer('_matrix.multiply_naive(mat1, mat2)')
-        tile = timeit.Timer('_matrix.multiply_tile(mat1, mat2)')
-        mkl = timeit.Timer('_matrix.multiply_mkl(mat1, mat2)')
+class Writer:
 
-        repeat = 1
+    def __init__(self, streams):
 
-        with open('performance.txt', 'w') as fobj:
+        self.streams = streams
 
-            w = Writer([sys.stdout, fobj])
+    def write(self, msg):
 
-            w.write(f'Start multiply_naive (repeat={repeat}), take ')
-            naivesec = naive.repeat(repeat=repeat, number=1)
-            w.write(f'{naivesec} seconds\n')
+        for stream in self.streams:
 
-            w.write(f'Start multiply_tile (repeat={repeat}), take ')
-            tilesec = tile.repeat(repeat=repeat, number=1)
-            w.write(f'{tilesec} seconds\n')
+            stream.write(msg)
 
-            w.write(f'Start multiply_mkl (repeat={repeat}), take ')
-            mklsec = mkl.repeat(repeat=repeat, number=1)
-            w.write(f'{mklsec} seconds\n')
 
-            w.write('Tile speed-up over naive: %g x\n' % (naivesec/tilesec))
-            w.write('MKL speed-up over naive: %g x\n' % (naivesec/mklsec))
+def benchmark():
+
+    setup = '''
+import _matrix
+size = 1000
+mat1 = _matrix.Matrix(size,size)
+mat2 = _matrix.Matrix(size,size)
+for it in range(size):
+    for jt in range(size):
+        mat1[it, jt] = it * size + jt + 1
+        mat2[it, jt] = it * size + jt + 1
+'''
+
+    naive = timeit.Timer('_matrix.multiply_naive(mat1, mat2)', setup=setup)
+    tile = timeit.Timer('_matrix.multiply_tile(mat1, mat2)', setup=setup)
+    mkl = timeit.Timer('_matrix.multiply_mkl(mat1, mat2)', setup=setup)
+
+    repeat = 5
+
+    with open('performance.txt', 'w') as fobj:
+
+        w = Writer([sys.stdout, fobj])
+        w.write(f'Start multiply_naive (repeat={repeat}), take ')
+        naivesec = naive.repeat(repeat=repeat, number=1)
+        w.write(f'{naivesec} seconds\n')
+
+        w.write(f'Start multiply_tile (repeat={repeat}), take ')
+        tilesec = tile.repeat(repeat=repeat, number=1)
+        w.write(f'{tilesec} seconds\n')
+
+        w.write(f'Start multiply_mkl (repeat={repeat}), take ')
+        mklsec = mkl.repeat(repeat=repeat, number=1)
+        w.write(f'{mklsec} seconds\n')
+
+        w.write('Tile speed-up over naive: %g x\n' % (naivesec/tilesec))
+        w.write('MKL speed-up over naive: %g x\n' % (naivesec/mklsec))
+    
+
+if __name__ == '__main__':
+    benchmark()
+
+
+        
 
 
 
