@@ -22,12 +22,12 @@ class Test_matrix(unittest.TestCase):
         size = 100
         mat1, mat2, mat3, *_ = self.make_matrices(size)
 
-        assert size == mat1.nrow
-        assert size == mat1.ncol
-        assert size == mat2.nrow
-        assert size == mat2.ncol
-        assert size == mat3.nrow
-        assert size == mat3.ncol
+        assert size == mat1.nrow()
+        assert size == mat1.ncol()
+        assert size == mat2.nrow()
+        assert size == mat2.ncol()
+        assert size == mat3.nrow()
+        assert size == mat3.ncol()
        
         assert 2 == mat1[0,1]
         assert size+2 == mat1[1,1]
@@ -85,8 +85,8 @@ class Test_matrix(unittest.TestCase):
             tile_str = "_matrix.multiply_tile(mat1, mat2, tsize)"
         ret_mkl = _matrix.multiply_mkl(mat1, mat2)
 
-        for i in range(ret_tile.nrow):
-            for j in range(ret_tile.ncol):
+        for i in range(ret_tile.nrow()):
+            for j in range(ret_tile.ncol()):
                 assert mat1[i,j] == ret_mkl[i,j]
                 assert ret_tile[i,j] == ret_mkl[i,j]
 
