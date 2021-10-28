@@ -17,7 +17,7 @@ FILE = _matrix
 all:
 	$(CXX) $(CFLAG) $(INCLUDES) $(FILE).cpp -o $(FILE) $(SUFFIX) $(MKL_LIBS) -I/usr/include/python3.8
 
-test:
+test: all
 	$(PYTHON) -m pytest test_matrix.py
 
 clean:
