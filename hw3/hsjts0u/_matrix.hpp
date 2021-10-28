@@ -1,3 +1,4 @@
+#include <cstring>
 #include <cstddef>
 #include <algorithm>
 #include <mkl.h>
@@ -17,6 +18,15 @@ public:
         delete [] m_buffer;
     }
 
+    Matrix(const Matrix &M)
+    {
+        m_nrow = M.m_nrow;
+        m_ncol = M.m_ncol;
+        size_t nelement = m_nrow * m_ncol;
+        m_buffer = new double[nelement](); 
+        memcpy(m_buffer, M.m_buffer, nelement*sizeof(double));
+    }
+
     Matrix& operator= (const Matrix& M) 
     {
         m_buffer = M.m_buffer;
@@ -25,7 +35,7 @@ public:
     bool operator== (Matrix const &M) const 
     {
         for (size_t i = 0; i < m_nrow; i++) 
-            for (size_t j = 0;j < m_ncol; j++)
+            for (size_t j = 0; j < m_ncol; j++)
                 if (m_buffer[i*m_ncol + j] != M(i, j)) return false;
                 
         return true;
