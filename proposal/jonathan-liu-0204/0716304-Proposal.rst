@@ -25,7 +25,7 @@ Anyone making their effort learning data structure.
 System architecture
 ===================
 
-Backend
+# Backend
 
 - To ensure the tree user input is visualized properly, I must have a flawless Red-Black Tree constructed in the backend.
 
@@ -35,7 +35,7 @@ Backend
     - There are no two adjacent red nodes (A red node cannot have a red parent or red child).
     - Every path from a node (including root) to any of its descendants NULL nodes has the same number of black nodes.
 
-Frontend
+# Frontend
 
 - Since I want all the people learning data structure can use this visualizing tool, I'll deploy this on my own website.
 
