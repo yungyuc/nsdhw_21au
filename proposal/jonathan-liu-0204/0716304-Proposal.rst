@@ -28,10 +28,10 @@ System architecture
 Backend
 - To ensure the tree user input is visualized properly, I must have a flawless Red-Black Tree constructed in the backend.
 - The tree should strictly follow the following rules:
--- Every node has a colour either red or black.
--- The root of the tree is always black.
--- There are no two adjacent red nodes (A red node cannot have a red parent or red child).
--- Every path from a node (including root) to any of its descendants NULL nodes has the same number of black nodes.
+    - Every node has a colour either red or black.
+    - The root of the tree is always black.
+    - There are no two adjacent red nodes (A red node cannot have a red parent or red child).
+    - Every path from a node (including root) to any of its descendants NULL nodes has the same number of black nodes.
 
 Frontend
 - Since I want all the people learning data structure can use this visualizing tool, I'll deploy this on my own website.
