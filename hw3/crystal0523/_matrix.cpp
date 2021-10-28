@@ -187,7 +187,7 @@ PYBIND11_MODULE(_matrix, m) {
         }, py::is_operator())     
         .def("assign", &Matrix::operator=)
         .def(py::self==py::self)   
-        .def("nrow", &Matrix::nrow)
-        .def("ncol", &Matrix::ncol)
+        .def_property_readonly("nrow", &Matrix::nrow)
+        .def_property_readonly("ncol", &Matrix::ncol)
         .def("Print", &Matrix::Print);
 }
