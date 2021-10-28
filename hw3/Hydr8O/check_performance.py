@@ -1,5 +1,9 @@
 import _matrix
 
+size = 1000
+
+mat1 = _matrix.Matrix(size,size)
+mat2 = _matrix.Matrix(size,size)
 ret_naive = _matrix.multiply_naive(mat1, mat2)
 ret_tile = _matrix.multiply_tile(mat1, mat2, 64)
 
