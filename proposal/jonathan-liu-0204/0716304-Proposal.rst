@@ -69,7 +69,7 @@ Frontend website
 Schedule
 ===================
 
-.. image:: Gantt Chart.jpg
+.. image:: Gantt_Chart.png
    :height: 50
    :width: 100
    :scale: 25
