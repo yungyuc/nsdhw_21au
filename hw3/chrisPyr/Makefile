@@ -1,5 +1,5 @@
-CXX=g++
-CXXFLAGS=-std=c++17 -O3 -Wall -Wextra -fPIC -shared
+CXX=clang++
+CXXFLAGS=-std=c++17 -O3 -Wall -Wextra -fPIC -shared -m64
 MKLLIB=-I/usr/include/mkl
 INCLUDE=-Iinclude/
 PYTHON=python3
@@ -17,7 +17,7 @@ all:
 
 
 test: $(SRC).*.so
-	python3 -m pytest -v test_matrix.py
+	python3 -m pytest -v
 
 
 $(SRC).*.so: $(SRC).cpp

@@ -27,7 +27,6 @@ public:
   //  delete []data;}
   //};
 
-  // Matrix(Matrix &other) = default;
   Matrix &operator=(const Matrix &other);
   bool operator==(const Matrix &other) const;
 
