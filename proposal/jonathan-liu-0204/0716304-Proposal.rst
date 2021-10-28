@@ -31,7 +31,7 @@ Backend
 
 - To ensure the tree user input is visualized properly, I must have a flawless Red-Black Tree constructed in the backend.
 
-- The tree should strictly follow the following rules:
+- The tree should strictly follow the following rules
     - Every node has a colour either red or black.
     - The root of the tree is always black.
     - There are no two adjacent red nodes (A red node cannot have a red parent or red child).
@@ -65,11 +65,11 @@ Tree visualizing: Python
 
 Frontend website 
 
-Platform I'll use - WordPress
- - FREE.
- - Highly customizable and user-friendly.
- - Being "responsive", which mean it’ll also work on smartphones & tablets.
- - Help available from the community
+- Platform: WordPress
+    - FREE.
+    - Highly customizable and user-friendly.
+    - Being "responsive", which mean it’ll also work on smartphones & tablets.
+    - Help available from the community
 
 ===================
 Schedule
