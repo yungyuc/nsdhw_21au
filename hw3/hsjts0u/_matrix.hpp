@@ -17,6 +17,11 @@ public:
         delete [] m_buffer;
     }
 
+    Matrix& operator= (const Matrix& M) 
+    {
+        m_buffer = M.m_buffer;
+        return *this;
+    }
     bool operator== (Matrix const &M) const 
     {
         for (size_t i = 0; i < m_nrow; i++) 
