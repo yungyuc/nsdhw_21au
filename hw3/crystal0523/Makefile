@@ -14,11 +14,11 @@ FILE = _matrix
 
 .PHONY: clean test
 
-main: $(FILE)
+all:
 	$(CXX) $(CFLAG) $(INCLUDES) $(FILE).cpp -o $(FILE) $(SUFFIX) $(MKL_LIBS) -I/usr/include/python3.8
 
 test:
-	$(PYTHON) -m pytest
+	$(PYTHON) -m pytest test_matrix.py
 
 clean:
 	rm -f *.o $(FILE) *.so performance.txt
