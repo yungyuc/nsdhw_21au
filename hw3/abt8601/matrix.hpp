@@ -16,7 +16,9 @@ public:
 
   virtual ~Matrix();
 
-  Matrix(const size_t nrow, const size_t ncol);
+  Matrix(size_t nrow, size_t ncol);
+
+  static Matrix zeros(size_t nrow, size_t ncol);
 
   size_t nrow() const noexcept;
   size_t ncol() const noexcept;
@@ -35,6 +37,8 @@ public:
   std::string repr() const;
 
 protected:
+  Matrix(size_t nrow, size_t ncol, double *elems) noexcept;
+
   void check_ix(std::pair<size_t, size_t>) const;
 
   size_t m_nrow, m_ncol;

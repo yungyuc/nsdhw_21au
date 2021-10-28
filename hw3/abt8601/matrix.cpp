@@ -71,6 +71,15 @@ Matrix::Matrix(const size_t nrow, const size_t ncol)
   }
 }
 
+Matrix Matrix::zeros(const size_t nrow, const size_t ncol) {
+  const size_t nelems = nrow * ncol;
+  double *elems = nullptr;
+  if (nelems > 0)
+    elems = new double[nelems]();
+
+  return Matrix(nrow, ncol, elems);
+}
+
 size_t Matrix::nrow() const noexcept { return m_nrow; }
 
 size_t Matrix::ncol() const noexcept { return m_ncol; }
@@ -137,6 +146,10 @@ std::string Matrix::repr() const {
 
   return ss.str();
 }
+
+Matrix::Matrix(const size_t nrow, const size_t ncol,
+               double *const elems) noexcept
+    : m_nrow(nrow), m_ncol(ncol), m_elems(elems) {}
 
 void Matrix::check_ix(const std::pair<size_t, size_t> ix) const {
   const size_t i = ix.first, j = ix.second;
