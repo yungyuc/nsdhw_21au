@@ -127,9 +127,9 @@ class Test_matrix(unittest.TestCase):
         size = 1000
         mat1, mat2, mat3, *_ = self.make_matrices(size)
 
-        naive = timeit.Timer('_matrix.multiply_naive(mat1, mat2)', setup=setup)
-        tile = timeit.Timer('_matrix.multiply_tile(mat1, mat2)', setup=setup)
-        mkl = timeit.Timer('_matrix.multiply_mkl(mat1, mat2)', setup=setup)
+        naive = timeit.Timer('_matrix.multiply_naive(mat1, mat2)')
+        tile = timeit.Timer('_matrix.multiply_tile(mat1, mat2)')
+        mkl = timeit.Timer('_matrix.multiply_mkl(mat1, mat2)')
 
         repeat = 1
 
