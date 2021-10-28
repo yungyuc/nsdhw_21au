@@ -32,6 +32,7 @@ public:
     // self-defined function
     size_t nrow() const;
     size_t ncol() const;
+    double* buffer() const;
     std::vector<double> buffer_vector() const { return std::vector<double>(dbuffer, dbuffer+dnrow*dncol); }
     void printself() const;
 private:
@@ -165,6 +166,10 @@ size_t Matrix2D::ncol() const {
     return dncol;
 }
 
+double* Matrix2D::buffer() const{
+	return dbuffer;
+}
+
 void Matrix2D::printself() const{
     for (size_t i=0; i<this->nrow(); ++i) // the i-th row
     {
@@ -205,13 +210,13 @@ Matrix2D multiply_tile(Matrix2D const &mat1, Matrix2D const &mat2, const size_t 
     for(size_t br=0; br<mat1.nrow(); br+=block_size){
 	size_t brlimit = std::min(br+block_size, mat1.nrow());
         for(size_t bc=0; bc<mat2.ncol(); bc+=block_size){
-	    size_t bclimit = std::min(bc+block_size, mat2.ncol());
+	    size_t bclimit = std::min(bc+block_size,mat2.ncol());
             for(size_t bk=0; bk<mat1.ncol(); bk+=block_size){
                 // block matrix multiplication
 		size_t bklimit = std::min(bk+block_size, mat1.ncol());
-	        for(size_t r=br; r < brlimit ; r++){
-		    for(size_t c=bc; c<bclimit; c++){
-                        for(size_t k=bk; k<bklimit ; k++){
+	        for(size_t k=bk; k<bklimit;k++){
+		    for(size_t r=br;r<brlimit;r++){
+                        for(size_t c=bc;c<bclimit;c++){
                             res(r,c) +=mat1(r,k)*mat2(k,c);
                         }
                     }
@@ -223,7 +228,7 @@ Matrix2D multiply_tile(Matrix2D const &mat1, Matrix2D const &mat2, const size_t 
 }
 
 Matrix2D multiply_mkl(Matrix2D const &mat1, Matrix2D const &mat2){
-    mkl_set_num_threads(1);
+    //mkl_set_num_threads(1);
     Matrix2D res(mat1.nrow(), mat2.ncol());
     cblas_dgemm(
          CblasRowMajor
@@ -233,9 +238,9 @@ Matrix2D multiply_mkl(Matrix2D const &mat1, Matrix2D const &mat2){
        , mat2.ncol()
        , mat1.ncol() 
        , 1.0
-       , mat1.dbuffer
+       , mat1.buffer()
        , mat1.ncol()
-       , mat2.dbuffer
+       , mat2.buffer()
        , mat2.ncol()
        , 0.0
        , res.dbuffer
