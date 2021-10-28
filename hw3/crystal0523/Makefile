@@ -9,7 +9,7 @@ MKL_LIBS=$MKL_LIBS:$MKL_LIB_DIR/libmkl_avx2.so
 MKL_LIBS=$MKL_LIBS:$MKL_LIB_DIR/libmkl_core.so
 MKL_LIBS=$MKL_LIBS:$MKL_LIB_DIR/libmkl_intel_lp64.so
 MKL_LIBS=$MKL_LIBS:$MKL_LIB_DIR/libmkl_sequential.so
-
+PYTHON = python3
 FILE = _matrix
 
 .PHONY: clean test
@@ -21,5 +21,5 @@ test:
 	$(PYTHON) -m pytest
 
 clean:
-	rm -f *.o $(FILE) *.so __pycache__  .pytest_cache performance.txt
+	rm -f *.o $(FILE) *.so performance.txt
 
