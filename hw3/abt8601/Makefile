@@ -19,7 +19,7 @@ else
 	LDLIBS   = $(LDLIBS_BASE)
 endif
 
-.PHONY: all test clean
+.PHONY: all test bench clean
 
 all: $(MOD)
 
@@ -34,6 +34,9 @@ build:
 
 test: $(MOD)
 	python3 -m pytest
+
+bench: $(MOD)
+	./benchmark.sh
 
 clean:
 	$(RM) -r build $(MOD)
