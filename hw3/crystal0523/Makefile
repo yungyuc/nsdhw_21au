@@ -12,14 +12,21 @@ MKL_LIBS=$MKL_LIBS:$MKL_LIB_DIR/libmkl_sequential.so
 PYTHON = python3
 FILE = _matrix
 
-.PHONY: clean test
+.PHONY: clean, test
 
-all:
-	$(CXX) $(CFLAG) $(INCLUDES) $(FILE).cpp -o $(FILE) $(SUFFIX) $(MKL_LIBS) -I/usr/include/python3.8
+
+all: $(FILE).*.so
+
+$(FILE).*.so: $(FILE).cpp
+	$(CXX) $(CFLAG) `$(INCLUDES)` $< -o $(FILE)`$(SUFFIX)` $(MKL_LIBS) -I /usr/include/python3.8
 
 test: all
-	$(PYTHON) -m pytest test_matrix.py
+	py.test test_matrix.py
 
 clean:
-	rm -f *.o $(FILE) *.so performance.txt
+	rm -rf *.so __pycache__  .pytest_cache performance.txt
+
+
+
+
 
