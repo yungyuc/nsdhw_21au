@@ -1,13 +1,14 @@
 .PHONY: all test clean
 
-CC = clang++
+CC = ~/llvm-12.0.0/build/bin/clang++
+#CC = clang++
 CFLAGS = -Wall -std=c++11 -O3 -m64 -fPIC -shared
 
-#MKLROOT = /usr/lib/x86_64-linux-gnu/
-MKLROOT = /opt/intel/mkl
-INCLUDE += -I$(MKLROOT)/include
-#INCLUDE = -I/usr/include/mkl
-LDFLAGS := \
+MKLROOT = /usr/lib/x86_64-linux-gnu/
+#MKLROOT = /opt/intel/mkl
+#INCLUDE += -I$(MKLROOT)/include
+INCLUDE = -I/usr/include/mkl
+#LDFLAGS := \
 			   $(MKLROOT)/lib/intel64/libmkl_def.so \
 			   $(MKLROOT)/lib/intel64/libmkl_avx2.so \
 			   $(MKLROOT)/lib/intel64/libmkl_intel_lp64.so \
@@ -16,7 +17,7 @@ LDFLAGS := \
 			   -lpthread -lm -ldl \
 			   -lblas -lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -liomp5
 
-#LDFLAGS=${MKLROOT}/libmkl_def.so \
+LDFLAGS=${MKLROOT}/libmkl_def.so \
 		 ${MKLROOT}/libmkl_avx2.so \
 		 ${MKLROOT}/libmkl_core.so \
 		 ${MKLROOT}/libmkl_intel_lp64.so \
