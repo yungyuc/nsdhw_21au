@@ -1,13 +1,13 @@
 ====================
 Simple ML Framework
 ====================
----------------------------
+--------------------------
 B106Roger @2021 NSD autumn
----------------------------
+--------------------------
 
 Basic Information
 ==================
-Project Github Link: https://github.com/B106Roger/nsdhw_21au
+Project Github Link: https://github.com/B106Roger/nsdhw_21au_final_proejct
 
 
 Problem to Solve
@@ -29,7 +29,9 @@ Prospective Users
 
 System Architecture
 ===================
-| - Provide easy-to-use API so that user can customize their neural network model(artribary number of layers, number of neurals)
+| - Provide easy-to-use API so that user can customize their neural network model.
+    For example user can make highly customize model with artribary number of layers, neurals, and use few lines to send the data
+    to your model then do backprobagation.
 | - Provide load weights and save weights functionality
 | - Make sure our implementation of backprobagation is exactly same as the main stream deep learnning framework such as tensorflow or pytorch
 
@@ -115,10 +117,10 @@ Schedule
 ========
 
 - Week 1: read cuda sample API code
-- Week 2: basic memory transfer between CPU and GPU
-- Week 3: matrix multiplication and addition
-- Week 4: single layer backprobagation
-- Week 5: multi layer backprobagation
-- Week 6: loss function backprobagation and gradient descent algorithm
-- Week 7: use pybind to provide Python interface 
+- Week 2: basic memory transfer between CPU and GPU and use pybind
+- Week 3: matrix multiplication, addition and use pybind
+- Week 4: single, multi layer backprobagation
+- Week 5: loss function backprobagation
+- Week 6: Porting the GPU version code to CPU version code 1
+- Week 7: Porting the GPU version code to CPU version code 2, and prepare presentation
 - Week 8: prepare presentation
