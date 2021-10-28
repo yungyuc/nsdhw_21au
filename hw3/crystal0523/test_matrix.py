@@ -56,7 +56,7 @@ class Test_matrix(unittest.TestCase):
 
         for i in range(ret_naive.nrow()):
             for j in range(ret_naive.ncol()):
-                assert mat1[i,j] == ret_mkl[i,j]
+                assert mat1[i,j] is not ret_mkl[i,j]
                 assert ret_naive[i,j] == ret_mkl[i,j]
 
     def test_zero(self):
@@ -87,7 +87,7 @@ class Test_matrix(unittest.TestCase):
 
         for i in range(ret_tile.nrow()):
             for j in range(ret_tile.ncol()):
-                assert mat1[i,j] == ret_mkl[i,j]
+                assert mat1[i,j] is not ret_mkl[i,j]
                 assert ret_tile[i,j] == ret_mkl[i,j]
 
         ns = dict(_matrix=_matrix, mat1=mat1, mat2=mat2, tsize=tsize)
@@ -102,88 +102,30 @@ class Test_matrix(unittest.TestCase):
 
     def test_tile(self):
 
+        show_ratio = bool(os.environ.get('SHOW_RATIO', False))
+
         mat1, mat2, *_ = self.make_matrices(500)
 
         ratio0, time0 = self.check_tile(mat1, mat2, 0)
+        if show_ratio:
+            print("naive ratio:", ratio0)
+
         ratio16, time16 = self.check_tile(mat1, mat2, 16)
+        if show_ratio:
+            print("tile 16 ratio:", ratio16)
+            print("time16/time0:", time16/time0)
+        assert ratio16/ratio0 < 0.8
+
         ratio17, time17 = self.check_tile(mat1, mat2, 17)
+        if show_ratio:
+            print("tile 17 ratio:", ratio17)
+            print("time17/time0:", time17/time0)
+        assert ratio17/ratio0 < 0.8
+
         ratio19, time19 = self.check_tile(mat1, mat2, 19)
-        if ratio16 / ratio0 < 0.8:
-            assert False
-        else:
-            assert True
-
-        if ratio17 / ratio0 < 0.8:
-            assert False
-        else:
-            assert True
-
-        if ratio19 / ratio0 < 0.8:
-            assert False
-        else:
-            assert True
+        if show_ratio:
+            print("tile 19 ratio:", ratio19)
+            print("time19/time0:", time19/time0)
+        assert ratio19/ratio0 < 0.8
      
-
-class Writer:
-
-    def __init__(self, streams):
-
-        self.streams = streams
-
-    def write(self, msg):
-
-        for stream in self.streams:
-
-            stream.write(msg)
-
-
-def benchmark():
-
-    setup = '''
-import _matrix
-size = 1000
-mat1 = _matrix.Matrix(size,size)
-mat2 = _matrix.Matrix(size,size)
-for it in range(size):
-    for jt in range(size):
-        mat1[it, jt] = it * size + jt + 1
-        mat2[it, jt] = it * size + jt + 1
-'''
-
-    naive = timeit.Timer('_matrix.multiply_naive(mat1, mat2)', setup=setup)
-    tile = timeit.Timer('_matrix.multiply_tile(mat1, mat2)', setup=setup)
-    mkl = timeit.Timer('_matrix.multiply_mkl(mat1, mat2)', setup=setup)
-
-    repeat = 5
-
-    with open('performance.txt', 'w') as fobj:
-
-        w = Writer([sys.stdout, fobj])
-        w.write(f'Start multiply_naive (repeat={repeat}), take ')
-        naivesec = naive.repeat(repeat=repeat, number=1)
-        w.write(f'{naivesec} seconds\n')
-
-        w.write(f'Start multiply_tile (repeat={repeat}), take ')
-        tilesec = tile.repeat(repeat=repeat, number=1)
-        w.write(f'{tilesec} seconds\n')
-
-        w.write(f'Start multiply_mkl (repeat={repeat}), take ')
-        mklsec = mkl.repeat(repeat=repeat, number=1)
-        w.write(f'{mklsec} seconds\n')
-
-        w.write('Tile speed-up over naive: %g x\n' % (naivesec/tilesec))
-        w.write('MKL speed-up over naive: %g x\n' % (naivesec/mklsec))
-    
-
-if __name__ == '__main__':
-    benchmark()
-
-
-        
-
-
-
-       
-
-
 
