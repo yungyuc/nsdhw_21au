@@ -13,9 +13,9 @@ _matrix.*.so: _matrix.cpp _matrix.hpp StopWatch.hpp
 # $(CC) -o _matrix`$(PYCONFIG)` $(CFLAGS) $(INCLUDE) `$(PYBIND)` $< 
 # matrix: _matrix.cpp _matrix.hpp StopWatch.hpp
 # 	dpcpp -o matrix -fsycl-device-code-split=per_kernel -DMKL_ILP64 -I${MKLROOT}/include $< ${MKLROOT}/lib/intel64/libmkl_sycl.a -Wl,--start-group ${MKLROOT}/lib/intel64/libmkl_intel_ilp64.a ${MKLROOT}/lib/intel64/libmkl_tbb_thread.a ${MKLROOT}/lib/intel64/libmkl_core.a -Wl,--end-group -L${TBBROOT}/lib/intel64/gcc4.8 -ltbb -lsycl -lOpenCL -lpthread -lm -ldl
-run: xxx
-	@./xxx
+
 clean:
-	@rm -rf *.so
-test:
-	@python3 -m pytest -vx
+	rm -rf *.so
+
+test: all
+	python3 -m pytest -vx
