@@ -1,6 +1,6 @@
 import _matrix
 
-size = 1000
+size = 2000
 
 mat1 = _matrix.Matrix(size,size)
 mat2 = _matrix.Matrix(size,size)
