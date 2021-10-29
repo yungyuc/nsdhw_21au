@@ -61,7 +61,7 @@ Matrix multiply_tile(const Matrix &m1, const Matrix &m2, size_t blocksize){
                 for(size_t ii=i; ii<std::min(i+blocksize, m1nrow); ii++){
                     for(size_t jj=j; jj<std::min(j+blocksize, m2ncol); jj++){
                         double t = 0;
-                        for(size_t kk=k; kk<std::min(k+blocksize, m2nrow) kk++){
+                        for(size_t kk=k; kk<std::min(k+blocksize, m2nrow); kk++){
                             t += m1.m_buffer[ii*m1nrow+kk] * m2.m_buffer[kk*m2nrow+jj];
                         }
                         m3.m_buffer[ii*m3.nrow()+jj] = t;
