@@ -266,7 +266,7 @@ Matrix multiple_tile(Matrix const &mat1, Matrix const &mat2, size_t width)
             "differs from that of second matrix row");
     }
 
-    size_t M = ret.nrow(), N = mat1.ncol(), K = ret.ncol();
+    size_t M = mat1.nrow(), N = mat1.ncol(), K = mat2.ncol();
     Matrix ret(M, K);
 
     for (size_t row = 0; row < M; row += width)
