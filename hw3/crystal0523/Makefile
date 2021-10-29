@@ -22,7 +22,7 @@ LDFLAGS=${MKL_ROOT}/libmkl_def.so \
 all: $(FILE).*.so
 
 $(FILE).*.so: 
-	$(CC) $(CFLAGS) $(INCLUDES) `$(PYTHON) -m pybind11 --includes` $^ -o $(FILE)`$(PYTHON)-config --extension-suffix` -I/usr/include/python3.8 $(LDFLAGS)
+	$(CC) $(CFLAGS) $(INCLUDES) `$(PYTHON) -m pybind11 --includes` $< -o $(FILE)`$(PYTHON)-config --extension-suffix` -I/usr/include/python3.8 $(LDFLAGS)
 
 test: all
 	$(PYTHON) -m pytest -v
