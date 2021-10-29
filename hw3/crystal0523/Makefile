@@ -14,7 +14,7 @@ LDFLAGS=${MKL_LIB_DIR}/libmkl_def.so \
 		 -lpthread -lm -ldl \
 	     -lblas -lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -liomp5
 
-.PHONY: clean, run, test
+.PHONY: all, clean, benchmark, test
 
 all:
 	$(CXX) ${CFLAGS} -I/usr/include/mkl $(INCLUDES) _matrix.cpp -o _matrix$(SUFFIX) -I/usr/include/python3.8 $(LDFLAGS)
