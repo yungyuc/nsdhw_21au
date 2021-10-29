@@ -21,7 +21,7 @@ LDFLAGS=${MKL_LIB_DIR}/libmkl_def.so \
 all: $(FILE).*.so
 
 $(FILE).*.so: $(FILE).cpp
-	$(CXX) $(CXXFLAGS) `$(pybind11)` $< -o $(FILE)`$(suffix)` $(MKL_LIBS) -I /usr/include/python3.8 $(LDFLAGS)
+	$(CXX) $(CFLAGS) `$(pybind11)` $< -o $(FILE)`$(suffix)` $(MKL_LIBS) -I /usr/include/python3.8 $(LDFLAGS)
 
 test: all
 	python3 -m pytest test_matrix.py
