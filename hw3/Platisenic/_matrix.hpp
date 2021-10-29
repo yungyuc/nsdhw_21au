@@ -108,20 +108,6 @@ public:
 
     double gflops() const { return m_nflo / m_elapsed / 1.e9; }
 
-    bool operator==(Matrix const &rhs){
-        if((m_nrow != rhs.nrow()) && (m_ncol != rhs.ncol())) { return false; }
-
-        for(size_t i=0; i<m_ncol; i++){
-            for(size_t j=0; j<m_nrow; j++){
-                if((*this)(i, j) != rhs(i, j)) { return false; }
-            }
-        }
-        return true;
-    }
-
-    bool operator!=(Matrix const &rhs){
-        return !((*this) == rhs);
-    }
 
     void print(){
         for(size_t i=0; i<m_nrow; i++){

@@ -7,6 +7,21 @@
 #include <pybind11/operators.h>
 namespace py = pybind11;
 
+bool operator==(Matrix const &lhs, Matrix const &rhs){
+    if((m_nrow != rhs.nrow()) && (m_ncol != rhs.ncol())) { return false; }
+
+    for(size_t i=0; i<m_ncol; i++){
+        for(size_t j=0; j<m_nrow; j++){
+            if(lhs(i, j) != rhs(i, j)) { return false; }
+        }
+    }
+    return true;
+}
+
+bool operator!=(Matrix const &lhs, Matrix const &rhs){
+    return !(lhs == rhs);
+}
+
 void initialize(Matrix &m1){
     for(size_t i=0; i<m1.nrow(); i++){
         for(size_t j=0; j<m1.ncol(); j++){
@@ -93,7 +108,7 @@ Matrix multiply_mkl(Matrix const & mat1, Matrix const & mat2)
 PYBIND11_MODULE(_matrix, m) {
     py::class_<Matrix>(m, "Matrix")
         .def(py::init<size_t, size_t>())
-        .def("__eq__", [](const Matrix &self, const Matrix &other) { return self == other; })
+        .def(py::self == py::self)
         .def("__getitem__", &Matrix::getitem)
         .def("__setitem__", &Matrix::setitem)
         .def_readwrite("nrow", &Matrix::m_nrow)
