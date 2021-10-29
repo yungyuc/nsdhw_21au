@@ -93,7 +93,7 @@ Matrix multiply_mkl(Matrix const & mat1, Matrix const & mat2)
 PYBIND11_MODULE(_matrix, m) {
     py::class_<Matrix>(m, "Matrix")
         .def(py::init<size_t, size_t>())
-        .def(py::self == py::self)
+        .def("__eq__", [](const Matrix &self, const Matrix &other) { return self == other; })
         .def("__getitem__", &Matrix::getitem)
         .def("__setitem__", &Matrix::setitem)
         .def_readwrite("nrow", &Matrix::m_nrow)
