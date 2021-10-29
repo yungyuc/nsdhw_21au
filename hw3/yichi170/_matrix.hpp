@@ -20,7 +20,14 @@ public:
 
     Matrix & operator=(const Matrix & other) {
         
-        m_buffer = other.m_buffer;
+        if (this == &other) { return *this; }
+        if (m_nrow != other.m_nrow || m_ncol != other.m_ncol)
+            reset_buffer(other.m_nrow, other.m_ncol);
+        
+        for (size_t i = 0; i < m_nrow; i++)
+            for (size_t j = 0; j < m_ncol; j++)
+                (*this)(i, j) = other(i, j);
+            
         return *this;
     }
 
