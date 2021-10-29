@@ -31,13 +31,11 @@ void initialize(Matrix &m1){
 }
 
 Matrix multiply_naive(const Matrix &m1, const Matrix &m2){
-    const size_t m1nrow  = m1.nrow();
-    const size_t m2ncol  = m2.ncol();
-    Matrix m3(m1nrow, m2ncol);
-    for(size_t i=0; i<m1nrow; i++){
-        for(size_t j=0; j<m2ncol; j++){
+    Matrix m3(m1.nrow(), m2.ncol());
+    for(size_t i=0; i<m1.nrow(); i++){
+        for(size_t j=0; j<m2.ncol(); j++){
             double t = 0;
-            for(size_t k=0; k<m1nrow; k++){
+            for(size_t k=0; k<m1.nrow(); k++){
                 t += m1(i, k) * m2(k, j);
             }
             m3(i, j) = t;
@@ -53,10 +51,13 @@ Matrix multiply_tile(const Matrix &m1, const Matrix &m2, size_t blocksize){
         for (size_t k=0; k<m2.ncol(); k+=blocksize){
             for (size_t j=0; j<m1.ncol(); j+=blocksize){
                  for (size_t kk = j; kk < std::min(m1.ncol(), j + blocksize); kk++){
+                    size_t m2base = kk*m2.nrow();
                     for (size_t ii = i; ii < std::min(m1.nrow(), i + blocksize); ii++) {
+                        size_t m1base = ii*m1.nrow()+kk;
+                        size_t m3base = ii*m3.nrow();
                         for (size_t jj =k; jj < std::min(m2.ncol(), k + blocksize); jj++) {
                             // m3(ii, jj) += m1(ii, kk) * m2(kk, jj);
-                            m3.m_buffer[ii*m3.nrow()+jj] += m1.m_buffer[ii*m1.nrow()+kk] * m2.m_buffer[kk*m2.nrow()+jj];
+                            m3.m_buffer[m3base+jj] += m1.m_buffer[m1base] * m2.m_buffer[m2base+jj];
                         }
                     }
                 }
