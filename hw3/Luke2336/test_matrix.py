@@ -1,4 +1,4 @@
-import matrix
+import _matrix
 import numpy as np
 import time
 import pytest
@@ -14,9 +14,9 @@ def test_multiply_naive():
   mat1 = buffer1.reshape(row1, col1)
   mat2 = buffer2.reshape(row2, col2)
   mat3 = np.dot(mat1, mat2)
-  m1 = matrix.Matrix(mat1)
-  m2 = matrix.Matrix(mat2)
-  ret = matrix.multiply_naive(m1, m2)
+  m1 = _matrix.Matrix(mat1)
+  m2 = _matrix.Matrix(mat2)
+  ret = _matrix.multiply_naive(m1, m2)
 
   for i in range(row1):
     for j in range(col2):
@@ -33,9 +33,9 @@ def test_multiply_tile():
   mat1 = buffer1.reshape(row1, col1)
   mat2 = buffer2.reshape(row2, col2)
   mat3 = np.dot(mat1, mat2)
-  m1 = matrix.Matrix(mat1)
-  m2 = matrix.Matrix(mat2)
-  ret = matrix.multiply_tile(m1, m2, 4)
+  m1 = _matrix.Matrix(mat1)
+  m2 = _matrix.Matrix(mat2)
+  ret = _matrix.multiply_tile(m1, m2, 4)
 
   for i in range(row1):
     for j in range(col2):
@@ -44,8 +44,8 @@ def test_multiply_tile():
 
 def test_time():
   size = 1000
-  ma = matrix.Matrix(size, size)
-  mb = matrix.Matrix(size, size)
+  ma = _matrix.Matrix(size, size)
+  mb = _matrix.Matrix(size, size)
   for i in range(size):
     for j in range(size):
       ma[i, j] = i + j
@@ -53,13 +53,13 @@ def test_time():
 
   start_time = time.time()
   for i in range(5):
-    matrix.multiply_naive(ma, mb)
+    _matrix.multiply_naive(ma, mb)
   end_time = time.time()
   time_naive = (end_time - start_time) / 5
 
   start_time = time.time()
   for i in range(5):
-    matrix.multiply_tile(ma, mb, 32)
+    _matrix.multiply_tile(ma, mb, 32)
   end_time = time.time()
   time_tile = (end_time - start_time) / 5
 

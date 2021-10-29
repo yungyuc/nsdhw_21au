@@ -225,7 +225,7 @@ Matrix multiply_mkl(const Matrix &ma, const Matrix &mb) {
   return ret;
 }
 
-PYBIND11_MODULE(matrix, m) {
+PYBIND11_MODULE(_matrix, m) {
   m.doc() = "matrix multiplication";
   m.def("multiply_naive", &multiply_naive);
   m.def("multiply_tile", &multiply_tile);
