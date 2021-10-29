@@ -8,10 +8,10 @@
 namespace py = pybind11;
 
 bool operator==(Matrix const &lhs, Matrix const &rhs){
-    if((m_nrow != rhs.nrow()) && (m_ncol != rhs.ncol())) { return false; }
+    if((lhs.m_nrow != rhs.m_nrow) && (lhs.m_ncol != rhs.m_ncol)) { return false; }
 
-    for(size_t i=0; i<m_ncol; i++){
-        for(size_t j=0; j<m_nrow; j++){
+    for(size_t i=0; i<lhs.m_ncol; i++){
+        for(size_t j=0; j<lhs.m_nrow; j++){
             if(lhs(i, j) != rhs(i, j)) { return false; }
         }
     }
