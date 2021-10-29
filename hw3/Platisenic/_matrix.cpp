@@ -50,21 +50,21 @@ Matrix multiply_naive(const Matrix &m1, const Matrix &m2){
 
 Matrix multiply_tile(const Matrix &m1, const Matrix &m2, size_t blocksize){
     const size_t m1nrow = m1.nrow();
-    // const size_t m1ncol = m1.ncol();
+    const size_t m1ncol = m1.ncol();
     const size_t m2nrow = m2.nrow();
     const size_t m2ncol  = m2.ncol();
     Matrix m3(m1nrow, m2ncol);
     StopWatch sw;
     for(size_t i=0; i<m1nrow; i+=blocksize){
-        for(size_t j=0; j<m2ncol; j+=blocksize){
-            for (size_t k=0; k<m2nrow; k+=blocksize){
+        for(size_t j=0; j<m1nrow; j+=blocksize){
+            m3.m_buffer[i*m3.nrow()+j] = 0.0;
+            for (size_t k=0; k<m1ncol; k+=blocksize){
                 for(size_t ii=i; ii<std::min(i+blocksize, m1nrow); ii++){
                     for(size_t jj=j; jj<std::min(j+blocksize, m2ncol); jj++){
-                        double t = 0;
-                        for(size_t kk=k; kk<std::min(k+blocksize, m2nrow); kk++){
-                            t += m1.m_buffer[ii*m1nrow+kk] * m2.m_buffer[kk*m2nrow+jj];
+                        for(size_t kk=k; kk<std::min(k+blocksize, m1ncol); kk++){
+                            m3.m_buffer[ii*m3.nrow()+jj] += m1.m_buffer[ii*m1nrow+kk] * m2.m_buffer[kk*m2nrow+jj];
                         }
-                        m3.m_buffer[ii*m3.nrow()+jj] = t;
+                        
                     }
                 }
             }
@@ -119,7 +119,7 @@ PYBIND11_MODULE(_matrix, m) {
 
 // int main(){
 //     size_t S = 1000;
-//     size_t blocksize = 64;
+//     size_t blocksize =50;
 //     Matrix m1(S, S); 
 //     initialize(m1);
 //     Matrix m2(S, S);

@@ -18,6 +18,9 @@ all: _matrix.*.so
 _matrix.*.so: _matrix.cpp _matrix.hpp StopWatch.hpp
 	$(CC) -o _matrix`$(PYCONFIG)` $(CFLAGS) $(MKL_LIBS) $(MKLLIB) `$(PYBIND)` $<  -I /usr/include/python3.8 -lblas -lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -liomp5 -lpthread -lm
 
+# _matrix: _matrix.cpp _matrix.hpp StopWatch.hpp
+# 	$(CC) -std=c++11 -o $@ $< $(MKL_LIBS) $(MKLLIB) -lblas -lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -liomp5 -lpthread -lm
+
 clean:
 	rm -rf *.so
 

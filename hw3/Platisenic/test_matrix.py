@@ -27,7 +27,7 @@ def test_multiply_tile():
             mat1[it, jt] = it * size + jt + 1
             mat2[it, jt] = it * size + jt + 1
     
-    rst1 = _matrix.multiply_tile(mat1, mat2, 10)
+    rst1 = _matrix.multiply_tile(mat1, mat2, 50)
     rst2 = _matrix.multiply_mkl(mat1, mat2)
     
     for it in range(size):
