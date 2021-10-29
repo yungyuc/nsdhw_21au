@@ -16,6 +16,6 @@ time_naive = min(t_naive.repeat(10, 1))
 ratio = time_tile/time_naive
 
 with open('performance.txt', 'w') as performance:
-    performance.write(f'Naive time: {time_naive.elapsed()}\n')
-    performance.write(f'Tiling time: {time_tile.elapsed()}\n')
+    performance.write(f'Naive time: {time_naive}\n')
+    performance.write(f'Tiling time: {time_tile}\n')
     performance.write(f'Speed up: {ratio}\n')
