@@ -94,7 +94,9 @@ PYBIND11_MODULE(_matrix, m) {
     py::class_<Matrix>(m, "Matrix")
         .def(py::init<size_t, size_t>())
         .def("__getitem__", &Matrix::getitem)
-        .def("__setitem__", &Matrix::setitem);
+        .def("__setitem__", &Matrix::setitem)
+        .def_readwrite("nrow", &Matrix::m_nrow)
+        .def_readwrite("ncol", &Matrix::m_ncol);
     m.def("multiply_mkl", &multiply_mkl, "");
     m.def("multiply_tile", &multiply_tile, "");
     m.def("multiply_naive", &multiply_naive, "");
