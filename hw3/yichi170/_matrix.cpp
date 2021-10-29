@@ -90,8 +90,6 @@ Matrix multiply_mkl(const Matrix &mt1, const Matrix &mt2) {
     
     validation_check(mt1, mt2);
     
-    mkl_set_num_threads(1);
-
     Matrix ret(mt1.m_nrow, mt2.m_ncol);
 
     cblas_dgemm(
