@@ -1,9 +1,13 @@
-.PHONY: clean all benchmark test
+.PHONY: all, test, benchmark, clean
 
 CXX = clang++
-CFLAGS =: -Wall -std=c++11 -O3 -m64 -fPIC -shared
-INCLUDES =`python3 -m pybind11 --includes`
-SUFFIX =`python3-config --extension-suffix`
+CXXFLAGS = -O3 -Wall -shared -std=c++11 -fPIC
+
+INCLUDES = python3 -m pybind11 --includes
+SUFFIX = python3-config --extension-suffix
+FILE = _matrix
+PYTHON = python3
+
 
 MKL_LIB_DIR=/usr/lib/x86_64-linux-gnu
 LDFLAGS=${MKL_LIB_DIR}/libmkl_def.so \
@@ -16,13 +20,13 @@ LDFLAGS=${MKL_LIB_DIR}/libmkl_def.so \
 
 
 all:
-	$(CXX) $(CFLAGS) -I/usr/include/mkl $(INCLUDES) _matrix.cpp -o _matrix$(SUFFIX) -I/usr/include/python3.8 $(LDFLAGS)
+	$(CXX) $(CFLAGS) $(INCLUDES) $< -o $(FILE)$(SUFFIX) -I/usr/include/python3.8 $(LDFLAGS)
 
-test: all
-	python3 -m pytest test_matrix.py
+test:
+	$(PYTHON) pytest test_matrix.py
 
 benchmark:
-	python3 benchmark.py
+	$(PYTHON) benchmark.py
 
 clean:
-	rm -rf *.so __pycache__  .pytest_cache performance.txt
+	rm *.o performance.txt
