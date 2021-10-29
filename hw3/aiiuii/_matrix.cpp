@@ -282,7 +282,7 @@ Matrix multiple_tile(Matrix const &mat1, Matrix const &mat2, const size_t width)
                         for (size_t n = iter; n < std::min(N, iter + width); ++n)
                         {
                             // ret(m, k) += mat1(m, n) * mat2(n, k);
-                            ret.buffer(m*N + k) += mat1(m*N + n) * mat2(n*N + k);
+                            ret.buffer(m*N + k) += mat1.buffer(m*N + n) * mat2.buffer(n*N + k);
                         }
                     }
                 }
