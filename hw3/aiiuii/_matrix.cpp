@@ -257,7 +257,7 @@ Matrix multiply_naive(Matrix const &mat1, Matrix const &mat2)
 /*
  * Tile matrix matrix multiplication.
  */
-Matrix multiple_tile(Matrix const &mat1, Matrix const &mat2, size_t width)
+Matrix multiple_tile(Matrix const &mat1, Matrix const &mat2, const size_t width)
 {
     if (mat1.ncol() != mat2.nrow())
     {
@@ -266,7 +266,7 @@ Matrix multiple_tile(Matrix const &mat1, Matrix const &mat2, size_t width)
             "differs from that of second matrix row");
     }
 
-    size_t M = mat1.nrow(), N = mat1.ncol(), K = mat2.ncol();
+    const size_t M = mat1.nrow(), N = mat1.ncol(), K = mat2.ncol();
     Matrix ret(M, K);
 
     for (size_t row = 0; row < M; row += width)
@@ -281,7 +281,8 @@ Matrix multiple_tile(Matrix const &mat1, Matrix const &mat2, size_t width)
                     {
                         for (size_t n = iter; n < std::min(N, iter + width); ++n)
                         {
-                            ret(m, k) += mat1(m, n) * mat2(n, k);
+                            // ret(m, k) += mat1(m, n) * mat2(n, k);
+                            ret.buffer(m*N + k) += mat1(m*N + n) * mat2(n*N + k);
                         }
                     }
                 }
