@@ -4,7 +4,7 @@ CC = clang++
 CFLAGS = -Wall -std=c++11 -O3 -m64 -fPIC -shared
 
 MKL_ROOT = /usr/lib/x86_64-linux-gnu/
-INCLUDEs = -I/usr/include/mkl
+INCLUDES = -I/usr/include/mkl
 
 PYTHON = python3
 FILE = _matrix
