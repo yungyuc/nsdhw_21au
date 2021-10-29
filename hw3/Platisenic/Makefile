@@ -22,7 +22,7 @@ _matrix.*.so: _matrix.cpp _matrix.hpp StopWatch.hpp
 # 	$(CC) -std=c++11 -o $@ $< $(MKL_LIBS) $(MKLLIB) -lblas -lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -liomp5 -lpthread -lm
 
 clean:
-	rm -rf *.so
+	rm -rf *.so __pycache__ .pytest_cache
 
 test: all
 	python3 -m pytest -vx

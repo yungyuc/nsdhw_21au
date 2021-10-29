@@ -34,7 +34,6 @@ Matrix multiply_naive(const Matrix &m1, const Matrix &m2){
     const size_t m1nrow  = m1.nrow();
     const size_t m2ncol  = m2.ncol();
     Matrix m3(m1nrow, m2ncol);
-    StopWatch sw;
     for(size_t i=0; i<m1nrow; i++){
         for(size_t j=0; j<m2ncol; j++){
             double t = 0;
@@ -44,33 +43,25 @@ Matrix multiply_naive(const Matrix &m1, const Matrix &m2){
             m3(i, j) = t;
         }
     }
-    m3.elapsed() = sw.lap();
     return m3;
 }
 
 Matrix multiply_tile(const Matrix &m1, const Matrix &m2, size_t blocksize){
-    const size_t m1nrow = m1.nrow();
-    const size_t m1ncol = m1.ncol();
-    const size_t m2nrow = m2.nrow();
-    const size_t m2ncol  = m2.ncol();
-    Matrix m3(m1nrow, m2ncol);
-    StopWatch sw;
-    for(size_t i=0; i<m1nrow; i+=blocksize){
-        for(size_t j=0; j<m1nrow; j+=blocksize){
-            m3.m_buffer[i*m3.nrow()+j] = 0.0;
-            for (size_t k=0; k<m1ncol; k+=blocksize){
-                for(size_t ii=i; ii<std::min(i+blocksize, m1nrow); ii++){
-                    for(size_t jj=j; jj<std::min(j+blocksize, m2ncol); jj++){
-                        for(size_t kk=k; kk<std::min(k+blocksize, m1ncol); kk++){
-                            m3.m_buffer[ii*m3.nrow()+jj] += m1.m_buffer[ii*m1nrow+kk] * m2.m_buffer[kk*m2nrow+jj];
+    Matrix m3(m1.nrow(), m2.ncol());
+
+    for (size_t i=0; i<m1.nrow(); i+=blocksize){
+        for (size_t k=0; k<m2.ncol(); k+=blocksize){
+            for (size_t j=0; j<m1.ncol(); j+=blocksize){
+                 for (size_t kk = j; kk < std::min(m1.ncol(), j + blocksize); kk++){
+                    for (size_t ii = i; ii < std::min(m1.nrow(), i + blocksize); ii++) {
+                        for (size_t jj =k; jj < std::min(m2.ncol(), k + blocksize); jj++) {
+                            m3(ii, jj) += m1(ii, kk) * m2(kk, jj);
                         }
-                        
                     }
                 }
             }
         }
     }
-    m3.elapsed() = sw.lap();
     return m3;
 }
 
@@ -79,9 +70,6 @@ Matrix multiply_mkl(Matrix const & mat1, Matrix const & mat2)
     mkl_set_num_threads(1);
 
     Matrix ret(mat1.nrow(), mat2.ncol());
-
-    StopWatch sw;
-
     cblas_dgemm(
         CblasRowMajor /* const CBLAS_LAYOUT Layout */
       , CblasNoTrans /* const CBLAS_TRANSPOSE transa */
@@ -98,8 +86,6 @@ Matrix multiply_mkl(Matrix const & mat1, Matrix const & mat2)
       , ret.m_buffer /* double * c */
       , ret.ncol() /* const MKL_INT ldc */
     );
-
-    ret.elapsed() = sw.lap();
 
     return ret;
 }
