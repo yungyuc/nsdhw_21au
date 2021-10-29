@@ -2,7 +2,7 @@
 #include "StopWatch.hpp"
 #include <iostream>
 #include <algorithm>
-#include "oneapi/mkl.hpp"
+#include <mkl.h>
 #include <pybind11/pybind11.h>
 #include <pybind11/operators.h>
 namespace py = pybind11;
