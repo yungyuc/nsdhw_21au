@@ -144,6 +144,7 @@ public:
 
     size_t size() const { return m_nrow * m_ncol; }
     double buffer(size_t i) const { return m_buffer[i]; }
+    double& buffer(size_t i) { return m_buffer[i]; }
     std::vector<double> buffer_vector() const
     {
         return std::vector<double>(m_buffer, m_buffer + size());
