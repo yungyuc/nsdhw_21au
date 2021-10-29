@@ -5,6 +5,7 @@ import sys
 import os
 import pytest
 
+
 class Test_matrix(unittest.TestCase):
 
     def make_matrices(self, size):
