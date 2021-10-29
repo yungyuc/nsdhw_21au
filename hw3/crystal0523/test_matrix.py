@@ -114,6 +114,7 @@ class Test_matrix(unittest.TestCase):
             print("naive ratio:", ratio0)
 
         ratio16, time16 = self.check_tile(mat1, mat2, 16)
+        
         if show_ratio:
             print("tile 16 ratio:", ratio16)
             print("time16/time0:", time16/time0)
