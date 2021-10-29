@@ -1,33 +1,34 @@
-.PHONY: clean test
+.PHONY: all test benchmark clean
 
-CXX =: clang++
-CFLAG =: -Wall -std=c++11 -O3 -m64 -fPIC -shared
-INCLUDES =`python3 -m pybind11 --includes`
-SUFFIX =`python3-config --extension-suffix`
+CC = clang++
+CFLAGS = -Wall -std=c++11 -O3 -m64 -fPIC -shared
 
+MKL_ROOT = /usr/lib/x86_64-linux-gnu/
+INCLUDEs = -I/usr/include/mkl
 
-MKL_LIB_DIR=/usr/lib/x86_64-linux-gnu
-MKL_LIBS=${MKL_LIB_DIR}/libmkl_def.so \
-		${MKL_LIB_DIR}/libmkl_avx2.so \
-		${MKL_LIB_DIR}/libmkl_core.so \
-		${MKL_LIB_DIR}/libmkl_intel_lp64.so \
-		${MKL_LIB_DIR}/libmkl_sequential.so
-		-lpthread -lm -ldl \
+PYTHON = python3
+FILE = _matrix
+
+LDFLAGS=${MKL_ROOT}/libmkl_def.so \
+		 ${MKL_ROOT}/libmkl_avx2.so \
+		 ${MKL_ROOT}/libmkl_core.so \
+		 ${MKL_ROOT}/libmkl_intel_lp64.so \
+		 ${MKL_ROOT}/libmkl_sequential.so \
+		 -lpthread -lm -ldl \
 	     -lblas -lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -liomp5
 
-OPT=-O3 -m64
 
-all:
-	$(CXX) ${CFLAG} $(INCLUDES) _matrix.cpp -o _matrix$(SUFFIX) -I/usr/include/python3.8 ${MKL_LIBS}
-	
+
+all: $(FILE).*.so
+
+$(FILE).*.so: 
+	$(CC) $(CFLAGS) $(INCLUDES) `$(PYTHON) -m pybind11 --includes` $^ -o $(FILE)`$(PYTHON)-config --extension-suffix` -I/usr/include/python3.8 $(LDFLAGS)
 
 test: all
-	python3 -m pytest test_matrix.py
+	$(PYTHON) -m pytest -v
 
 benchmark:
-	python3 benchmark.py
+	$(PYTHON) benchmark.py
 
 clean:
-	rm -rf *.so __pycache__ ../.pytest_cache .pytest_cache ../.vscode performance.txt
-
-
+	$(RM) *.o $(FILE).*.so performance.txt
