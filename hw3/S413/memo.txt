@@ -1,0 +1,4 @@
+Last you discovered, you need to export the MAtrix class,
+otherwise, the functions will say that they received 
+unexpected data classes as parameters. Should probably
+be able to call Matrix from within python. 
