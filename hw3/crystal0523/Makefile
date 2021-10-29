@@ -1,9 +1,9 @@
-CXX =: g++
+CXX =: clang++
 CFLAG =: -Wall -std=c++11 -O3 -m64 -fPIC -shared
 
 
-pybind11 = python3 -m pybind11 --includes
-suffix = python3-config --extension-suffix
+pybind11 = `python3 -m pybind11 --includes`
+suffix = `python3-config --extension-suffix`
 FILE = _matrix
 
 MKL_LIB_DIR=/usr/lib/x86_64-linux-gnu
@@ -15,13 +15,11 @@ LDFLAGS=${MKL_LIB_DIR}/libmkl_def.so \
 		 -lpthread -lm -ldl \
 	     -lblas -lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -liomp5
 
-.PHONY: cleam, run, test
+.PHONY: cleam, run, test, benchmark
 
 
-all: $(FILE).*.so
-
-$(FILE).*.so: $(FILE).cpp
-	$(CXX) $(CXXFLAGS) `$(pybind11)` $< -o $(FILE)`$(suffix)` $(MKL_LIBS) -I /usr/include/python3.8 $(LDFLAGS)
+all:
+	$(CXX) $(CFLAG) -I/usr/include/mkl $(pybind11) _matrix.cpp -o _matrix$(suffix) -I/usr/include/python3.8 $(LDFLAGS)
 
 test: all
 	python3 -m pytest test_matrix.py
