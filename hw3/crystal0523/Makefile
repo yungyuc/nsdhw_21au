@@ -29,4 +29,4 @@ benchmark:
 	$(PYTHON) benchmark.py
 
 clean:
-	rm *.o performance.txt
+	rm -rf *.so __pycache__  .pytest_cache performance.txt
