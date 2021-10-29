@@ -1,10 +1,8 @@
-CXX =: clang++
-CFLAG =: -Wall -std=c++11 -O3 -m64 -fPIC -shared
-
+CXX = clang++
+CFLAG = -Wall -std=c++11 -O3 -m64 -fPIC -shared
 
 pybind11 = `python3 -m pybind11 --includes`
 suffix = `python3-config --extension-suffix`
-FILE = _matrix
 
 MKL_LIB_DIR=/usr/lib/x86_64-linux-gnu
 LDFLAGS=${MKL_LIB_DIR}/libmkl_def.so \
@@ -15,7 +13,7 @@ LDFLAGS=${MKL_LIB_DIR}/libmkl_def.so \
 		 -lpthread -lm -ldl \
 	     -lblas -lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -liomp5
 
-.PHONY: cleam, run, test, benchmark
+.PHONY: clean, all, test, benchmark
 
 
 all:
