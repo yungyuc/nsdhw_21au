@@ -17,7 +17,7 @@ LDFLAGS=${MKL_LIB_DIR}/libmkl_def.so \
 .PHONY: all, clean, benchmark, test
 
 all:
-	$(CXX) ${CFLAGS} -I/usr/include/mkl $(INCLUDES) _matrix.cpp -o _matrix$(SUFFIX) -I/usr/include/python3.8 $(LDFLAGS)
+	$(CXX) $(CFLAGS) -I/usr/include/mkl $(INCLUDES) _matrix.cpp -o _matrix$(SUFFIX) -I/usr/include/python3.8 $(LDFLAGS)
 
 test: all
 	python3 -m pytest test_matrix.py
