@@ -57,16 +57,15 @@ Matrix multiply_tile(const Matrix &m1, const Matrix &m2, size_t blocksize){
     StopWatch sw;
     for(size_t i=0; i<m1nrow; i+=blocksize){
         for(size_t j=0; j<m2ncol; j+=blocksize){
-            for(size_t ii=i; ii<std::min(i+blocksize, m1nrow); ii++){
-                for(size_t jj=j; jj<std::min(j+blocksize, m2ncol); jj++){
-                    // std::cout << "ii: " << ii << " jj: " << jj << std::endl;
-                    double t = 0;
-                    for(size_t k=0; k<m1nrow; k++){
-                        t += m1.m_buffer[ii*m1nrow+k] * m2.m_buffer[k*m2nrow+jj];
-                        // std::cout << "t: " << t << std::endl;
+            for (size_t k=0; k<m2_nrow; k+=blocksize){
+                for(size_t ii=i; ii<std::min(i+blocksize, m1nrow); ii++){
+                    for(size_t jj=j; jj<std::min(j+blocksize, m2ncol); jj++){
+                        double t = 0;
+                        for(size_t kk=k; kk<std::min(k+blocksize, m2nrow) kk++){
+                            t += m1.m_buffer[ii*m1nrow+kk] * m2.m_buffer[kk*m2nrow+jj];
+                        }
+                        m3.m_buffer[ii*m3.nrow()+jj] = t;
                     }
-                    m3.m_buffer[ii*m3.nrow()+jj] = t;
-                    // m3(ii, jj) = t;
                 }
             }
         }
