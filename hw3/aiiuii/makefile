@@ -17,7 +17,7 @@ all: $(TARGET)
 .PHONY: clean test
 
 $(TARGET): _matrix.cpp
-	$(CXX) $(CFLAGS) -shared -fPIC `python3 -m pybind11 --includes` _matrix.cpp -o _matrix`python3-config --extension-suffixINCLUDE` \
+	$(CXX) $(CFLAGS) -shared -fPIC `python3 -m pybind11 --includes` _matrix.cpp -o _matrix`python3-config --extension-suffix` \
 	`python3-config --includes` $(INCLUDE) $(MKL)
 
 test: $(TARGET)
