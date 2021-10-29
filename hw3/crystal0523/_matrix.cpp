@@ -23,7 +23,6 @@ public:
     bool operator== (Matrix const & mat1)const;
     double   operator() (size_t row, size_t col) const { return buffer_[index(row, col)]; }
     double & operator() (size_t row, size_t col) { return buffer_[index(row, col)]; }
-    void Print()const;
     size_t nrow() const { return row_; }
     size_t ncol() const { return col_; }
     size_t size() const { return row_ * col_; }
@@ -57,18 +56,6 @@ bool Matrix::operator== (Matrix const & mat1)const
     }
 
     return true;
-}
-
-void Matrix::Print()const
-{
-    for(int i = 0; i < (*this).row_; i++)
-    {
-        for(int j = 0; j < (*this).col_; j++)
-        {
-            std::cout << (*this)(i,j) << " ";
-        }
-        std::cout << std::endl;
-    }
 }
 
 /*
@@ -187,7 +174,6 @@ PYBIND11_MODULE(_matrix, m) {
         .def("assign", &Matrix::operator=)
         .def(py::self==py::self)   
         .def_property_readonly("nrow", &Matrix::nrow)
-        .def_property_readonly("ncol", &Matrix::ncol)
-        .def("Print", &Matrix::Print);
+        .def_property_readonly("ncol", &Matrix::ncol);
 }
 
