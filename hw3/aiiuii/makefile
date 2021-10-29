@@ -20,7 +20,7 @@ $(TARGET): _matrix.cpp
 	$(CXX) $(CFLAGS) -shared -fPIC `python3 -m pybind11 --includes` _matrix.cpp -o _matrix`python3-config --extension-suffix` `python3-config --includes` $(MKL)
 
 test: $(TARGET)
-	python3 -m pytest test_matrix.py
+	python3 -m pytest unit_test.py
 
 clean: 
 	rm -rf $(TARGET)  __pycache__
