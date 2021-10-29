@@ -59,7 +59,7 @@ def test_time():
 
   start_time = time.time()
   for i in range(5):
-    _matrix.multiply_tile(ma, mb, 32)
+    _matrix.multiply_tile(ma, mb, 16)
   end_time = time.time()
   time_tile = (end_time - start_time) / 5
 
