@@ -266,19 +266,20 @@ Matrix multiple_tile(Matrix const &mat1, Matrix const &mat2, size_t width)
             "differs from that of second matrix row");
     }
 
-    Matrix ret(mat1.nrow(), mat2.ncol());
+    size_t M = ret.nrow(), N = mat1.ncol(), K = ret.ncol();
+    Matrix ret(M, K);
 
-    for (size_t row = 0; row < ret.nrow(); row += width)
+    for (size_t row = 0; row < M; row += width)
     {
-        for (size_t col = 0; col < ret.ncol(); col += width)
+        for (size_t col = 0; col < K; col += width)
         {
-            for (size_t iter = 0; iter < mat1.ncol(); iter += width)
+            for (size_t iter = 0; iter < N; iter += width)
             {
-                for (size_t m = row; m < std::min(ret.nrow(), row + width); ++m)
+                for (size_t m = row; m < std::min(M, row + width); ++m)
                 {
-                    for (size_t k = col; k < std::min(ret.ncol(), col + width); ++k)
+                    for (size_t k = col; k < std::min(K, col + width); ++k)
                     {
-                        for (size_t n = iter; n < std::min(mat1.ncol(), iter + width); ++n)
+                        for (size_t n = iter; n < std::min(N, iter + width); ++n)
                         {
                             ret(m, k) += mat1(m, n) * mat2(n, k);
                         }
