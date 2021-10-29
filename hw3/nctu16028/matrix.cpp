@@ -92,7 +92,7 @@ size_t Matrix::ncol() const
 }
 
 // access the raw contents of the buffer
-double* buff() const
+double* Matrix::buff() const
 {
     return m_buffer;
 }
@@ -118,7 +118,7 @@ Matrix multiply_naive(Matrix const &matA, Matrix const &matB)
         for(size_t j=0; j<matB.ncol(); j++)
         {
             double val = 0;
-            for(size_t k=0; k<matA_ncol(); k++)
+            for(size_t k=0; k<matA.ncol(); k++)
                 val += (matA(i, k) * matB(k, j));
             matC(i, j) = val;
         }
@@ -134,15 +134,15 @@ Matrix multiply_tile(Matrix const &matA, Matrix const &matB, size_t const tile_s
     {
         for(size_t j=0; j<matB.ncol(); j+=tile_size)
         {
+            // tile initialization
+            for(size_t ti=i; ti<std::min(i+tile_size, matA.nrow()); ti++)
+            {
+                for(size_t tj=j; tj<std::min(j+tile_size, matB.ncol()); tj++)
+                    matC(ti, tj) = 0;
+            }
+
             for(size_t k=0; k<matA.ncol(); k+=tile_size)
             {
-                // tile initialization
-                for(size_t ti=i; ti<std::min(i+tile_size, matA.nrow()); ti++)
-                {
-                    for(size_t tj=j; tj<std::min(j+tile_size, matB.ncol()); tj++)
-                        matC(ti, tj) = 0;
-                }
-
                 // tile-tile multiplication
                 for(size_t ti=i; ti<std::min(i+tile_size, matA.nrow()); ti++)
                 {
@@ -181,7 +181,7 @@ Matrix multiply_mkl(Matrix const &matA, Matrix const &matB)
         matB.ncol(),    /* const MKL_INT ldb */
         0.0,            /* const double beta */
         matC.buff(),    /* double * c */
-        matC.ncol(),    /* const MKL_INT ldc */
+        matC.ncol()     /* const MKL_INT ldc */
     );
 
     return matC;
