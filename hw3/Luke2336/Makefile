@@ -1,9 +1,14 @@
 CXX := g++
 CFLAGS := --std=c++11
 WFLAGS := -O3 -Wall -Wextra
-MKL_DIR := /usr/lib/x86_64-linux-gnu/mkl
+MKL_DIR := /usr/lib/x86_64-linux-gnu
+MKL_LIBS := ${MKL_DIR}/libmkl_def.so \
+		        ${MKL_DIR}/libmkl_avx2.so \
+		        ${MKL_DIR}/libmkl_core.so \
+		        ${MKL_DIR}/libmkl_intel_lp64.so \
+		        ${MKL_DIR}/libmkl_sequential.so
 MKL_INCLUDE := /usr/include/mkl
-MKL := -I $(MKL_INCLUDE) -L $(MKL_DIR) -lblas -lmkl_rt  -lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -liomp5 -lpthread -lm
+MKL := -I $(MKL_INCLUDE) $(MKL_LIBS) -lblas -lmkl_rt -lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -liomp5 -lpthread -lm
 INCLUDE := -I /usr/include/python3.8
 TARGET = _matrix.*.so
 
