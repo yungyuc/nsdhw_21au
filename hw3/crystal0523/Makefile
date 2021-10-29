@@ -22,8 +22,8 @@ LDFLAGS=${MKL_LIB_DIR}/libmkl_def.so \
 all:
 	$(CXX) $(CFLAGS) $(INCLUDES) $< -o $(FILE)$(SUFFIX) -I/usr/include/python3.8 $(LDFLAGS)
 
-test:
-	$(PYTHON) pytest test_matrix.py
+test: all
+	$(PYTHON) -m pytest test_matrix.py
 
 benchmark:
 	$(PYTHON) benchmark.py
