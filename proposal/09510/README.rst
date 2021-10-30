@@ -35,9 +35,9 @@ Python API :
     1. encrypt(input_file ,algo ,seed) : Return key, and encrypted file.
     2. decrypt(encrypted_file, algo, key) : Return decrypted file.
   
-  input_file : The file you want to encrypt.
-  algo : setting encrypt/decrypt algo. For example: DES.
-  seed : the seed used to generate random key.
+  -input_file : The file you want to encrypt.
+  -algo : setting encrypt/decrypt algo. For example: DES.
+  -seed : the seed used to generate random key.
 
 
  
