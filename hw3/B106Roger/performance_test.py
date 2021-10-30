@@ -8,6 +8,13 @@ def init_matrix(mat):
     for i in range(r):
         for j in range(c):
             mat[i,j]=i*mat.ncol+j
+def print_matrix(mat):
+    r=mat.nrow
+    c=mat.ncol
+    for i in range(r):
+        for j in range(c):
+            print(f'{mat[i,j]:10.4f}', end=' ')
+        print()
 
 class TestClass:
     def test_mats(self, t1_row, t1_col, t2_row, t2_col):
@@ -22,12 +29,17 @@ class TestClass:
             test_func(mat1, mat2)
         else:
             test_func(mat1, mat2, block_size)
-
+def print_bk(bk):
+    for i in range(2):
+        for j in range(2):
+            print(bk[i,j], end=' ')
+        print()
 if __name__=='__main__':
+    ###################################
     number=4
-    bk_size=32
-    r=1024
-    c=1024
+    bk_size=16
+    r=500
+    c=500
 
     test=TestClass()
     mat1, mat2=test.test_mats(r, c, r, c)

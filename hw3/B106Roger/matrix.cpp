@@ -10,24 +10,54 @@ namespace py = pybind11;
 
 class Block {
 public:
-    Block(size_t nrow, size_t ncol):
-        m_nrow(nrow), m_ncol(ncol), m_buffer(NULL)
+    Block(size_t nrow, size_t ncol, bool colmajor):
+        m_nrow(nrow), m_ncol(ncol), m_buffer(NULL), m_colmajor(colmajor)
     {
+        if (m_colmajor)
+            m_buffer=new double[m_nrow*m_ncol];
     }
-    ~Block() { m_buffer = NULL;}
+    Block(const Block &block):
+        m_nrow(block.m_nrow), m_ncol(block.m_ncol), m_buffer(NULL), m_colmajor(block.m_colmajor)
+    {
+        if (block.m_colmajor)
+        {
+            m_buffer=new double[m_nrow*m_ncol];
+            memcpy(m_buffer, block.m_buffer, sizeof(double) * m_nrow * m_ncol);
+        }
+    }
+    ~Block() { 
+        if (m_colmajor) delete[] m_buffer;
+        m_buffer = NULL;
+    }
     double   operator() (size_t row, size_t col) const { // for getitem
-        if (row > m_nrow) throw std::invalid_argument( "received row exceed nrow" );
-        if (col > m_ncol) throw std::invalid_argument( "received col exceed ncol" );
-        return m_buffer[row*m_row_stride + col];
+        // if (row > m_nrow) throw std::invalid_argument( "received row exceed nrow" );
+        // if (col > m_ncol) throw std::invalid_argument( "received col exceed ncol" );
+        if (m_colmajor)
+        {
+            return m_buffer[col * m_nrow + row];
+        }
+        else
+            return m_buffer[row * m_row_stride + col];
     }
-    void setRow(double *ptr, size_t row_stride) {
+    void setContent(double *ptr, size_t row_stride) {
         m_row_stride = row_stride;
-        m_buffer = ptr;
+        if (m_colmajor) {
+            for (int i = 0; i < m_nrow; i++) {
+                for (int j = 0; j < m_ncol; j++) {
+                    m_buffer[j * m_nrow + i]= ptr[i * m_row_stride + j];
+                }
+            }
+        } else {
+            
+            m_buffer = ptr;
+        }
     }
+
     size_t nrow() const {return m_nrow;}
     size_t ncol() const {return m_ncol;}
 
 private:
+    bool m_colmajor;
     double *m_buffer;
     size_t m_row_stride;
     size_t m_nrow;
@@ -42,6 +72,7 @@ public:
     {
         size_t nelement = nrow * ncol;
         m_buffer = new double[nelement];
+        memset(m_buffer, 0, nelement*sizeof(double));
     }
 
     Matrix(Matrix const &target) {
@@ -57,48 +88,48 @@ public:
 
     // No bound check.
     double   operator() (size_t row, size_t col) const { // for getitem
-        if (row > m_nrow) throw std::invalid_argument( "received row exceed nrow" );
-        if (col > m_ncol) throw std::invalid_argument( "received col exceed ncol" );
+        // if (row > m_nrow) throw std::invalid_argument( "received row exceed nrow" );
+        // if (col > m_ncol) throw std::invalid_argument( "received col exceed ncol" );
         return m_buffer[row*m_ncol + col];
     }
     double & operator() (size_t row, size_t col) {       // for setitem
-        if (row > m_nrow) throw std::invalid_argument( "received row exceed nrow" );
-        if (col > m_ncol) throw std::invalid_argument( "received col exceed ncol" );
+        // if (row > m_nrow) throw std::invalid_argument( "received row exceed nrow" );
+        // if (col > m_ncol) throw std::invalid_argument( "received col exceed ncol" );
         return m_buffer[row*m_ncol + col];
     }
     Matrix operator+(const Matrix &mat) const {
-        if (m_nrow != mat.m_nrow || m_ncol != mat.m_ncol) throw std::invalid_argument( "received matrix shape isn't consistent" );
+        // if (m_nrow != mat.m_nrow || m_ncol != mat.m_ncol) throw std::invalid_argument( "received matrix shape isn't consistent" );
         Matrix result(mat);
         for (int i=0; i< m_nrow; i+=1) {
             for (int j=0; j<m_ncol; j+=1) {
-                result(i,j)+=(*this)(i,j);
+                result.m_buffer[i*m_ncol+j]+=(*this)(i,j);
             }
         }
         return result;
     }
     void operator+=(const Matrix &mat) {
-        if (m_nrow != mat.m_nrow || m_ncol != mat.m_ncol) throw std::invalid_argument( "received matrix shape isn't consistent" );
+        // if (m_nrow != mat.m_nrow || m_ncol != mat.m_ncol) throw std::invalid_argument( "received matrix shape isn't consistent" );
         for (int i=0; i< m_nrow; i+=1) {
             for (int j=0; j<m_ncol; j+=1) {
-                (*this)(i,j)+=mat(i,j);
+                m_buffer[i*m_ncol+j]+=mat(i,j);
             }
         }
     }
     Matrix operator-(const Matrix &mat) const {
-        if (m_nrow != mat.m_nrow || m_ncol != mat.m_ncol) throw std::invalid_argument( "received matrix shape isn't consistent" );
+        // if (m_nrow != mat.m_nrow || m_ncol != mat.m_ncol) throw std::invalid_argument( "received matrix shape isn't consistent" );
         Matrix result(mat);
         for (int i=0; i< m_nrow; i+=1) {
             for (int j=0; j<m_ncol; j+=1) {
-                result(i,j)-=(*this)(i,j);
+                result.m_buffer[i*m_ncol+j]-=(*this)(i,j);
             }
         }
         return result;
     }
     void operator-=(const Matrix &mat) {
-        if (m_nrow != mat.m_nrow || m_ncol != mat.m_ncol) throw std::invalid_argument( "received matrix shape isn't consistent" );
+        // if (m_nrow != mat.m_nrow || m_ncol != mat.m_ncol) throw std::invalid_argument( "received matrix shape isn't consistent" );
         for (int i=0; i< m_nrow; i+=1) {
             for (int j=0; j<m_ncol; j+=1) {
-                (*this)(i,j)-=mat(i,j);
+                m_buffer[i*m_ncol+j]-=mat(i,j);
             }
         }
     }
@@ -127,37 +158,25 @@ public:
     Block get_block(size_t block_size, size_t row_idx, size_t col_idx, bool col2row = false) const{
         // row_idx: row index of the block
         // col_idx: col index of the block
-        if (block_size*row_idx > m_nrow) throw std::invalid_argument( "received block_size*row exceed nrow" );
-        if (block_size*col_idx > m_ncol) throw std::invalid_argument( "received block_size*col exceed ncol" );
+        // if (block_size*row_idx > m_nrow) throw std::invalid_argument( "received block_size*row exceed nrow" );
+        // if (block_size*col_idx > m_ncol) throw std::invalid_argument( "received block_size*col exceed ncol" );
         size_t bk_col = m_ncol - block_size*col_idx < block_size ? m_ncol - block_size*col_idx : block_size;
         size_t bk_row = m_nrow - block_size*row_idx < block_size ? m_nrow - block_size*row_idx : block_size;
-        Block block(bk_row, bk_col);
-        if (!col2row) {
-            size_t target_row=(block_size*row_idx)*m_ncol;
-            size_t target_col=(block_size*col_idx);
-            block.setRow(m_buffer+target_row+target_col, m_ncol);
-            return block;
-        } else {
-            return block;
-        }
+        Block block(bk_row, bk_col, col2row);
 
-        // Matrix matrix(bk_row, bk_col);
-        // for (int i=0;i<bk_row; i++) {
-        //     size_t target_row=(block_size*row_idx+i)*m_ncol;
-        //     size_t target_col=(block_size*col_idx);
-        //     size_t source_row=i*bk_col;
-        //     memcpy(matrix.m_buffer+source_row, m_buffer+target_row+target_col, sizeof(double) * bk_col);
-        // }
-        // return matrix;
+        size_t target_row=(block_size*row_idx)*m_ncol;
+        size_t target_col=(block_size*col_idx);
+        block.setContent(m_buffer+target_row+target_col, m_ncol);
+        return block;
     }
 
     void set_block(size_t block_size, size_t row_idx, size_t col_idx, const Matrix &mat) {
         // row_idx: row index of the block
         // col_idx: col index of the block
-        if (block_size*row_idx > m_nrow || block_size*col_idx > m_ncol) throw std::invalid_argument( "received block_size*row exceed nrow or block_size*col exceed ncol" );
+        // if (block_size*row_idx > m_nrow || block_size*col_idx > m_ncol) throw std::invalid_argument( "received block_size*row exceed nrow or block_size*col exceed ncol" );
         size_t bk_col = m_ncol - block_size*col_idx < block_size ? m_ncol - block_size*col_idx : block_size;
         size_t bk_row = m_nrow - block_size*row_idx < block_size ? m_nrow - block_size*row_idx : block_size;
-        if (bk_row != mat.m_nrow || bk_col != mat.m_ncol) throw std::invalid_argument( "received block_shape and mat are not consistent" );
+        // if (bk_row != mat.m_nrow || bk_col != mat.m_ncol) throw std::invalid_argument( "received block_shape and mat are not consistent" );
 
         for (int i=0;i<bk_row; i++) {
             size_t target_row=(block_size*row_idx+i)*m_ncol;
@@ -212,6 +231,7 @@ Matrix multiply_naive(const Matrix &mat1, const Matrix &mat2) {
     }
     return tmp;
 }
+
 Matrix multiply_tile(Matrix &mat1, Matrix &mat2, size_t block_size) {
     size_t row=mat1.nrow();
     size_t col=mat2.ncol();
@@ -226,15 +246,17 @@ Matrix multiply_tile(Matrix &mat1, Matrix &mat2, size_t block_size) {
             Matrix tmpmat(1,1);
             for (int k=0; k<max_bk_content; k++) {
                 if (k==0) 
-                    tmpmat = multiply_naive_bk(mat1.get_block(block_size, i, k), mat2.get_block(block_size, k, j));
+                    tmpmat = multiply_naive_bk(mat1.get_block(block_size, i, k, false), mat2.get_block(block_size, k, j, true));
                 else
-                    tmpmat +=  multiply_naive_bk(mat1.get_block(block_size, i, k), mat2.get_block(block_size, k, j));
+                    tmpmat +=  multiply_naive_bk(mat1.get_block(block_size, i, k, false), mat2.get_block(block_size, k, j, true));
             }
             result.set_block(block_size, i, j, tmpmat);
         }
     }
     return result;
 }
+
+
 Matrix multiply_mkl(Matrix &mat1, Matrix &mat2) {
     mkl_set_num_threads(1);
 
@@ -257,16 +279,9 @@ Matrix multiply_mkl(Matrix &mat1, Matrix &mat2) {
       , ret.ncol() /* const MKL_INT ldc */
     );
 
-    // ret.elapsed() = sw.lap();
-    // ret.nflo() = calc_nflo(mat1, mat2);
-
     return ret;
 }
 
-
-// multiply_naive()
-// multiple_tile()
-// multiply_mkl()
 
 PYBIND11_MODULE(_matrix, m) {
     m.doc() = "nsd21au hw3 pybind implementation"; // optional module docstring
@@ -279,12 +294,15 @@ PYBIND11_MODULE(_matrix, m) {
         // .def("__isub__", [](Matrix &mat, const Matrix &mat2) { mat-=mat2; })
         // .def("__sub__", [](const Matrix &mat1, const Matrix &mat2) { return mat1-mat2; })
         .def("__eq__", [](const Matrix &mat1, const Matrix &mat2) { return mat1 == mat2; })
-
+        // .def("getblock", &Matrix::get_block)
         .def_property_readonly("nrow", &Matrix::nrow)
         .def_property_readonly("ncol", &Matrix::ncol);
 
-        m.def("multiply_naive", &multiply_naive);
-        m.def("multiply_tile", &multiply_tile);
-        m.def("multiply_mkl", &multiply_mkl);
-
+    // py::class_<Block>(m, "Block")
+    //     .def(pybind11::init<int, int, bool>())
+    //     .def("__getitem__", [](const Block &mat, std::pair<size_t, size_t> idx) { return mat(idx.first, idx.second); });
+    
+    m.def("multiply_naive", &multiply_naive);
+    m.def("multiply_tile", &multiply_tile);
+    m.def("multiply_mkl", &multiply_mkl);
 }
