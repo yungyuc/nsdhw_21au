@@ -14,7 +14,7 @@ public:
   }
 
   Matrix(size_t nrow, size_t ncol, std::vector<double> const &vec)
-      : m_nrow(m_nrow), m_ncol(m_ncol) {
+      : m_nrow(nrow), m_ncol(ncol) {
     reset_buffer(nrow, ncol);
     (*this) = vec;
   }
@@ -102,7 +102,7 @@ public:
     return m_buffer[index(row, col)];
   }
 
-  bool operator==(const Matrix &m) {
+  bool operator==(const Matrix &m) const {
     if (m_nrow != m.m_nrow || m_ncol != m.m_ncol) {
       return false;
     }
@@ -233,8 +233,8 @@ PYBIND11_MODULE(_matrix, m) {
   py::class_<Matrix>(m, "Matrix")
       .def(py::init<size_t, size_t>())
       .def(py::init<std::vector<std::vector<double>> &>())
-      .def_readwrite("m_nrow", &Matrix::m_nrow)
-      .def_readwrite("m_ncol", &Matrix::m_ncol)
+      .def_readwrite("nrow", &Matrix::m_nrow)
+      .def_readwrite("ncol", &Matrix::m_ncol)
       .def(
           "__getitem__",
           [](Matrix &mat, std::pair<size_t, size_t> p) {
@@ -247,5 +247,6 @@ PYBIND11_MODULE(_matrix, m) {
             mat(p.first, p.second) = val;
           },
           py::is_operator())
-      .def("__eq__", &Matrix::operator==);
+      .def("__eq__", &Matrix::operator==)
+      .def(py::self==py::self);
 }
