@@ -1,27 +1,36 @@
-* Encryption Acceleration 
-** Basic Information
+========================
+Encryption Acceleration 
+========================
+
+
+Basic Information
+========================
 Code repository: https://github.com/09510/Encryption-Acceleration
 
-** Problem to solve
+Problem to solve
+=======================
 IMessage encryption is an important technology to protect information security. 
 However, if you want to ensure the encryption strength, the encryption/decryption takes a lot of time.
 Encryption Acceleration is a tool to accelerate encryption and decryption by GPU. 
 
 
 
-** Perspective users 
+Perspective users 
+=========================
 Anyone who wants to use GPU to accelerate encryption and decryption.
 
 
  
-** System architecture 
+System architecture 
+=============================
 1. Calling encrypt/decrypt function.
 2. doing encrypt/decrypt by gpu.
 3. return encrypted/decrypted msg. 
     
 
 
-** API description 
+API description 
+================================
 Python API : 
     1. encrypt(input_file ,algo ,seed) : Return key, and encrypted file.
     2. decrypt(encrypted_file, algo, key) : Return decrypted file.
@@ -32,7 +41,8 @@ Python API :
 
 
  
-** Engineering infrastructure 
+Engineering infrastructure 
+=================================
 
 -Build System : 
     Make
@@ -42,8 +52,8 @@ Python API :
     C+++ : Google Tesr
     Python : pytest
 
-** Schedule 
-
+Schedule 
+====================================
 - Week 1: Implement algo. part on C++
 - Week 2: implement cuda part on C++
 - Week 3: implement cuda part on C++
