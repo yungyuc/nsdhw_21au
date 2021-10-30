@@ -1,6 +1,3 @@
-reStructuredText Viewer
-DisplayrST Syntax Help
- Blog
 ==================
 Related Work Graph
 ==================
@@ -49,8 +46,8 @@ Engineering infrastructure
 
 I may use the following tools to test my project. I'm not sure how to use Google test, so I will try to figure out if I need to use it to test.
 
-  - C++: Google test
-  - Python: Pytest
+    - C++: Google test
+    - Python: Pytest
 
 - Version Control
   - Git & GitHub
