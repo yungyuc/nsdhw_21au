@@ -9,7 +9,7 @@ Code repository: https://github.com/09510/Encryption-Acceleration
 
 Problem to solve
 =======================
-IMessage encryption is an important technology to protect information security. 
+Message encryption is an important technology to protect information security. 
 However, if you want to ensure the encryption strength, the encryption/decryption takes a lot of time.
 Encryption Acceleration is a tool to accelerate encryption and decryption by GPU. 
 
@@ -23,9 +23,9 @@ Anyone who wants to use GPU to accelerate encryption and decryption.
  
 System architecture 
 =============================
-1. Calling encrypt/decrypt function.
-2. doing encrypt/decrypt by gpu.
-3. return encrypted/decrypted msg. 
+1. Calling encrypt/decrypt function by Python.
+2. Doing encrypt/decrypt by gpu.
+3. Return encrypted/decrypted msg. 
     
 
 
@@ -50,6 +50,7 @@ Engineering infrastructure
     Git
 -Test : 
     C+++ : Google Tesr
+    
     Python : pytest
 
 Schedule 
