@@ -11,24 +11,25 @@ namespace py = pybind11;
 class Block {
 public:
     Block(size_t nrow, size_t ncol):
-        m_nrow(nrow), m_ncol(ncol) 
+        m_nrow(nrow), m_ncol(ncol), m_buffer(NULL)
     {
-        m_buffer=new double*[nrow];
     }
-    ~Block() { delete[] m_buffer;}
+    ~Block() { m_buffer = NULL;}
     double   operator() (size_t row, size_t col) const { // for getitem
         if (row > m_nrow) throw std::invalid_argument( "received row exceed nrow" );
         if (col > m_ncol) throw std::invalid_argument( "received col exceed ncol" );
-        return m_buffer[row][col];
+        return m_buffer[row*m_row_stride + col];
     }
-    void setRow(size_t index, double *ptr) {
-        m_buffer[index] = ptr;
+    void setRow(double *ptr, size_t row_stride) {
+        m_row_stride = row_stride;
+        m_buffer = ptr;
     }
     size_t nrow() const {return m_nrow;}
     size_t ncol() const {return m_ncol;}
 
 private:
-    double** m_buffer;
+    double *m_buffer;
+    size_t m_row_stride;
     size_t m_nrow;
     size_t m_ncol;
 };
@@ -123,7 +124,7 @@ public:
         }
     }
 
-    Block get_block(size_t block_size, size_t row_idx, size_t col_idx) const{
+    Block get_block(size_t block_size, size_t row_idx, size_t col_idx, bool col2row = false) const{
         // row_idx: row index of the block
         // col_idx: col index of the block
         if (block_size*row_idx > m_nrow) throw std::invalid_argument( "received block_size*row exceed nrow" );
@@ -131,14 +132,15 @@ public:
         size_t bk_col = m_ncol - block_size*col_idx < block_size ? m_ncol - block_size*col_idx : block_size;
         size_t bk_row = m_nrow - block_size*row_idx < block_size ? m_nrow - block_size*row_idx : block_size;
         Block block(bk_row, bk_col);
-        for (int i=0;i<bk_row; i++) {
-            size_t target_row=(block_size*row_idx+i)*m_ncol;
+        if (!col2row) {
+            size_t target_row=(block_size*row_idx)*m_ncol;
             size_t target_col=(block_size*col_idx);
-            size_t source_row=i*bk_col;
-            block.setRow(i, m_buffer+target_row+target_col);
-            // memcpy(matrix.m_buffer+source_row, m_buffer+target_row+target_col, sizeof(double) * bk_col);
+            block.setRow(m_buffer+target_row+target_col, m_ncol);
+            return block;
+        } else {
+            return block;
         }
-        return block;
+
         // Matrix matrix(bk_row, bk_col);
         // for (int i=0;i<bk_row; i++) {
         //     size_t target_row=(block_size*row_idx+i)*m_ncol;
@@ -224,7 +226,7 @@ Matrix multiply_tile(Matrix &mat1, Matrix &mat2, size_t block_size) {
             Matrix tmpmat(1,1);
             for (int k=0; k<max_bk_content; k++) {
                 if (k==0) 
-                    tmpmat = multiply_naive_bk(mat1.get_block(block_size, i, k),mat2.get_block(block_size, k, j));
+                    tmpmat = multiply_naive_bk(mat1.get_block(block_size, i, k), mat2.get_block(block_size, k, j));
                 else
                     tmpmat +=  multiply_naive_bk(mat1.get_block(block_size, i, k), mat2.get_block(block_size, k, j));
             }

@@ -31,4 +31,5 @@ test: ${MATLIB}
 	python -m unittest unit_test.py
 
 clean:
-	rm -rf *.so __pycache__ .pytest_cache performance.txt
+	rm -rf *.so __pycache__ .pytest_cache 
+	rm performance.txt
