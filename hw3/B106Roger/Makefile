@@ -32,4 +32,3 @@ test: ${MATLIB}
 
 clean:
 	rm -rf *.so __pycache__ .pytest_cache 
-	rm performance.txt
