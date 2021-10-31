@@ -14,22 +14,6 @@ Computing `Fast Fourier Transform <https://en.wikipedia.org/wiki/Fast_Fourier_tr
 
 Currently the most common method to do FFT is ``Cooley-Tukey algorithm``. In this algorithm, it keeps breaking down a DFT of any size :math:`N = m \\times n` into smaller DFTs of sizes :math:`m` and :math:`n`, along with :math:`O(N)` multiplications by twiddle factor (typically either :math:`m` or :math:`n` is a small factor). Therefore, the DFT can be expressed as below:
 
-=============================================================================
-Proposal for FFT Computing Optimization base on Columnar Array (CA-FFT)
-=============================================================================
-
-Basic information
-=================
-
-The GitHub repository is at: (URL)
-
-Problem to solve
-================
-
-Computing `Fast Fourier Transform <https://en.wikipedia.org/wiki/Fast_Fourier_transform>`__ is very important for digital recording, sampling. It is an algorithm computing the discrete Fourier transform (DFT) of a sequence. Since the sequences usually include lots of data and the computation of FFT is heavy, fasten up the solving speed is crucial for saving caching memory and also optimizing the computing speed.
-
-Currently the most common method to do FFT is ``Cooley-Tukey algorithm``. In this algorithm, it keeps breaking down a DFT of any size :math:`N = m \times n` into smaller DFTs of sizes :math:`m` and :math:`n`, along with :math:`O(N)` multiplications by twiddle factor (typically either :math:`m` or :math:`n` is a small factor). Therefore, the DFT can be expressed as below:
-
 .. math::
 
     DFT_{mn}= (DFT_m \otimes I_n)D_{m,n}(I_m \otimes DFT_n)L_m^{mn} \\
@@ -76,9 +60,6 @@ and will be built with `cmake <https://cmake.org>`__.
 The repository is hosted on GitHub and will use GitHub Action for continuous
 integration.
 
-Repo
-=====
-https://github.com/eesss34690/Cache_Optimization.git
 
 
 Schedule
@@ -89,7 +70,8 @@ The development of the project will take 8 weeks:
 * Week 1: Building DFT structure for usage
 * Week 2, 3: Optimize with initial value, construct buffer
 * Week 4, 5: Do ```cache optimization``` by using blocking
-* Week 6: Finish Makefile and using python for testing
-* Week 7: Validation with other tools
-* Week 8: (Optional for presentation or schedule delay)
+* Week 6: Use python for testing and Validation with other tools
+* Week 7: Prepare for presentation
+* Week 8: Buffer week for soft adjustment
+
 
