@@ -1,4 +1,5 @@
-nterbotix Ros Xsarms Toolkits
+==============================
+Interbotix Ros Xsarms Toolkits
 ==============================
 
 
@@ -19,74 +20,74 @@ In this project I will use the following tools:
 
 * PyQt: 
       To create GUI interface.
-      * ROS: 
-            The Robot Operating System (ROS) is a set of software libraries and tools that help you build robot applications.
-            * IRROS: 
-                  The SDK developed by the vendor.It provides API to interact with robotic arm.
-                  * MoveIt: 
-                        MoveIt is ROS's most advanced and flexible library for motion planning and manipulation tasks. It integrates state-of-the-art inverse kinematics solvers, path planning algorithms, and collision detection into a single, unified ROS interface.
+* ROS: 
+      The Robot Operating System (ROS) is a set of software libraries and tools that help you build robot applications.
+* IRROS: 
+      The SDK developed by the vendor.It provides API to interact with robotic arm.
+* MoveIt: 
+      MoveIt is ROS's most advanced and flexible library for motion planning and manipulation tasks. It integrates state-of-the-art inverse kinematics solvers, path planning algorithms, and collision detection into a single, unified ROS interface.
 
 
 
-                      Prospective Users
-                      =================
+Prospective Users
+=================
 
-                      Anyone who needs to use robotic arm.
+Anyone who needs to use robotic arm.
 
-                      System Architecture
-                      ===================
+System Architecture
+===================
 
-                      1. 
-                                               The system will monitor ROS nodes created by IRROS, analyze data and show related information on the screen.
+1. 
+The system will monitor ROS nodes created by IRROS, analyze data and show related information on the screen.
 
-                      2.
-                      The system will provides GUI to adjust target position and orientation.Then, users can perform moveit_planning command and robotic arm will follow it.
+2.
+The system will provides GUI to adjust target position and orientation.Then, users can perform moveit_planning command and robotic arm will follow it.
 
-                      3. 
-                                               The system will allows users to record the state of robotic arm and replay it.
+3. 
+The system will allows users to record the state of robotic arm and replay it.
 
-                      API Description
-                      ===============
+API Description
+===============
 
-                      Example
-                      ~~~~~~~~~~~
+Example
+~~~~~~~~~~~
 
-                      ``getinfo(string node_name)``: Get information from ROS nodes.
+``getinfo(string node_name)``: Get information from ROS nodes.
 
-                      ``record(double* joint_state, string record_name="")``: Record the current state of robotic arm and store shortcuts to access it when needed. 
+``record(double* joint_state, string record_name="")``: Record the current state of robotic arm and store shortcuts to access it when needed. 
 
-                      ``replay(string record_name)``: Replay of previously stored states.
+``replay(string record_name)``: Replay of previously stored states.
 
-                      ``move(double* joint_state)``: Call the API from MoveIt and pass the result into ROS nodes.
-                           
-                      Engineering Infrastructure
-                      ==========================
+``move(double* joint_state)``: Call the API from MoveIt and pass the result into ROS nodes.
 
-                      build system: 
-                           catkin_make
+Engineering Infrastructure
+==========================
 
-                           testing framework: 
-                                pytest
+build system: 
+      catkin_make
 
-                                version control:
-                                     git
+testing framework: 
+      pytest
 
-                                     Schedule
-                                     ========
+version control:
+      git
 
-                                     * Week 1: Familiar with the IRROS structure.
-                                       * Week 2: Familiar with the MoveIt API.
-                                         * Week 3: Using catkin_make to build workspace and setting launch files.
-                                           * Week 4: Implement the set of functions to manipulate robotic arm. 
-                                             * Week 5: Implement the set of functions to record and replay.
-                                               * Week 6: Build GUI with PyQt
-                                                 * Week 7: Prepare presentation
-                                                   * Week 8: Buffer
+Schedule
+========
 
-                                                   References
-                                                   ==========
+* Week 1: Familiar with the IRROS structure.
+* Week 2: Familiar with the MoveIt API.
+* Week 3: Using catkin_make to build workspace and setting launch files.
+* Week 4: Implement the set of functions to manipulate robotic arm. 
+* Week 5: Implement the set of functions to record and replay.
+* Week 6: Build GUI with PyQt
+* Week 7: Prepare presentation
+* Week 8: Buffer
 
-                                                   * ROS: https://www.ros.org/
-                                                     * MoveIt: https://moveit.ros.org/
-                                                       * IRROS: https://github.com/Interbotix
-                                                         * PyQt: https://wiki.python.org/moin/PyQt
+References
+==========
+
+* ROS: https://www.ros.org/
+* MoveIt: https://moveit.ros.org/
+* IRROS: https://github.com/Interbotix
+* PyQt: https://wiki.python.org/moin/PyQt
