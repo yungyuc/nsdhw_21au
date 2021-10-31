@@ -1,5 +1,6 @@
 # Basic Information
-GitHub repository: (TODO)
+- GitHub repository: https://github.com/Platisenic/autodiff
+- Proejct Name: autodiff
 # Problem to Solve
 It is very important to compute the derivative of a function when we dealing with some optimization problems. With this method, we can find the input that maximize or minimize the function.
 
@@ -33,12 +34,16 @@ For example, ![](https://latex.codecogs.com/svg.image?y=(x1+x2)*x1). Computation
 - Members in nodes:
     - value: store value
     - grad: store gradient
+    - input1: store input node
+    - input2: store input node
+    - output: store output node
 - Member functions in Operators:
     - forward(*input): calculate the value during forward pass
     - backward(*input): calculate the gradient by chain rule during backward pass
 - There is a compute engine that traverse the computation graph, and calculate the values, gradients of nodes.
     - Since the computation graph has dependencies (You can not traverse (+node) earlier than (x1 node) ), and it is a [Directed Acyclic Graph](https://en.wikipedia.org/wiki/Directed_acyclic_graph), the compute engine traverse the graph by order in [topological sort](https://en.wikipedia.org/wiki/Topological_sorting)
-- Using [Operator Overloading](https://en.cppreference.com/w/cpp/language/operators), the users not need to build the computation graph themselves.
+    - DAG can be implemented using structure called Node, and there are two input and one output inside the Node.
+- Using [Operator Overloading](https://en.cppreference.com/w/cpp/language/operators), users not need to build the computation graph themselves.
 ### Work Flow
 ![workflow](https://user-images.githubusercontent.com/69299037/137633832-1fe5f554-0171-46f9-9b3f-de1211f3e56b.jpg)
 
@@ -58,7 +63,7 @@ For example, ![](https://latex.codecogs.com/svg.image?y=(x1+x2)*x1). Computation
 
 # Schedule
 - Week 1: Define node class
-- Week 2: Implement member functions
+- Week 2: Implement member functions(get, set, operator overloading)
 - Week 3: Implement topological sort
 - Week 4: Implement forward pass
 - Week 5: Implement backward pass
