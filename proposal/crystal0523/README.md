@@ -1,6 +1,6 @@
 # Fourier Transform for Image Processing
 ## Basic Information
-* GitHub repository: https://github.com/crystal0523/nsdhw_21au
+* GitHub repository: https://github.com/crystal0523/Fourier-Transform-for-Image-Processing
 ## Problem to Solve
   
 The Fourier Transform is an important image processing tool which is used to decompose an image into its sine and cosine components. The output of the transformation represents the image in frequency domain, while the input image is the spatial domain equivalent. 
