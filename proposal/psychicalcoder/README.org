@@ -1,4 +1,4 @@
-#+TITLE: Mesh Simplification Using Quadric Error Metrics
+#+TITLE: PolyLower - Mesh Simplification Using Quadric Error Metrics
 
 * Basic Information
   
@@ -44,7 +44,6 @@
    the input mesh. The allow_unconnected option allows the algorithm to contract
    two vertices that do not form an edge.
 
-   
 *** save_wavefront(filename, vertices, faces)
    This function save the mesh to a new file in wavefront object format.
 
@@ -64,14 +63,14 @@
   
 * Schedule
 
-  |--------+----------------------------------------------------------------------------|
-  | Week   | What to do                                                                 |
-  |--------+----------------------------------------------------------------------------|
-  | Week 1 | Implement wavefront format parser and saver                                |
-  | Week 2 | Implement triangulation                                                    |
-  | Week 3 | Implement linear system solver and linear algebra tools like cross product |
-  | Week 4 | Keep implement the above components and write unit tests for them.         |
-  | Week 5 | Implement the main algorithm                                               |
-  | Week 6 | Implement the main algorithm and write tests                               |
-  | Week 7 | Prepare the presentation                                                   |
-  | Week 8 | Prepare the presentation                                                   |
+  |--------+----------------------------------------------------------------|
+  | Week   | What to do                                                     |
+  |--------+----------------------------------------------------------------|
+  | Week 1 | Implement wavefront format parser and saver                    |
+  | Week 2 | Implement triangulation                                        |
+  | Week 5 | Implement the main algorithm framework                         |
+  | Week 6 | Implement the other componenets and finish the whole algorithm |
+  | Week 3 | Write unitests and check if there is any bug                   |
+  | Week 4 | Optimize                                                       |
+  | Week 7 | Prepare the presentation                                       |
+  | Week 8 | Prepare the presentation                                       |
