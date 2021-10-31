@@ -43,7 +43,76 @@ The Mathematics Behind the Problem
 The following formulation is abridged and revised from that of [2],
 which is more elementary and directly relates to the implementation.
 
-(TODO: All the math)
+Let ``Xᵢ`` be the given set of data where ``i = 1, 2, ..., n``
+and ``k(x, y)`` be the kernel function (known as the diffusion kernel)
+satisfying the following properties
+
+- ``k`` is symmetric: ``k(x, y) = k(y, x)``
+- ``k`` is positivity preserving: ``k(x, y) ≥ 0``
+
+The kernel defines a local similarity measure.
+Its value should be high for points close by
+and quickly go to zero outside a certain neighbourhood.
+An example is the popular radial basis function kernel
+(referred to as the Gaussian kernel in some literatures)
+``k(x, y) = e^(-ɣ∥x − y∥²)``.
+
+We then define a random walk on the data points,
+where the probability of jumping from point ``x`` to point ``y`` is
+``p(x, y) = k(x, y) / d(x)``
+where ``d(x) = Σ_y k(x, y)`` is the normalisation constant.
+Intuitively, it is easier to jump to a nearby point than to one far away.
+
+Running the random walk for several time steps
+reveals the "geometry" of the data.
+Define ``pₜ(x, y)`` to be
+the probability of jumping from point ``x`` to point ``y`` in ``t`` steps.
+(The explicit formula is given by the Chapman-Kolmogorov equation).
+It is easy to jump along paths where data points are dense,
+so ``pₜ(x, y)`` is high if ``x`` and ``y`` are "well-connected".
+
+Now, we define the diffusion distance ``Dₜ(Xᵢ, Xⱼ)`` by
+``Dₜ(Xᵢ, Xⱼ)² = ∥pₜ(Xᵢ, *) − pₜ(Xⱼ, *)∥²_l²(ℝⁿ, D⁻¹)``.
+Intuitively, ``Dₜ(x, y)`` is small whenever
+``x`` and ``y`` are similarly well-connected or disconnected
+to every other points.
+For example, if the points form two non-intersecting lines,
+then two points on the same line have a low diffusion distance
+because a third point is
+either well-connected to both of the two points if it lies on the same line,
+or disconnected from both of the two points if it lies on a different line.
+The opposite is true for two points on different lines.
+So the diffusion distance is a metric
+that captures the underlying "geometry" of the data.
+
+What is left to do is to map the data to a lower-dimensional space
+such that the Euclidean distance in the new space
+approximates the diffusion distance in the data space.
+Let ``P`` be the probability matrix where ``Pᵢⱼ = p(Xᵢ, Xⱼ)``.
+This matrix can be regarded as a transition matrix of a Markov chain.
+We also have that ``pₜ(Xᵢ, Xⱼ) = Pᵗᵢⱼ``.
+Let ``λᵢ`` be the i-th eigenvalue of ``P``
+and ``ψᵢ`` be the corresponding eigenvector.
+(It can be shown that ``P`` is diagonalisable; see later.)
+If we map ``Xᵢ`` to ``Yᵢ`` where ``Yᵢⱼ = λᵗⱼ ψⱼᵢ``,
+then it can be shown that ``∥Yᵢ − Yⱼ∥ = Dₜ(Xᵢ, Xⱼ)``.
+Dimensionality reduction is achieved by removing dimensions
+corresponding to small eigenvalues.
+(In fact we can even remove the one corresponding to the largest eigenvalue,
+because it is constant across data points.)
+This way the Euclidean distance of the mapped data points
+best approximates the diffusion distance in the data space.
+
+We don't need to diagonalise ``P`` itself
+to calculate ``P``'s eigenvalues and eigenvectors.
+Let ``K`` be the kernel matrix where ``Kᵢⱼ = k(Xᵢ, Xⱼ)``.
+Let ``D`` be the diagonal matrix that normalises the rows of ``K``
+(i.e., ``P = D⁻¹ K``).
+Then it can be shown that ``P' = D^(1/2) P D^(-1/2)``
+is symmetric, has the same eigenvalues as ``P``,
+and has eigenvectors easily convertible to that of ``P``.
+Thus, the most difficult part of diffusion maps is to solve the
+sparse symmetric eigendecomposition problem.
 
 Prospective Users
 =================
