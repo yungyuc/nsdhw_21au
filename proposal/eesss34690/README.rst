@@ -5,7 +5,7 @@ Proposal for FFT Computing Optimization base on Columnar Array (CA-FFT)
 Basic information
 =================
 
-The GitHub repository is at: (URL)
+The GitHub repository is at: `Github Repo <https://github.com/eesss34690/Cache_Optimization.git>`__
 
 Problem to solve
 ================
@@ -74,4 +74,7 @@ The development of the project will take 8 weeks:
 * Week 7: Prepare for presentation
 * Week 8: Buffer week for soft adjustment
 
-
+Reference
+==========
+1. `Fast Fourier Transform <https://en.wikipedia.org/wiki/Fast_Fourier_transform>`__
+2. `Scipy FFT <https://docs.scipy.org/doc/scipy/reference/tutorial/fft.html>`__
