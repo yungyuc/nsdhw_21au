@@ -1,6 +1,7 @@
 Basic Information
 -------------------
 Github Repositroy: TBD
+
 https://github.com/S413/AllThatJazz
 
 Problem to Solve
@@ -49,20 +50,31 @@ The class should also store the best and worst fits in HM.
 ::
 
 class HarmonySearch
+
 {
+	
 	vector<vector<float>> HM;
+	
 	float PR;
+	
 	float HCMR;
+	
 	vector<float> best; //can consider just saving an index so as not to copy
+	
 	vector<float> worst; //""""
+	
 	vector<float> objectiveFunction;
 	
 	init_HM(HM); //should initialize the HM randomly
-	fit(objectiveFunction, harmony); //should fit a harmony into Objective
-	generate_harmony(HM, HCMR); //should generate new harmonies at every iteration either from scratch or by calling change_pitch
-	compare_fit(new_harmony, worst, HM); //should compare the new harmony and the worst harmony in HM fit
-	change_pitch(HM, PR); // if a new harmony is not made from scratch, one from HM is modified
 	
+	fit(objectiveFunction, harmony); //should fit a harmony into Objective
+	
+	generate_harmony(HM, HCMR); //should generate new harmonies at every iteration either from scratch or by calling change_pitch
+	
+	compare_fit(new_harmony, worst, HM); //should compare the new harmony and the worst harmony in HM fit
+	
+	change_pitch(HM, PR); // if a new harmony is not made from scratch, one from HM is modified
+
 }
 
 
