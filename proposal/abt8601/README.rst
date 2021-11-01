@@ -55,7 +55,7 @@ Its value should be high for points close by
 and quickly go to zero outside a certain neighbourhood.
 An example is the popular radial basis function kernel
 (referred to as the Gaussian kernel in some literatures)
-``k(x, y) = e^(-ɣ∥x − y∥²)``.
+``k(x, y) = e^(-γ∥x − y∥²)``.
 
 We then define a random walk on the data points,
 where the probability of jumping from point ``x`` to point ``y`` is
@@ -237,7 +237,7 @@ The diffusion maps interface.
     then ``gamma = 1 / (2 * sigma**2)``.
     If neither ``gamma`` nor ``sigma`` is given,
     then ``gamma`` defaults to ``1 / n_features``
-    where ``n_features = data.nrow``.
+    where ``n_features = data.ncol``.
     If both ``gamma`` and ``sigma`` are given,
     the constructor raises ``ValueError``.
 
@@ -246,8 +246,8 @@ The diffusion maps interface.
 
 - Method ``at_scale(t: int) -> Matrix``:
   Get the lower-dimensional data at diffusion time ``t``.
-  The output matrix is an ``n_features`` × ``n_components`` matrix,
-  where ``n_features = data.nrow``.
+  The output matrix is an ``n_samples`` × ``n_components`` matrix,
+  where ``n_samples = data.nrow``.
 
 Example
 -------
