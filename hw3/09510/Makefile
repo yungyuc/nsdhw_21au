@@ -1,0 +1,17 @@
+INCLUDES = $(shell python3 -m pybind11 --includes) $(shell python3-config --includes) 
+MKL_INC = -I/usr/include/mkl
+MKL_LIB = -L/usr/lib/x86_64-linux-gnu -lblas
+OUT = _matrix$(shell python3-config --extension-suffix)
+MTARGET = main
+
+.PHONY: clean test source
+
+$(MTARGET): _matrix.hpp _matrix.cpp
+	g++ --std=c++11 -Wall -O3 -shared -fPIC $(INCLUDES) $(MKL_INC) $(MKL_LIB) $^ -o $(OUT) -lrt -lblas
+
+
+clean:
+	rm -rf __pycache__ .pytest_cache *.o $(MTARGET) _matrix*.so performance.txt
+
+test: $(MTARGET)
+	python3 -m pytest ../validate.py
