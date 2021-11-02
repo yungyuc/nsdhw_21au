@@ -65,7 +65,7 @@ private:
 
 Matrix multiply_naive(const Matrix &mat1, const Matrix &mat2)
 {
-  if (m1.ncol() != m2.nrow())
+  if (mat1.ncol() != mat2.nrow())
   {
     throw out_of_range(
         "the matrices are not multipliable");
@@ -89,7 +89,7 @@ Matrix multiply_naive(const Matrix &mat1, const Matrix &mat2)
 
 Matrix multiply_tile(Matrix const &mat1, Matrix const &mat2, size_t tsize)
 {
-  if (m1.ncol() != m2.nrow())
+  if (mat1.ncol() != mat2.nrow())
   {
     throw out_of_range(
         "the matrices are not multipliable");
@@ -122,7 +122,7 @@ Matrix multiply_tile(Matrix const &mat1, Matrix const &mat2, size_t tsize)
 
 Matrix multiply_mkl(Matrix const &mat1, Matrix const &mat2)
 {
-  if (m1.ncol() != m2.nrow())
+  if (mat1.ncol() != mat2.nrow())
   {
     throw out_of_range(
         "the matrices are not multipliable");
