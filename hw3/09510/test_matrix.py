@@ -36,14 +36,14 @@ class TestMatrix:
 
 
         #ground truth
-        np_m = np.matmul(r_a, r_b)
+        ans_numpy = np.matmul(r_a, r_b)
 
         #check
         for i in range(row):
             for j in range(col2):
-                assert np_m[i, j] == approx(ans_naive[i, j])
-                assert np_m[i, j] == approx(ans_tile[i, j])
-                assert np_m[i, j] == approx(ans_mkl[i, j])
+                assert ans_numpy[i, j] == approx(ans_naive[i, j])
+                assert ans_numpy[i, j] == approx(ans_tile[i, j])
+                assert ans_numpy[i, j] == approx(ans_mkl[i, j])
 
         return naive, tile, mkl
 
