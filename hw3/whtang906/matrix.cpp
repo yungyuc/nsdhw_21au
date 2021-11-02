@@ -173,10 +173,10 @@ PYBIND11_MODULE(_matrix, m)
       .def(pybind11::init<const vector<vector<double>> &>())
       .def_property_readonly("nrow", &Matrix::nrow)
       .def_property_readonly("ncol", &Matrix::ncol)
-      .def("__eq__", [](const Matrix &mat, const Matrix &other)
-           { return mat == other; })
-      .def("__setitem__", [](Matrix &mat, pair<size_t, size_t> idx, double val)
-           { return mat(idx.first, idx.second) = val; })
-      .def("__getitem__", [](const Matrix &mat, pair<size_t, size_t> idx)
-           { return mat(idx.first, idx.second); });
+      .def("__eq__", &Matrix::operator==)
+      .def("__setitem__", [](Matrix &mat, array<int, 2> i, double v)
+           { mat(i[0], i[1]) = v; })
+      .def("__getitem__",
+           [](const Matrix &mat, array<int, 2> i)
+           { return mat(i[0], i[1]); });
 }
