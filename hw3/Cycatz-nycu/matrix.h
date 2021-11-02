@@ -15,8 +15,16 @@ public:
 
     ~Matrix() { delete[] m_elems; }
 
-    double& operator() (size_t i, size_t j);
-    double operator() (size_t i, size_t j) const;
+    double& operator() (size_t i, size_t j) {
+        check_range(i, j);
+        return m_elems[i * m_ncol + j];
+    }
+
+    double operator() (size_t i, size_t j) const {
+        check_range(i, j); 
+        return m_elems[i * m_ncol + j];
+    }
+
 
 
     std::pair<size_t, size_t> size() const;

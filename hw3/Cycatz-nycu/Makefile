@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -O3 -fPIC -Wall -Wextra -std=c++14 -funroll-loops -march=native  -I /usr/include/python3.8 $(shell python3 -m pybind11 --includes)  $(shell python3-config --includes)  -I/usr/include/mkl
+CXXFLAGS = -O2 -fPIC -Wall -Wextra -std=c++14 -funroll-loops -march=native  -I /usr/include/python3.8 $(shell python3 -m pybind11 --includes)  $(shell python3-config --includes)  -I/usr/include/mkl
 LD_FLAGS = -shared -L/usr/lib/x86_64-linux-gnu/mkl -lblas
 
 

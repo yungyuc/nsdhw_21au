@@ -56,17 +56,6 @@ Matrix& Matrix::operator=(const Matrix &rhs) {
     return *this;
 }
 
-double& Matrix::operator() (size_t i, size_t j) {
-    check_range(i, j);
-    return m_elems[i * m_ncol + j];
-}
-
-double Matrix::operator() (size_t i, size_t j) const {
-    check_range(i, j); 
-    return m_elems[i * m_ncol + j];
-}
-
-
 std::pair<size_t, size_t> Matrix::size() const {
     return std::make_pair(m_nrow, m_ncol);
 }
@@ -106,9 +95,8 @@ bool Matrix::check_range(size_t i, size_t j) const {
     if (i >= m_nrow || j >= m_ncol) {
         throw std::out_of_range("matrix index out of range");
         return false;
-    } else {
-        return true;
     }
+    return true;
 }
 
 Matrix multiply_naive(const Matrix &A, const Matrix &B) {
