@@ -16,6 +16,7 @@ public:
     double* buff() const;                   // access the raw contents of the buffer
     double   operator() (size_t row, size_t col) const; // element getter
     double & operator() (size_t row, size_t col);       // element setter
+    bool operator==(Matrix const &);        // equality operator overloading
 
 private:
     size_t m_nrow;

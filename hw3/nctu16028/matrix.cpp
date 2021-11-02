@@ -111,6 +111,24 @@ double & Matrix::operator() (size_t row, size_t col)
     return m_buffer[row*m_ncol + col];
 }
 
+// equality operator overloading
+bool Matrix::operator==(Matrix const &other)
+{
+    if((m_nrow != other.nrow()) || (m_ncol != other.ncol()))
+        return false;
+
+    for(size_t i=0; i<m_nrow; i++)
+    {
+        for(size_t j=0; j<m_ncol; j++)
+        {
+            if((*this)(i, j) != other(i, j))
+                return false;
+        }
+    }
+
+    return true;
+}
+
 // Perform naive matrix-matrix multiplication
 Matrix multiply_naive(Matrix const &matA, Matrix const &matB)
 {
