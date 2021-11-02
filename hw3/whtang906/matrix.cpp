@@ -43,7 +43,7 @@ public:
     {
       for (size_t j = 0; j < m_ncol; ++j)
       {
-        if (m_buffer[i * m_ncol, j] != other(i, j))
+        if ((*this)(i, j) != other(i, j))
         {
           return false;
         }
