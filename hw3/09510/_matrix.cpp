@@ -1,106 +1,107 @@
 #include "_matrix.hpp"
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
-#include <cstddef>
-#include <algorithm>
 
-namespace py = pybind11;
+namespace pybind = pybind11;
 using namespace std;
 
-Matrix multiply_naive(Matrix const & matrix1, Matrix const & matrix2)
+Matrix multiply_naive(Matrix const & a, Matrix const & b)
 {
 
-    Matrix ret(matrix1.nrow(), matrix2.ncol());
+    Matrix ans(a.nrow(), b.ncol());
 
-    for (size_t row = 0; row < ret.nrow(); row++) 
-    {
-        for (size_t column = 0; column < ret.ncol(); column++) 
-        {
-            double value = 0;
-            for (size_t k = 0; k < matrix1.ncol(); k++) {
-                value += matrix1(row, k) * matrix2(k, column);
+
+    for (size_t i = 0; i < a.nrow(); ++i) {
+        for (size_t j = 0; j < b.ncol(); ++j) {
+            double v = 0;
+            for (size_t k = 0; k < b.nrow(); ++k) {
+                v += a(i, k) * b(k, j);
             }
-            ret(row, column) = value;
+            ans(i, j) = v;
         }
+
     }
 
-    return ret;
+    return ans;
 
 }
 
-Matrix multiply_tile(Matrix const & matrix1, Matrix const & matrix2, size_t tilesize)
+Matrix multiply_tile(Matrix const & a, Matrix const & b, size_t tile)
 {
+    if (a.ncol() != b.nrow()) {
+        throw out_of_range(
+            "the number of first matrix column "
+            "differs from that of second matrix row");
+    }
+    size_t bound_i, bound_j, bound_k;
+    Matrix ans(a.nrow(), b.ncol());
 
-    Matrix ret(matrix1.nrow(), matrix2.ncol());
-
-    for (size_t row = 0; row < matrix1.nrow(); row += tilesize) 
+    for (size_t i = 0; i < a.nrow(); i += tile)
     {
-        for (size_t col = 0; col < matrix2.ncol(); col += tilesize) 
+        for (size_t j = 0; j < b.ncol(); j += tile) 
         {
-            for (size_t inner = 0; inner < matrix1.ncol(); inner += tilesize) 
+            bound_i = std::min(a.nrow(), i + tile);
+            bound_j = std::min(b.ncol(), j + tile);
+            for (size_t k = 0; k < a.ncol(); k += tile)
             {
+                bound_k = std::min(a.ncol(), k + tile);
 
-
-                for (size_t k = inner; k < std::min(matrix1.ncol(), inner + tilesize); k++) 
+                for (size_t t_k = k; t_k < bound_k; t_k++)
                 {
-                    for (size_t i = row; i < std::min(matrix1.nrow(), row + tilesize); i++) 
+                    for (size_t t_i = i; t_i < bound_i; t_i++)
                     {
-                        for (size_t j = col; j < std::min(matrix2.ncol(), col + tilesize); j++)
+                        for (size_t t_j = j; t_j < bound_j; t_j++)
                         {
-                            ret(i, j) += matrix1(i, k) * matrix2(k, j);
+                            ans(t_i, t_j) += a(t_i, t_k) * b(t_k, t_j);
                         }
                     }
                 }
-
-
-                
             }
         }
     }
-
-    return ret;
+    return ans;
 
 }
 
-Matrix multiply_mkl(Matrix const & matrix1, Matrix const & matrix2)
+Matrix multiply_mkl(Matrix const & a, Matrix const & b)
 {
 
-    Matrix ret = Matrix(matrix1.nrow(), matrix2.ncol());
+    Matrix ans = Matrix(a.nrow(), b.ncol());
 
     cblas_dgemm(
-        CblasRowMajor,
-        CblasNoTrans,
-        CblasNoTrans,
-        matrix1.nrow(),
-        matrix2.ncol(),
-        matrix1.ncol(),
-        1.0,
-        matrix1.get_matrix_buffer(),
-        matrix1.ncol(),
-        matrix2.get_matrix_buffer(),
-        matrix2.ncol(),
-        0.0,
-        ret.get_matrix_buffer(),
-        ret.ncol()
+         CblasRowMajor
+        ,CblasNoTrans
+        ,CblasNoTrans
+        ,a.nrow()
+        ,b.ncol()
+        ,a.ncol()
+        ,1.0
+        ,a.get_matrix_buffer()
+        ,a.ncol()
+        ,b.get_matrix_buffer()
+        ,b.ncol()
+        ,0.0
+        ,ans.get_matrix_buffer()
+        ,ans.ncol()
     );
 
-    return ret;
+    return ans;
 } 
 
 
-PYBIND11_MODULE(_matrix, m) {
-  m.def("multiply_naive", &multiply_naive);
-  m.def("multiply_tile", &multiply_tile);
-  m.def("multiply_mkl", &multiply_mkl);
+PYBIND11_MODULE(_matrix, m)
+{
+    m.doc() = "Matrix multiply";
+    m.def("multiply_naive", &multiply_naive);
+    m.def("multiply_tile", &multiply_tile);
+    m.def("multiply_mkl", &multiply_mkl);
 
-  py::class_<Matrix>(m, "Matrix")
-    .def(py::init<size_t, size_t>())
-    //.def(py::init<const Matrix &matrix> &>())
-    .def_property_readonly("nrow", &Matrix::nrow)
-    .def_property_readonly("ncol", &Matrix::ncol)
-
-    .def("__eq__", [](const Matrix &self, const Matrix &other) { return self == other; })
-    .def("assign", &Matrix::operator=)
-    .def("__setitem__", [](Matrix &self, std::pair<size_t, size_t> idx, double val) { return self(idx.first, idx.second) = val; })
-    .def("__getitem__", [](const Matrix &self, std::pair<size_t, size_t> idx) { return self(idx.first, idx.second); });
-}
+    pybind::class_<Matrix>(m, "Matrix")
+        .def(pybind::init<int, int>())
+        .def_property_readonly("nrow", &Matrix::nrow)
+        .def_property_readonly("ncol", &Matrix::ncol)
+        .def("__eq__", [](const Matrix &mat, const Matrix &other) { return mat == other; })
+        .def("assign", &Matrix::operator=)
+        .def("__setitem__", [](Matrix &mat, std::pair<size_t, size_t> idx, double val) { return mat(idx.first, idx.second) = val; })
+        .def("__getitem__", [](const Matrix &mat, std::pair<size_t, size_t> idx) { return mat(idx.first, idx.second); });
+} 
