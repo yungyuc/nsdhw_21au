@@ -2,13 +2,13 @@
 #include "mkl.h"
 #include <cstddef>
 #include <vector>
-
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 
-
 namespace pybind = pybind11;
 using namespace std;
+
+
 
 class Matrix {
   public:
@@ -61,8 +61,6 @@ class Matrix {
 
 
 
-
-
 Matrix multiply_naive(const Matrix &a, const Matrix &b) {
   
 
@@ -78,7 +76,7 @@ Matrix multiply_naive(const Matrix &a, const Matrix &b) {
         v += a(i, k) * b(k, j);
       }
       ans(i, j) = v;
-      
+
     }
   }
   return ans;
@@ -132,12 +130,6 @@ Matrix multiply_mkl(const Matrix &a, const Matrix &b) {
   );
   return ans;
 }
-
-
-
-
-
-
 
 
 

@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-
 import _matrix
 from pytest import approx
 import numpy as np
@@ -34,7 +33,6 @@ class TestMatrix:
         time_end = time.time()
         mkl = time_end - time_start
 
-
         #ground truth
         ans_numpy = np.matmul(r_a, r_b)
 
@@ -54,8 +52,6 @@ class TestMatrix:
             f.write('mutiply_mkl: '+ str(mkl_t) + " second\n")
             f.write('tile speeds up rate ( naive time / tile time) : '+ str(naive_t / tile_t) + "\n")
             f.write('MKL speeds up rate (naive time / mkl time) : '+ str(naive_t / mkl_t) + "\n")
-
-
 
 
     def test(self):
