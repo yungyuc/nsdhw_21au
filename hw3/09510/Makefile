@@ -4,7 +4,7 @@ MKL_LIB = -L/usr/lib/x86_64-linux-gnu -lblas
 OUT = _matrix$(shell python3-config --extension-suffix)
 MTARGET = main
 
-.PHONY: clean test source
+.PHONY: clean test
 
 $(MTARGET): _matrix.hpp _matrix.cpp
 	g++ --std=c++11 -Wall -O3 -shared -fPIC $(INCLUDES) $(MKL_INC) $(MKL_LIB) $^ -o $(OUT) -lrt -lblas
