@@ -46,10 +46,3 @@ def run_benchmark(p, q, r, tsize):
 
 def test_1000():
     run_benchmark(1000, 1000, 1000, 4)
-
-def test_random():
-    p = random.randint(1, 1000)
-    q = random.randint(1, 1000)
-    r = random.randint(1, 1000)
-    tsize = random.randint(1, 1000)
-    run_benchmark(p, q, r, tsize)

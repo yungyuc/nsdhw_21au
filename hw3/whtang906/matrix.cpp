@@ -18,7 +18,15 @@ public:
   {
   }
 
-  Matrix(const vector<vector<double>> &target);
+  Matrix(const vector<vector<double>> &target)
+  {
+    m_nrow = target.size();
+    m_ncol = target[0].size();
+    for (auto &i : target)
+    {
+      m_buffer.insert(end(m_buffer), begin(i), end(i));
+    }
+  }
   // No bound check.
   double operator()(size_t row, size_t col) const
   {
@@ -29,7 +37,20 @@ public:
     return m_buffer[row * m_ncol + col];
   }
 
-  bool operator==(const Matrix &other);
+  bool operator==(const Matrix &other)
+  {
+    for (size_t i = 0; i < m_nrow; ++i)
+    {
+      for (size_t j = 0; j < m_ncol; ++j)
+      {
+        if ((*this)(i, j) != other(i, j))
+        {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
 
   size_t nrow() const { return m_nrow; }
   size_t ncol() const { return m_ncol; }
@@ -41,31 +62,6 @@ private:
   size_t m_ncol;
   vector<double> m_buffer;
 };
-
-Matrix::Matrix(const vector<vector<double>> &target)
-{
-  m_nrow = target.size();
-  m_ncol = target[0].size();
-  for (auto &i : target)
-  {
-    m_buffer.insert(end(m_buffer), begin(i), end(i));
-  }
-}
-
-bool Matrix::operator==(const Matrix &other)
-{
-  for (size_t i = 0; i < m_nrow; ++i)
-  {
-    for (size_t j = 0; j < m_ncol; ++j)
-    {
-      if ((*this)(i, j) != other(i, j))
-      {
-        return false;
-      }
-    }
-  }
-  return true;
-}
 
 Matrix multiply_naive(const Matrix &mat1, const Matrix &mat2)
 {
