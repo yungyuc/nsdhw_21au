@@ -67,7 +67,6 @@ class Matrix
 
 
 
-
-Matrix multiply_naive(Matrix const & a, Matrix const & b);
-Matrix multiply_tile(Matrix const & a, Matrix const & b, size_t tile);
-Matrix multiply_mkl(Matrix const & a, Matrix const & b);
+Matrix multiply_naive(Matrix const & mat1, Matrix const & mat2);
+Matrix multiply_tile(Matrix const & mat1, Matrix const & mat2, size_t tsize);
+Matrix multiply_mkl(Matrix const & mat1, Matrix const & mat2); 
