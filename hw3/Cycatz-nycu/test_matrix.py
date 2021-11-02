@@ -20,6 +20,16 @@ def init_matrix(M, N, L):
 
     return (m1, m2)
 
+def is_equal(m1, m2):
+    if (m1.ncol != m2.ncol) or (m1.nrow != m2.nrow):
+        return False
+    for i in range(m1.nrow):
+        for j in range(m1.ncol):
+            if not math.isclose(m1[i, j], m2[i, j], abs_tol=1e-6):
+                return False
+    return True
+
+
 def test_can_not_multiply():
     m1 = Matrix(10, 20)
     m2 = Matrix(30, 100)
@@ -70,10 +80,10 @@ def test_speed():
         f.write('tiling (32) with is %f times faster than naive\n' % (tnaive/ttile32))
         f.write('mkl is %f times faster than naive\n' % (tnaive/tmkl))
 
-    assert m_naive == m_tile8
-    assert m_naive == m_tile16
-    assert m_naive == m_tile32
-    assert m_naive == m_mkl
+    assert is_equal(m_naive, m_tile8)
+    assert is_equal(m_naive, m_tile16)
+    assert is_equal(m_naive, m_tile32)
+    assert is_equal(m_naive, m_mkl)
 
 
 

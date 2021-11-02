@@ -148,7 +148,7 @@ Matrix multiply_tile(const Matrix &A, const Matrix &B, size_t tile_width)
                     for (size_t ti = i; ti < rb; ti++) {
                         const double A_ti_tk = A(ti, tk);
                         for (size_t tj = j; tj < cb; tj++) {
-                            C(ti, tj) += A(ti, tk) * B(tk, tj);
+                            C(ti, tj) += A_ti_tk * B(tk, tj);
                         }
                     }
                 }
