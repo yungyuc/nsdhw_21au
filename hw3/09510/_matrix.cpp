@@ -84,7 +84,7 @@ Matrix multiply_mkl(Matrix const & a, Matrix const & b)
 
 
 
-PYBIND11_MODULE(matrix,m){
+PYBIND11_MODULE(_matrix,m){
 
     m.doc()="Matrix multiply";
 	m.def("multiply_naive",&multiply_naive);
