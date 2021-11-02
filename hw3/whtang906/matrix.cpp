@@ -175,8 +175,8 @@ PYBIND11_MODULE(_matrix, m)
       .def_property_readonly("ncol", &Matrix::ncol)
       .def("__eq__", [](const Matrix &mat, const Matrix &other)
            { return mat == other; })
-      .def("__setitem__", [](Matrix &mat, std::pair<size_t, size_t> idx, double val)
+      .def("__setitem__", [](Matrix &mat, pair<size_t, size_t> idx, double val)
            { return mat(idx.first, idx.second) = val; })
-      .def("__getitem__", [](const Matrix &mat, std::pair<size_t, size_t> idx)
+      .def("__getitem__", [](const Matrix &mat, pair<size_t, size_t> idx)
            { return mat(idx.first, idx.second); });
 }

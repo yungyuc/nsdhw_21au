@@ -6,39 +6,35 @@ import pytest
 import random
 import time
 
-def is_approx_equal(m1, m2, m, n):
+def is_approx_equal(mat1, mat2, m, n):
     for i in range(m):
         for j in range(n):
-            assert m1[i, j] == pytest.approx(m2[i, j])
+            assert mat1[i, j] == pytest.approx(mat2[i, j])
     return True
 
 def run_benchmark(p, q, r, tsize):
-    m1 = np.random.rand(p, q)
-    m2 = np.random.rand(q, r)
-    m3 = np.matmul(m1, m2)
+    mat1 = np.random.rand(p, q)
+    mat2 = np.random.rand(q, r)
+    gt = np.matmul(mat1, mat2)
 
-    _m1 = _matrix.Matrix(m1)
-    _m2 = _matrix.Matrix(m2)
+    _mat1 = _matrix.Matrix(mat1)
+    _mat2 = _matrix.Matrix(mat2)
 
     start = time.process_time()
-    ret_naive = _matrix.multiply_naive(_m1, _m2)
+    ret_naive = _matrix.multiply_naive(_mat1, _mat2)
     t_naive = time.process_time() - start
 
     start = time.process_time()
-    ret_tile = _matrix.multiply_tile(_m1, _m2, tsize)
+    ret_tile = _matrix.multiply_tile(_mat1, _mat2, tsize)
     t_tile = time.process_time() - start
 
     start = time.process_time()
-    ret_mkl = _matrix.multiply_mkl(_m1, _m2)
+    ret_mkl = _matrix.multiply_mkl(_mat1, _mat2)
     t_mkl = time.process_time() - start
 
-    assert m3.shape[0] == ret_naive.nrow and m3.shape[1] == ret_naive.ncol
-    assert m3.shape[0] == ret_tile.nrow and m3.shape[1] == ret_tile.ncol
-    assert m3.shape[0] == ret_mkl.nrow and m3.shape[1] == ret_mkl.ncol
-
-    assert(is_approx_equal(m3, ret_naive, p, r))
-    assert(is_approx_equal(m3, ret_tile, p, r))
-    assert(is_approx_equal(m3, ret_mkl, p, r))
+    assert(is_approx_equal(gt, ret_naive, p, r))
+    assert(is_approx_equal(gt, ret_tile, p, r))
+    assert(is_approx_equal(gt, ret_mkl, p, r))
 
     with open('performance.txt', 'w') as f:
         f.write(f'Setup:\n p: {p} q: {q} r: {r} tsize: {tsize}\n')
