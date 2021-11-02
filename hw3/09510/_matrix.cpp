@@ -54,7 +54,7 @@ Matrix multiply_tile(Matrix const & mat1, Matrix const & mat2, size_t tsize)
     return ret;
 
 }
-}
+
 
 Matrix multiply_mkl(Matrix const & a, Matrix const & b)
 {
