@@ -18,7 +18,7 @@ Matrix::Matrix(Matrix const &cp)
     //if(m_buffer)
     //    delete[] m_buffer;
     size_t nelement = m_nrow * m_ncol;
-    m_buffer = new double[nelement];
+    m_buffer = new double[nelement]();
     for(size_t i=0; i<nelement; i++)
         m_buffer[i] = cp.m_buffer[i];
 }
@@ -44,7 +44,7 @@ Matrix & Matrix::operator=(Matrix const &cp_rval)
     //if(m_buffer)
     //    delete[] m_buffer;
     size_t nelement = m_nrow * m_ncol;
-    m_buffer = new double[nelement];
+    m_buffer = new double[nelement]();
     for(size_t i=0; i<nelement; i++)
         m_buffer[i] = cp_rval.m_buffer[i];
 
@@ -71,7 +71,7 @@ Matrix::Matrix(size_t nrow, size_t ncol)
     m_nrow = nrow;
     m_ncol = ncol;
     size_t nelement = nrow * ncol;
-    m_buffer = new double[nelement];
+    m_buffer = new double[nelement]();
 }
 
 // destructor
@@ -154,22 +154,18 @@ Matrix multiply_tile(Matrix const &matA, Matrix const &matB, size_t const tile_s
     {
         for(size_t j=0; j<matB.ncol(); j+=tile_size)
         {
-            // tile initialization
-            for(size_t ti=i; ti<std::min(i+tile_size, matA.nrow()); ti++)
-            {
-                for(size_t tj=j; tj<std::min(j+tile_size, matB.ncol()); tj++)
-                    matC(ti, tj) = 0;
-            }
-
             for(size_t k=0; k<matA.ncol(); k+=tile_size)
             {
                 // tile-tile multiplication
-                for(size_t ti=i; ti<std::min(i+tile_size, matA.nrow()); ti++)
+                size_t ti_bound = std::min(i+tile_size, matA.nrow());
+                size_t tj_bound = std::min(j+tile_size, matB.ncol());
+                size_t tk_bound = std::min(k+tile_size, matA.ncol());
+                for(size_t ti=i; ti<ti_bound; ti++)
                 {
-                    for(size_t tj=j; tj<std::min(j+tile_size, matB.ncol()); tj++)
+                    for(size_t tj=j; tj<tj_bound; tj++)
                     {
                         double val = 0;
-                        for(size_t tk=k; tk<std::min(k+tile_size, matA.ncol()); tk++)
+                        for(size_t tk=k; tk<tk_bound; tk++)
                             val += (matA(ti, tk) * matB(tk, tj));
                         matC(ti, tj) += val;
                     }
