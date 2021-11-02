@@ -62,7 +62,7 @@ class Matrix {
 
 
 Matrix multiply_naive(const Matrix &a, const Matrix &b) {
-  
+  if(a.m_ncol!=b.m_nrow){throw pybind::value_error("these two matric can't multiply.");}
 
   Matrix ans(a.nrow(), b.ncol());
   for (size_t i = 0; i < a.nrow(); ++i) 
@@ -84,7 +84,7 @@ Matrix multiply_naive(const Matrix &a, const Matrix &b) {
 
 Matrix multiply_tile(const Matrix &a, const Matrix &b, size_t tsize) {
   
-
+  if(a.m_ncol!=b.m_nrow){throw pybind::value_error("these two matric can't multiply.");}
   Matrix ans(a.nrow(), b.ncol());
   for (size_t i = 0; i < a.nrow(); i += tsize)
   {
@@ -109,7 +109,7 @@ Matrix multiply_tile(const Matrix &a, const Matrix &b, size_t tsize) {
 }
 
 Matrix multiply_mkl(const Matrix &a, const Matrix &b) {
-  
+  if(a.m_ncol!=b.m_nrow){throw pybind::value_error("these two matric can't multiply.");}
 
   Matrix ans(a.nrow(), b.ncol());
   cblas_dgemm(

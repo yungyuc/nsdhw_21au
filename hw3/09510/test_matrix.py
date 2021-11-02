@@ -52,10 +52,10 @@ class TestMatrix:
         j=300
         k=300
 
-        for time in range(8):
+        for time in range(1,8):
             naive_t, tile_t, mkl_t = self.multiply_calculate(i*time, j, k*time, 2)
 
-            
+
     def test(self):
         # Rule in README.rst : the matrix size should be larger than or equal to 1000x1000
         # (i*j) * (j*k)
