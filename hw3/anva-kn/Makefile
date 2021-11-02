@@ -8,7 +8,7 @@ CXX = g++
 
 MODULE = _matrix
 SOFILE = $(MODULE)$(shell python3-config --extension-suffix)
-LBS = -I /opt/intel/include/mkl -L /opt/intel/mkl -lblas
+LBS = -I /opt/intel/mkl -L /opt/intel/mkl/include -lblas
 
 .PHONY: all test clean
 all: $(SOFILE)
