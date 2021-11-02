@@ -42,7 +42,7 @@ private:
   vector<double> m_buffer;
 };
 
-Matrix::(const vector<vector<double>> &target)
+Matrix::Matrix(const vector<vector<double>> &target)
 {
   m_nrow = target.size();
   m_ncol = target[0].size();
@@ -52,7 +52,7 @@ Matrix::(const vector<vector<double>> &target)
   }
 }
 
-Matrix::operator==(const Matrix &other)
+bool Matrix::operator==(const Matrix &other)
 {
   for (size_t i = 0; i < m_nrow; ++i)
   {
