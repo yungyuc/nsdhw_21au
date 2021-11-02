@@ -53,7 +53,7 @@ class Matrix
         }
 
 
-        double * get_matrix_buffer() const { return m_buffer; }
+        double * get_buffer() const { return m_buffer; }
         size_t nrow() const { return m_nrow; }
         size_t ncol() const { return m_ncol; }
 
