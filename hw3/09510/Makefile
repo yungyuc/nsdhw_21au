@@ -1,18 +1,18 @@
-INCLUDES = $(shell python3 -m pybind11 --includes) $(shell python3-config --includes) 
-MKL_INC = -I/usr/include/mkl
-MKL_LIB = -L/usr/lib/x86_64-linux-gnu -lblas
-OUT = _matrix$(shell python3-config --extension-suffix)
-MTARGET = main
+CXX := g++
+CXXFLAGS := -O3 -Wall -shared -std=c++11 -fPIC
+TARGET = _matrix.*.so
 
-.PHONY: clean test
+INCLUDE_DIRS = /usr/include/mkl
+MKL_LIB=/usr/lib/x86_64-linux-gnu -lblas
 
-$(MTARGET): _matrix.hpp _matrix.cpp
-	g++ --std=c++11 -Wall -O3 -shared -fPIC $(INCLUDES) $(MKL_INC) $(MKL_LIB) $^ -o $(OUT) -lrt -lblas
+all: $(TARGET)
 
+$(TARGET): _matrix.cpp
+	$(CXX) $(CXXFLAGS) `python3 -m pybind11 --includes` $< -o _matrix`python3-config --extension-suffix` `python3-config --includes` -I${INCLUDE_DIRS} -L${MKL_LIB} -lpthread
 
+test: all
+	python3 -m pytest test_matrix.py
+
+.PHONY: clean
 clean:
-	rm -rf __pycache__ .pytest_cache *.o $(MTARGET) _matrix*.so performance.txt
-
-test: $(MTARGET)
-	python3 -m pytest ../validate.py
-
+	rm -rf *.o *.so __pycache__
