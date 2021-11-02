@@ -8,3 +8,4 @@ clean:
 
 test: defaults
 	python3 -m pytest test_matrix.py
+	python3 test_matrix.py

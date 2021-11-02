@@ -117,21 +117,20 @@ Matrix multiply_tile(const Matrix &A, const Matrix &B, size_t Block) {
     }
 
     size_t N = A.nrow();
-
     size_t s = Block;
 
-    for(size_t i=0; i<N; i+=s){
-	    for(size_t j=0; j<N; j+=s){
-		    for(size_t k=0; k<N; k+=s){
-			    for(size_t i1=i; i1<std::min(N,i+s); i++){
-				    for(size_t j1=j; j1<std::min(N,j+s); j++){
-					    for(size_t k1=k; k1<std::min(N,k+s); k++){
-						    C(i1,j1) += A(i1,k1)*B(k1,j1);
-					    }
-				    }
-			    }
-		    }
-	    }
+    for (size_t i = 0; i < N; i += s) {
+        for (size_t j = 0; j < N; j += s) {
+            for (size_t k = 0; k < N; k += s) {
+                for (size_t k1 = k; k1 < std::min(N, k + s); k1++) {
+                    for (size_t i1 = i; i1 < std::min(N, i + s); i1++) {
+                        for (size_t j1 = j; j1 < std::min(N, j + s); j1++) {
+                            C(i1, j1) += A(i1, k1) * B(k1, j1);
+                        }
+                    }
+                }
+            }
+        }
     }
 
     return C;
