@@ -95,15 +95,13 @@ PYBIND11_MODULE(_matrix, m) {
   m.def("multiply_mkl", &multiply_mkl);
 
   py::class_<Matrix>(m, "Matrix")
-      .def(py::init<size_t, size_t>())
-      .def(py::init<const Matrix &matrix> &>())
-      .def_property_readonly("nrow", &Matrix::nrow)
-      .def_property_readonly("ncol", &Matrix::ncol)
+    .def(py::init<size_t, size_t>())
+    //.def(py::init<const Matrix &matrix> &>())
+    .def_property_readonly("nrow", &Matrix::nrow)
+    .def_property_readonly("ncol", &Matrix::ncol)
 
-      .def("__eq__", &Matrix::operator==)
-      .def("__getitem__",
-           [](const Matrix &m, array<int, 2> idx) { return m(idx[0], idx[1]); })
-      .def("__setitem__", [](Matrix &m, array<int, 2> idx, double val) {
-        m(idx[0], idx[1]) = val;
-      });
+    .def("__eq__", [](const Matrix &self, const Matrix &other) { return self == other; })
+    .def("assign", &Matrix::operator=)
+    .def("__setitem__", [](Matrix &self, std::pair<size_t, size_t> idx, double val) { return self(idx.first, idx.second) = val; })
+    .def("__getitem__", [](const Matrix &self, std::pair<size_t, size_t> idx) { return self(idx.first, idx.second); });
 }
