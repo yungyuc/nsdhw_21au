@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import _matrix
 import numpy as np
 import pytest
