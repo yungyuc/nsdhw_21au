@@ -7,7 +7,7 @@ import time
 
 class TestMatrix:
 
-    def multiply_calculate(self, row, col1, col2, tsize):
+    def multiply_time(self, row, col1, col2, tsize):
         
         #ini
         r_a = np.random.rand(row, col1)
@@ -45,6 +45,19 @@ class TestMatrix:
 
         return naive, tile, mkl
 
+    def test_class(self):
+        a=_matrix.Matrix(100)
+        assert a.nrow() == 100
+        assert a.ncol() == 100
+
+        a(0,0) = 20
+        assert a(0,0) == 20
+        a(0,0) = a(0,0) + 30
+        assert a(0,0) == 50
+
+    def test_tile(self):
+        naive_t, tile_t, mkl_t = self.multiply_calculate(i, j, k, 16)
+        assert (tile_t/naive_t) <= 0.8
 
     def test_performance(self):
         # Rule in README.rst : the matrix size should be larger than or equal to 1000x1000
@@ -54,13 +67,13 @@ class TestMatrix:
         k=1500
 
         naive_t, tile_t, mkl_t = self.multiply_calculate(i, j, k, 2)
-        for i in range(2,6):
-            this_naive, this_tile, this_mkl = self.multiply_calculate(i, j, k, 2**i)
+        for i in range(10):
+            this_naive, this_tile, this_mkl = self.multiply_calculate(i, j, k, 2 * (i+1) )
             tile_t = min(this_tile, tile_t)
         
         with open('performance.txt', 'w') as f:
             f.write('mutiply_naive time: '+ str(naive_t) + " second\n")
             f.write('mutiply_tile: '+ str(tile_t) + " second\n")
-            f.write('mutiply_mkl: '+ str(mkl_t) + " second\n")
+            f.write('mutiply_mkl: '+ str(mkl_t) + " second\n\n")
             f.write('tile speeds up rate ( naive time / tile time) : '+ str(naive_t / tile_t) + "\n")
             f.write('MKL speeds up rate (naive time / mkl time) : '+ str(naive_t / mkl_t) + "\n")
