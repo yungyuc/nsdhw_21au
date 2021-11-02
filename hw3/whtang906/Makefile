@@ -9,7 +9,7 @@ MKLFLAGS = ${MKL_DIR}/libmkl_def.so \
 	${MKL_DIR}/libmkl_intel_lp64.so \
 	${MKL_DIR}/libmkl_sequential.so
 
-CXXFLAGS = -Wall -O3 -shared -std=c++11 -fPIC -I${INCLUDE_DIR} ${MKLFLAGS} -lblas -lmkl_intel_lp64 -lmkl_intel_thread -ldl -lpthread -lm ${INCLUDE}
+CXXFLAGS = -Wall -O3 -shared -std=c++11 -fPIC -I${INCLUDE_DIR} ${MKLFLAGS} -lmkl_intel_lp64 -lmkl_sequential -lmkl_core -lpthread -lm -ldl ${INCLUDE}
 FPIC = `python3 -m pybind11 --includes`
 SOFILE = _matrix${shell python3-config --extension-suffix}
 
