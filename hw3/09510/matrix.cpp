@@ -9,7 +9,6 @@ namespace pybind = pybind11;
 using namespace std;
 
 
-
 class Matrix {
   public:
     Matrix(size_t nrow, size_t ncol): m_nrow(nrow), m_ncol(ncol), m_buffer(nrow * ncol, 0.0) {}
@@ -58,7 +57,6 @@ class Matrix {
     size_t m_ncol;
     vector<double> m_buffer;
 };
-
 
 
 Matrix multiply_naive(const Matrix &a, const Matrix &b) {

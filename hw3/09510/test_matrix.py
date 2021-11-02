@@ -45,11 +45,6 @@ class TestMatrix:
 
         return naive, tile, mkl
 
-    def test_class(self):
-        a=_matrix.Matrix(100)
-        assert a.nrow() == 100
-        assert a.ncol() == 100
-
 
     def test_tile(self):
         naive_t, tile_t, mkl_t = self.multiply_time(1000, 1000, 1000, 16)
@@ -61,7 +56,7 @@ class TestMatrix:
         i=1500
         j=1500
         k=1500
-
+        
         naive_t, tile_t, mkl_t = self.multiply_time(i, j, k, 16)
         
         with open('performance.txt', 'w') as f:
