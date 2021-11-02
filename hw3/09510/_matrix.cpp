@@ -2,6 +2,8 @@
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 
+namespace py = pybind11;
+using namespace std;
 
 Matrix multiply_naive(Matrix const & a, Matrix const & b)
 {
@@ -26,7 +28,11 @@ Matrix multiply_naive(Matrix const & a, Matrix const & b)
 
 Matrix multiply_tile(Matrix const & a, Matrix const & b, size_t tile)
 {
-
+    if (a.ncol() != b.nrow()) {
+        throw out_of_range(
+            "the number of first matrix column "
+            "differs from that of second matrix row");
+    }
     size_t bound_i, bound_j, bound_k;
     Matrix ans(a.nrow(), b.ncol());
 
@@ -83,21 +89,20 @@ Matrix multiply_mkl(Matrix const & a, Matrix const & b)
 } 
 
 
+PYBIND11_MODULE(_matrix, m) {
+  m.def("multiply_naive", &multiply_naive);
+  m.def("multiply_tile", &multiply_tile);
+  m.def("multiply_mkl", &multiply_mkl);
 
-PYBIND11_MODULE(_matrix,m){
-
-    m.doc()="Matrix multiply";
-	m.def("multiply_naive",&multiply_naive);
-	m.def("multiply_tile",&multiply_tile);
-	m.def("multiply_mkl",&multiply_mkl);
-	pybind11::class_<Matrix>(m,"Matrix")
-		.def(pybind11::init<const size_t, const size_t>())
-
-        .def("__eq__", &Matrix::operator==)
-        .def("__getitem__",[](const Matrix & m,std::array<int,2>index){return m(index[0],index[1]);})
-        .def("__setitem__",[](Matrix & m, std::array<int,2>index,double value){m(index[0],index[1])=value;})
-
-        .def_property_readonly("nrow",&Matrix::nrow)
-        .def_property_readonly("ncol",&Matrix::nrow);
-
+  py::class_<Matrix>(m, "Matrix")
+      .def(py::init<size_t, size_t>())
+      .def(py::init<const std::vector<std::vector<double>> &>())
+      .def_property_readonly("nrow", &Matrix::nrow)
+      .def_property_readonly("ncol", &Matrix::ncol)
+      .def("__eq__", &Matrix::operator==)
+      .def("__getitem__",
+           [](const Matrix &m, array<int, 2> idx) { return m(idx[0], idx[1]); })
+      .def("__setitem__", [](Matrix &m, array<int, 2> idx, double val) {
+        m(idx[0], idx[1]) = val;
+      });
 }

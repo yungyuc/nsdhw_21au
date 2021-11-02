@@ -15,3 +15,4 @@ clean:
 
 test: $(MTARGET)
 	python3 -m pytest ../validate.py
+
