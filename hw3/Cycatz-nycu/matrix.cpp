@@ -21,18 +21,19 @@ Matrix::Matrix(size_t r, size_t c) : m_nrow(r), m_ncol(c) {
         throw std::out_of_range("matrix index out of range");
     }
     m_elems = new double[r * c];
-    std::fill(m_elems, m_elems + r * c, 0.0);
+    for (size_t i = 0; i < r; i++) {
+        for (size_t j = 0; j < c; j++) {
+             m_elems[i * c + j] = 0.0;
+        }
+    }
 }
 
 Matrix::Matrix(const Matrix &rhs) {
-    if (rhs.m_elems) {
-        m_elems = new double[rhs.m_nrow * rhs.m_ncol]; 
-        m_nrow = rhs.m_nrow;
-        m_ncol = rhs.m_ncol;
-        std::copy_n(rhs.m_elems, m_nrow * m_ncol, m_elems);
-    } else {
-        m_elems = nullptr;
-        m_nrow = m_ncol = 0;
+    m_elems = new double[rhs.m_nrow * rhs.m_ncol]; 
+    m_nrow = rhs.m_nrow;
+    m_ncol = rhs.m_ncol;
+    for (size_t i = 0; i < rhs.m_nrow * rhs.m_ncol; i++) {
+        m_elems[i] = rhs.m_elems[i];  
     }
 }
 
@@ -57,12 +58,12 @@ Matrix& Matrix::operator=(const Matrix &rhs) {
 
 double& Matrix::operator() (size_t i, size_t j) {
     check_range(i, j);
-    return m_elems[i * m_nrow + j];
+    return m_elems[i * m_ncol + j];
 }
 
 double Matrix::operator() (size_t i, size_t j) const {
     check_range(i, j); 
-    return m_elems[i * m_nrow + j];
+    return m_elems[i * m_ncol + j];
 }
 
 
@@ -155,6 +156,7 @@ Matrix multiply_tile(const Matrix &A, const Matrix &B, size_t tile_width)
             }
         }
     }
+
     return C;
 }
 
