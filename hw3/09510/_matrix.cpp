@@ -1,89 +1,90 @@
 #include "_matrix.hpp"
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
+#include <cstddef>
+#include <algorithm>
 
 namespace py = pybind11;
 using namespace std;
 
-Matrix multiply_naive(Matrix const & a, Matrix const & b)
+Matrix multiply_naive(Matrix const & matrix1, Matrix const & matrix2)
 {
 
-    Matrix ans(a.nrow(), b.ncol());
+    Matrix ret(matrix1.nrow(), matrix2.ncol());
 
-
-    for (size_t i = 0; i < a.nrow(); ++i) {
-        for (size_t j = 0; j < b.ncol(); ++j) {
-            double v = 0;
-            for (size_t k = 0; k < b.nrow(); ++k) {
-                v += a(i, k) * b(k, j);
-            }
-            ans(i, j) = v;
-        }
-
-    }
-
-    return ans;
-
-}
-
-Matrix multiply_tile(const Matrix &m1, const Matrix &m2, size_t tsize) {
-  if (m1.ncol() != m2.nrow()) {
-    throw out_of_range(
-        "the number of first matrix column "
-        "differs from that of second matrix row");
-  }
-
-  size_t bound_i, bound_j, bound_k;
-  Matrix m3(m1.nrow(), m2.ncol());
-  for (size_t i = 0; i < m1.nrow(); i += tsize)
-  {
-    for (size_t j = 0; j < m2.ncol(); j += tsize) 
+    for (size_t row = 0; row < ret.nrow(); row++) 
     {
-      bound_i = min(m1.nrow(), i + tsize);
-      bound_j = min(m2.ncol(), j + tsize);
-      for (size_t k = 0; k < m1.ncol(); k += tsize)
-      {
-        bound_k = min(m1.ncol(), k + tsize);
-        for (size_t bk = k; bk < bound_k; ++bk)
-	{
-          for (size_t bi = i; bi < bound_i; ++bi)
-	  {
-            for (size_t bj = j; bj < bound_j; ++bj)
-	    {
-              m3(bi, bj) += m1(bi, bk) * m2(bk, bj);
+        for (size_t column = 0; column < ret.ncol(); column++) 
+        {
+            double value = 0;
+            for (size_t k = 0; k < matrix1.ncol(); k++) {
+                value += matrix1(row, k) * matrix2(k, column);
             }
-          }
+            ret(row, column) = value;
         }
-      }
     }
-  }
-  return m3;
+
+    return ret;
 
 }
 
-Matrix multiply_mkl(Matrix const & a, Matrix const & b)
+Matrix multiply_tile(Matrix const & matrix1, Matrix const & matrix2, size_t tilesize)
 {
 
-    Matrix ans = Matrix(a.nrow(), b.ncol());
+    Matrix ret(matrix1.nrow(), matrix2.ncol());
+
+    for (size_t row = 0; row < matrix1.nrow(); row += tilesize) 
+    {
+        for (size_t col = 0; col < matrix2.ncol(); col += tilesize) 
+        {
+            for (size_t inner = 0; inner < matrix1.ncol(); inner += tilesize) 
+            {
+
+
+                for (size_t k = inner; k < std::min(matrix1.ncol(), inner + tilesize); k++) 
+                {
+                    for (size_t i = row; i < std::min(matrix1.nrow(), row + tilesize); i++) 
+                    {
+                        for (size_t j = col; j < std::min(matrix2.ncol(), col + tilesize); j++)
+                        {
+                            ret(i, j) += matrix1(i, k) * matrix2(k, j);
+                        }
+                    }
+                }
+
+
+                
+            }
+        }
+    }
+
+    return ret;
+
+}
+
+Matrix multiply_mkl(Matrix const & matrix1, Matrix const & matrix2)
+{
+
+    Matrix ret = Matrix(matrix1.nrow(), matrix2.ncol());
 
     cblas_dgemm(
-         CblasRowMajor
-        ,CblasNoTrans
-        ,CblasNoTrans
-        ,a.nrow()
-        ,b.ncol()
-        ,a.ncol()
-        ,1.0
-        ,a.get_matrix_buffer()
-        ,a.ncol()
-        ,b.get_matrix_buffer()
-        ,b.ncol()
-        ,0.0
-        ,ans.get_matrix_buffer()
-        ,ans.ncol()
+        CblasRowMajor,
+        CblasNoTrans,
+        CblasNoTrans,
+        matrix1.nrow(),
+        matrix2.ncol(),
+        matrix1.ncol(),
+        1.0,
+        matrix1.get_matrix_buffer(),
+        matrix1.ncol(),
+        matrix2.get_matrix_buffer(),
+        matrix2.ncol(),
+        0.0,
+        ret.get_matrix_buffer(),
+        ret.ncol()
     );
 
-    return ans;
+    return ret;
 } 
 
 
