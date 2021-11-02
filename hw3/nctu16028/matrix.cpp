@@ -29,6 +29,7 @@ Matrix::Matrix(Matrix &&mv)
     m_nrow = mv.m_nrow;
     m_ncol = mv.m_ncol;
     m_buffer = mv.m_buffer;
+    mv.m_buffer = nullptr;
 }
 
 // copy assignment operator
@@ -59,6 +60,7 @@ Matrix & Matrix::operator=(Matrix &&mv_rval)
     m_nrow = mv_rval.m_nrow;
     m_ncol = mv_rval.m_ncol;
     m_buffer = mv_rval.m_buffer;
+    mv_rval.m_buffer = nullptr;
 
     return *this;
 }
