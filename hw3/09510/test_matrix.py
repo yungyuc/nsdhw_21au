@@ -50,10 +50,6 @@ class TestMatrix:
         assert a.nrow() == 100
         assert a.ncol() == 100
 
-        a(0,0) = 20
-        assert a(0,0) == 20
-        a(0,0) = a(0,0) + 30
-        assert a(0,0) == 50
 
     def test_tile(self):
         naive_t, tile_t, mkl_t = self.multiply_calculate(i, j, k, 16)
