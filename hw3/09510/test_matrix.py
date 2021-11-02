@@ -52,7 +52,7 @@ class TestMatrix:
 
 
     def test_tile(self):
-        naive_t, tile_t, mkl_t = self.multiply_calculate(i, j, k, 16)
+        naive_t, tile_t, mkl_t = self.multiply_time(i, j, k, 16)
         assert (tile_t/naive_t) <= 0.8
 
     def test_performance(self):
@@ -62,9 +62,9 @@ class TestMatrix:
         j=1500
         k=1500
 
-        naive_t, tile_t, mkl_t = self.multiply_calculate(i, j, k, 2)
+        naive_t, tile_t, mkl_t = self.multiply_time(i, j, k, 2)
         for i in range(10):
-            this_naive, this_tile, this_mkl = self.multiply_calculate(i, j, k, 2 * (i+1) )
+            this_naive, this_tile, this_mkl = self.multiply_time(i, j, k, 2 * (i+1) )
             tile_t = min(this_tile, tile_t)
         
         with open('performance.txt', 'w') as f:
