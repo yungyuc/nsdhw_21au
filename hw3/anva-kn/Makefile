@@ -1,0 +1,23 @@
+##
+# NSD HW3
+#
+# @file
+# @version 0.1
+
+CXX = g++
+
+MODULE = _matrix
+SOFILE = $(MODULE)$(shell python3-config --extension-suffix)
+LBS = -I /opt/intel/mkl -L /opt/intel/mkl/include -lblas
+
+.PHONY: all test clean
+all: $(SOFILE)
+
+$(SOFILE): matrix.cpp matrix.hpp
+	g++ -O3 -Wall -shared -std=c++11 -fPIC $(shell python3-config --includes) -Iextern/pybind11/include matrix.cpp -o $(SOFILE) $(LBS)
+
+test: $(SOFILE)
+	python3 -m pytest -v
+
+clean:
+	rm -rf $(SOFILE) __pycache__ .pytest_cache performance.txt
