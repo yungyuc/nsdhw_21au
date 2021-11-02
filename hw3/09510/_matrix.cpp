@@ -96,9 +96,10 @@ PYBIND11_MODULE(_matrix, m) {
 
   py::class_<Matrix>(m, "Matrix")
       .def(py::init<size_t, size_t>())
-      .def(py::init<const std::vector<std::vector<double>> &>())
+      .def(py::init<const Matrix &matrix> &>())
       .def_property_readonly("nrow", &Matrix::nrow)
       .def_property_readonly("ncol", &Matrix::ncol)
+
       .def("__eq__", &Matrix::operator==)
       .def("__getitem__",
            [](const Matrix &m, array<int, 2> idx) { return m(idx[0], idx[1]); })
