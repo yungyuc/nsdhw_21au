@@ -26,40 +26,38 @@ Matrix multiply_naive(Matrix const & a, Matrix const & b)
 
 }
 
-Matrix multiply_tile(Matrix const & a, Matrix const & b, size_t tile)
-{
-    if (a.ncol() != b.nrow()) {
-        throw out_of_range(
-            "the number of first matrix column "
-            "differs from that of second matrix row");
-    }
-    size_t bound_i, bound_j, bound_k;
-    Matrix ans(a.nrow(), b.ncol());
+Matrix multiply_tile(const Matrix &m1, const Matrix &m2, size_t tsize) {
+  if (m1.ncol() != m2.nrow()) {
+    throw out_of_range(
+        "the number of first matrix column "
+        "differs from that of second matrix row");
+  }
 
-    for (size_t i = 0; i < a.nrow(); i += tile)
+  size_t bound_i, bound_j, bound_k;
+  Matrix m3(m1.nrow(), m2.ncol());
+  for (size_t i = 0; i < m1.nrow(); i += tsize)
+  {
+    for (size_t j = 0; j < m2.ncol(); j += tsize) 
     {
-        for (size_t j = 0; j < b.ncol(); j += tile) 
-        {
-            bound_i = std::min(a.nrow(), i + tile);
-            bound_j = std::min(b.ncol(), j + tile);
-            for (size_t k = 0; k < a.ncol(); k += tile)
-            {
-                bound_k = std::min(a.ncol(), k + tile);
-
-                for (size_t t_k = k; t_k < bound_k; t_k++)
-                {
-                    for (size_t t_i = i; t_i < bound_i; t_i++)
-                    {
-                        for (size_t t_j = j; t_j < bound_j; t_j++)
-                        {
-                            ans(t_i, t_j) += a(t_i, t_k) * b(t_k, t_j);
-                        }
-                    }
-                }
+      bound_i = min(m1.nrow(), i + tsize);
+      bound_j = min(m2.ncol(), j + tsize);
+      for (size_t k = 0; k < m1.ncol(); k += tsize)
+      {
+        bound_k = min(m1.ncol(), k + tsize);
+        for (size_t bk = k; bk < bound_k; ++bk)
+	{
+          for (size_t bi = i; bi < bound_i; ++bi)
+	  {
+            for (size_t bj = j; bj < bound_j; ++bj)
+	    {
+              m3(bi, bj) += m1(bi, bk) * m2(bk, bj);
             }
+          }
         }
+      }
     }
-    return ans;
+  }
+  return m3;
 
 }
 
