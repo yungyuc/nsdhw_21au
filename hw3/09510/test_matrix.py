@@ -62,10 +62,7 @@ class TestMatrix:
         j=1500
         k=1500
 
-        naive_t, tile_t, mkl_t = self.multiply_time(i, j, k, 2)
-        for i in range(10):
-            this_naive, this_tile, this_mkl = self.multiply_time(i, j, k, 2 * (i+1) )
-            tile_t = min(this_tile, tile_t)
+        naive_t, tile_t, mkl_t = self.multiply_time(i, j, k, 16)
         
         with open('performance.txt', 'w') as f:
             f.write('mutiply_naive time: '+ str(naive_t) + " second\n")
