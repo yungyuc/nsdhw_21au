@@ -102,11 +102,11 @@ Matrix multiply_tile(Matrix const &mat1, Matrix const &mat2, size_t tsize)
     {
       for (size_t k = 0; k < mat1.ncol(); k += tsize)
       {
-        for (size_t tk = 0; tk < min(mat1.nrow(), k + tsize); ++tk)
+        for (size_t tk = k; tk < min(mat1.nrow(), k + tsize); ++tk)
         {
-          for (size_t ti = 0; ti < min(mat2.ncol(), i + tsize); ++ti)
+          for (size_t ti = i; ti < min(mat2.ncol(), i + tsize); ++ti)
           {
-            for (size_t tj = 0; tj < min(mat1.ncol(), j + tsize); ++tj)
+            for (size_t tj = j; tj < min(mat1.ncol(), j + tsize); ++tj)
             {
               ret(ti, tj) += mat1(ti, tk) * mat2(tk, tj);
             }
