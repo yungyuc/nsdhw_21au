@@ -1,5 +1,6 @@
 #include "matrix.hpp"
 #include <mkl.h>
+#include <pybind11/pybind11.h>
 
 // default constructor
 Matrix::Matrix()
@@ -201,5 +202,26 @@ Matrix multiply_mkl(Matrix const &matA, Matrix const &matB)
     );
 
     return matC;
+}
+
+PYBIND11_MODULE(_matrix, m)
+{
+    m.def("multiply_naive", &multiply_naive);
+    m.def("multiply_tile", &multiply_tile);
+    m.def("multiply_mkl", &multiply_mkl);
+
+    pybind11::class_<Matrix>(m, "Matrix")
+        .def(pybind11::init<size_t, size_t>())
+        .def_property_readonly("nrow", &Matrix::nrow)
+        .def_property_readonly("ncol", &Matrix::ncol)
+        .def("__getitem__",
+            [](Matrix &mat, std::pair<size_t, size_t> key) {
+                return mat(key.first, key.second);
+            })
+        .def("__setitem__",
+            [](Matrix &mat, std::pair<size_t, size_t> key, double val) {
+                mat(key.first, key.second) = val;
+            })
+        .def("__eq__", &Matrix::operator==);
 }
 
