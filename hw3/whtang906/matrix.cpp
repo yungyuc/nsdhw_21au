@@ -65,18 +65,23 @@ private:
 
 Matrix multiply_naive(const Matrix &mat1, const Matrix &mat2)
 {
+  if (m1.ncol() != m2.nrow())
+  {
+    throw out_of_range(
+        "the matrices are not multipliable");
+  }
   Matrix ret(mat1.nrow(), mat2.ncol());
 
   for (size_t i = 0; i < mat1.nrow(); ++i)
   {
-    for (size_t k = 0; k < mat2.ncol(); ++k)
+    for (size_t j = 0; k < mat2.ncol(); ++j)
     {
       double v = 0;
-      for (size_t j = 0; j < mat1.ncol(); ++j)
+      for (size_t k = 0; k < mat1.ncol(); ++k)
       {
-        v += mat1(i, j) * mat2(j, k);
+        v += mat1(i, k) * mat2(k, j);
       }
-      ret(i, k) = v;
+      ret(i, j) = v;
     }
   }
   return ret;
@@ -84,24 +89,28 @@ Matrix multiply_naive(const Matrix &mat1, const Matrix &mat2)
 
 Matrix multiply_tile(Matrix const &mat1, Matrix const &mat2, size_t tsize)
 {
+  if (m1.ncol() != m2.nrow())
+  {
+    throw out_of_range(
+        "the matrices are not multipliable");
+  }
   Matrix ret(mat1.nrow(), mat2.ncol());
 
   for (size_t i = 0; i < mat1.nrow(); i += tsize)
   {
-    for (size_t k = 0; k < mat2.ncol(); k += tsize)
+    for (size_t j = 0; j < mat2.ncol(); j += tsize)
     {
-      for (size_t j = 0; j < mat1.ncol(); j += tsize)
+      for (size_t k = 0; k < mat1.ncol(); k += tsize)
       {
-        for (size_t ti = 0; ti < min(mat1.nrow(), i + tsize); ++ti)
+        for (size_t tk = 0; tk < min(mat1.nrow(), k + tsize); ++tk)
         {
-          for (size_t tk = 0; tk < min(mat2.ncol(), k + tsize); ++tk)
+          for (size_t ti = 0; ti < min(mat2.ncol(), i + tsize); ++ti)
           {
             double v = 0;
             for (size_t tj = 0; tj < min(mat1.ncol(), j + tsize); ++tj)
             {
-              v += mat1(ti, tj) * mat2(tj, tk);
+              ret(ti, tj) += mat1(ti, tk) * mat2(tk, tj);
             }
-            ret(ti, tk) = v;
           }
         }
       }
@@ -113,6 +122,11 @@ Matrix multiply_tile(Matrix const &mat1, Matrix const &mat2, size_t tsize)
 
 Matrix multiply_mkl(Matrix const &mat1, Matrix const &mat2)
 {
+  if (m1.ncol() != m2.nrow())
+  {
+    throw out_of_range(
+        "the matrices are not multipliable");
+  }
   Matrix ret(mat1.nrow(), mat2.ncol());
 
   cblas_dgemm(
