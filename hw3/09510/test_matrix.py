@@ -45,19 +45,32 @@ class TestMatrix:
 
         return naive, tile, mkl
 
-    def write_file(self, naive_t, tile_t, mkl_t):
+
+
+    def test_accuracy(self):
+        i=300
+        j=300
+        k=300
+
+        for time in range(8):
+            naive_t, tile_t, mkl_t = self.multiply_calculate(i*time, j, k*time, 2)
+
+            
+    def test(self):
+        # Rule in README.rst : the matrix size should be larger than or equal to 1000x1000
+        # (i*j) * (j*k)
+        i=1500
+        j=1500
+        k=1500
+
+        naive_t, tile_t, mkl_t = self.multiply_calculate(i, j, k, 2)
+        for i in range(2,6):
+            this_naive, this_tile, this_mkl = self.multiply_calculate(i, j, k, 2**i)
+            tile_t = min(this_tile, tile_t)
+        
         with open('performance.txt', 'w') as f:
             f.write('mutiply_naive time: '+ str(naive_t) + " second\n")
             f.write('mutiply_tile: '+ str(tile_t) + " second\n")
             f.write('mutiply_mkl: '+ str(mkl_t) + " second\n")
             f.write('tile speeds up rate ( naive time / tile time) : '+ str(naive_t / tile_t) + "\n")
             f.write('MKL speeds up rate (naive time / mkl time) : '+ str(naive_t / mkl_t) + "\n")
-
-
-    def test(self):
-        # Rule in README.rst : the matrix size should be larger than or equal to 1000x1000
-        naive_t, tile_t, mkl_t = self.multiply_calculate(1500, 1500, 1500, 2)
-        for i in range(2,6):
-            this_naive, this_tile, this_mkl = self.multiply_calculate(1500, 1500, 1500, 2**i)
-            tile_t = min(this_tile, tile_t)
-        self.write_file(naive_t, tile_t, mkl_t)

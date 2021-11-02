@@ -5,11 +5,12 @@ MKLFLAGS = ${MKL_DIR}/libmkl_def.so \
 	${MKL_DIR}/libmkl_core.so \
 	${MKL_DIR}/libmkl_intel_lp64.so \
 	${MKL_DIR}/libmkl_sequential.so
+
 INCLUDE = `python3-config --includes`
 CXXFLAGS =-I${INCLUDE_DIRS} ${MKLFLAGS} -ldl -lpthread -lm $(INCLUDE)
 OUT = _matrix${shell python3-config --extension-suffix}
 
-.PHONY: all
+.PHONY: all clean test
 all: ${OUT}
 
 ${OUT}: matrix.cpp
