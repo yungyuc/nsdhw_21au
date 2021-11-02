@@ -52,7 +52,7 @@ class TestMatrix:
 
 
     def test_tile(self):
-        naive_t, tile_t, mkl_t = self.multiply_time(i, j, k, 16)
+        naive_t, tile_t, mkl_t = self.multiply_time(1000, 1000, 1000, 16)
         assert (tile_t/naive_t) <= 0.8
 
     def test_performance(self):
