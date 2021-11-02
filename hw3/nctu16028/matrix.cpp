@@ -180,7 +180,7 @@ Matrix multiply_tile(Matrix const &matA, Matrix const &matB, size_t const tile_s
 // Call DGEMM for the multiplication
 Matrix multiply_mkl(Matrix const &matA, Matrix const &matB)
 {
-    mkl_set_num_threads(1);
+    //mkl_set_num_threads(1);
 
     Matrix matC(matA.nrow(), matB.ncol());
 
