@@ -16,17 +16,6 @@ static bool can_multiply(const Matrix &A, const Matrix &B)
     return true;
 }
 
-Matrix::Matrix(size_t r, size_t c) : m_nrow(r), m_ncol(c) {
-    if (r == 0 || c == 0) {
-        throw std::out_of_range("matrix index out of range");
-    }
-    m_elems = new double[r * c];
-    for (size_t i = 0; i < r; i++) {
-        for (size_t j = 0; j < c; j++) {
-             m_elems[i * c + j] = 0.0;
-        }
-    }
-}
 
 Matrix::Matrix(const Matrix &rhs) {
     m_elems = new double[rhs.m_nrow * rhs.m_ncol]; 
@@ -100,7 +89,8 @@ bool Matrix::check_range(size_t i, size_t j) const {
 }
 
 Matrix multiply_naive(const Matrix &A, const Matrix &B) {
-    can_multiply(A, B);
+    if (A.ncol() != B.nrow())
+        throw std::invalid_argument("The two matrices cannot be multiplied");
     Matrix C(A.nrow(), B.ncol());
 
     for (size_t i = 0; i < A.nrow(); i++) {
@@ -119,19 +109,26 @@ Matrix multiply_naive(const Matrix &A, const Matrix &B) {
 
 Matrix multiply_tile(const Matrix &A, const Matrix &B, size_t tile_width)
 {
-    can_multiply(A, B);
-    Matrix C(A.nrow(), B.ncol());
 
-    for (size_t i = 0; i < A.nrow(); i += tile_width) {
-        for (size_t j = 0; j < B.ncol(); j += tile_width) {
+    size_t A_row = A.nrow();
+    size_t A_col = A.ncol();
+    size_t B_row = B.nrow();
+    size_t B_col = B.ncol();
+
+    if (A_col != B_row)
+        throw std::invalid_argument("The two matrices cannot be multiplied");
+    Matrix C(A_row, B_col);
+
+    for (size_t i = 0; i < A_row; i += tile_width) {
+        for (size_t j = 0; j < B_col; j += tile_width) {
 
             /* Tile bounds */  
-            size_t rb = std::min(A.nrow(), i + tile_width);
-            size_t cb = std::min(B.ncol(), j + tile_width);
+            size_t rb = std::min(A_row, i + tile_width);
+            size_t cb = std::min(B_col, j + tile_width);
 
             /* Calculation for tiles */    
-            for (size_t k = 0; k < A.ncol(); k += tile_width) {
-                size_t tb = std::min(A.ncol(), k + tile_width);
+            for (size_t k = 0; k < A_col; k += tile_width) {
+                size_t tb = std::min(A_col, k + tile_width);
 
                 for (size_t tk = k; tk < tb; tk++) {
                     for (size_t ti = i; ti < rb; ti++) {
@@ -150,7 +147,8 @@ Matrix multiply_tile(const Matrix &A, const Matrix &B, size_t tile_width)
 
 Matrix multiply_mkl(const Matrix &A, const Matrix &B)
 {
-    can_multiply(A, B);
+    if (A.ncol() != B.nrow())
+        throw std::invalid_argument("The two matrices cannot be multiplied");
     Matrix C(A.nrow(), B.ncol());
     
     cblas_dgemm(CblasRowMajor,
