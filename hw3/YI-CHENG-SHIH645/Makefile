@@ -11,7 +11,7 @@ EXTENSION = $(shell python3-config --extension-suffix)
 MKL = -I/usr/include/mkl -L/usr/lib/x86_64-linux-gnu/mkl
 
 main:main.cpp
-	$(CC) $(CXXFLAGS) $(PYBIND) $(MKL) main.cpp -o matrix$(EXTENSION) -lblas
+	$(CC) $(CXXFLAGS) $(PYBIND) $(MKL) main.cpp -o _matrix$(EXTENSION) -lblas
 
 test:
 	python -m pytest -v
