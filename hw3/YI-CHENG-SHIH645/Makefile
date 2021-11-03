@@ -10,7 +10,7 @@ PYBIND = $(shell python3 -m pybind11 --includes)
 EXTENSION = $(shell python3-config --extension-suffix)
 MKL = -I/usr/include/mkl -L/usr/lib/x86_64-linux-gnu/mkl
 
-main:main.cpp
+_matrix$(EXTENSION):main.cpp
 	$(CC) $(CXXFLAGS) $(PYBIND) $(MKL) main.cpp -o _matrix$(EXTENSION) -lblas
 
 test:
