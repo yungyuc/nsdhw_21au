@@ -26,6 +26,9 @@ entry too.  You can request my review in the PR for discussions.
 Project List
 ============
 
+#. `09510 <https://github.com/09510>`__ for
+   `Encryption Acceleration <09510/README.rst>`__:
+   https://github.com/09510/Encryption-Acceleration
 #. `B106Roger <https://github.com/B106Roger>`__ for
    `Simple ML Framework <B106Roger/README.rst>`__:
    https://github.com/B106Roger/nsdhw_21au_final_proejct
@@ -46,9 +49,14 @@ Project List
    <Luke2336/README.rst>`__: https://github.com/Luke2336/graph-visualization
 #. `Platisenic <https://github.com/Platisenic>`__ for `autodiff
    <Platisenic/README.md>`__: https://github.com/Platisenic/autodiff
+#. `S413 <https://github.com/S413>`__ for `All That Jazz <S413/README.rst>`__:
+   https://github.com/S413/AllThatJazz
 #. `YI-CHENG-SHIH645 <https://github.com/YI-CHENG-SHIH645>`__ for `Recommender
    System <YI-CHENG-SHIH645/README.rst>`__:
    https://github.com/YI-CHENG-SHIH645/RecommenderSystem
+#. `abt8601 <https://github.com/abt8601>`__ for `abt8601
+   <abt8601/README.rst>`__: missing
+#. `aiiuii <https://github.com/aiiuii>`__ cannot merge.
 #. `anva-kn <https://github.com/anva-kn>`__ for `Ramanflow
    <anva-kn/README.rst>`__: https://github.com/anva-kn/ramanflow
 #. `chrisPyr <https://github.com/chrisPyr>`__ for `My Universe
@@ -60,19 +68,28 @@ Project List
    <eesss34690/README.rst>`__: https://github.com/eesss34690/Cache_Optimization
 #. `hsjts0u <https://github.com/hsjts0u>`__ for `TermPlot <hsjts0u>`__:
    https://github.com/hsjts0u/TermPlot
+#. `jonathan-liu-0204 <https://github.com/jonathan-liu-0204>`__ for `VRedBlack
+   <jonathan-liu-0204/0716304-Proposal.rst>`__:
+   https://github.com/jonathan-liu-0204/Visualization-of-Red-Black-Tree
 #. `music87 <https://github.com/music87>`__ for `Call Option Pricer
    <music87/proposal.md>`__:
    https://github.com/music87/nsd-project-option-pricer
 #. `nctu16028 <https://github.com/nctu16028>`__ for `Exploring Bezier Curve
    <nctu16028>`__: https://github.com/nctu16028/Exploring-Bezier-Curve
+#. `psychicalcoder <https://github.com/psychicalcoder>`__ for `PolyLower
+   <psychicalcoder/README.org>`__: https://github.com/psychicalcoder/polylower
 #. `ran-ablaze <https://github.com/ran-ablaze>`__ for `Simple Polyhedral
    Structure <ran-ablaze>`__:
    https://github.com/ran-ablaze/Simple-Polyhedral-Structure
+#. `sam29309010 <https://github.com/sam29309010>`__ for `Backtesting
+   <sam29309010/readme.md>`__: N/A
 #. `secondlevel <https://github.com/secondlevel>`__ for `Social distance
    detector <secondlevel/README.md>`__:
    https://github.com/secondlevel/Social-distance-detector
 #. `whtang906 <https://github.com/whtang906>`__ for `Selective Search
    <whtang906/README.md>`__: https://github.com/whtang906/cpp-selective-search
+#. `yichi170 <https://github.com/yichi170>`__ for `Related Work Graph
+   <yichi170/README.rst>`__: N/A
 
 Presentation
 ============
