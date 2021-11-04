@@ -3,7 +3,7 @@
 #PYBIND = $(shell python3 -m pybind11 --includes)
 #EXTENSION = $(shell python3-config --extension-suffix)
 #MKL = -I/opt/intel/oneapi/mkl/2021.4.0/include
-#SOFILE = matrix$(EXTENSION)
+#SOFILE = _matrix$(EXTENSION)
 
 CXX = g++
 CXXFLAGS = -Wall -shared -std=c++11 -fPIC
