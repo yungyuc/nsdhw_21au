@@ -7,7 +7,7 @@
 
 CXX = g++
 CXXFLAGS = -Wall -shared -std=c++11 -fPIC
-PYBIND = $(shell python3 -m pybind11 --includes)
+PYBIND = `python3 -m pybind11 --includes`
 EXTENSION = $(shell python3-config --extension-suffix)
 MKL = -I/usr/include/mkl -L/usr/lib/x86_64-linux-gnu/mkl
 SOFILE = _matrix$(EXTENSION)
