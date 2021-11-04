@@ -13,7 +13,7 @@ MKL = -I/usr/include/mkl -L/usr/lib/x86_64-linux-gnu/mkl
 SOFILE = _matrix$(EXTENSION)
 
 $(SOFILE):matrix.cpp
-	$(CC) $(CXXFLAGS) $(PYBIND) matrix.cpp -o $(SOFILE) $(MKL) -lblas
+	$(CXX) $(CXXFLAGS) $(PYBIND) matrix.cpp -o $(SOFILE) $(MKL) -lblas
 
 test: $(SOFILE)
 	python -m pytest -v
