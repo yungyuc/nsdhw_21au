@@ -166,27 +166,33 @@ Matrix multiply_tile(const Matrix & mat1, const Matrix & mat2, int width) {
     size_t C = mat2.ncol();
     size_t K = mat1.ncol();
     Matrix mat2T = mat2.transpose();
-    static Matrix ret(mat1.nrow(), mat2.ncol());
-    for(int r=0; r<R; ++r)
-        for(int c=0; c<C; ++c)
-            ret[C*r+c] = 0.0;
+    static Matrix ret(R, C);
 
-    for(int r=0; r<R; r+=width) {                    // block row 開頭
+    for(size_t r=0; r<R; ++r)
+        for(size_t c=0; c<C; ++c)
+            ret(r, c) = 0.0;
+
+    for(size_t r=0; r<R; r+=width) {                    // block row 開頭
         size_t r_end = r+width > R ? R : r+width;     // block row 結尾 (定義出一整列的 blocks)
-        for(int c=0; c<C; c+=width) {                // block col 開頭
+        for(size_t c=0; c<C; c+=width) {                // block col 開頭
             size_t c_end = c+width > C ? C : c+width; // block col 結尾 (定義出一整行的 blocks)
-            for(int k=0; k<K; k+=width) {             // 兩個 block 要做 multiplication
+            for(size_t k=0; k<K; k+=width) {             // 兩個 block 要做 multiplication
                 size_t k_end = k+width > K ? K : k+width;
 
-                for(int cp=c; cp<c_end; ++cp) {
-                    int sj = (int)C * cp;
-                    for(int rp=r; rp<r_end; ++rp) {
-                        int ki = (int)K * rp;
-                        int kij = ki + cp;
-                        for(int kp=k; kp<k_end; ++kp)
+                for(size_t cp=c; cp<c_end; ++cp) {
+                    size_t sj = C * cp;
+                    for(size_t rp=r; rp<r_end; ++rp) {
+                        size_t ki = K * rp;
+                        size_t kij = ki + cp;
+                        for(size_t kp=k; kp<k_end; ++kp)
                             ret[kij] += mat1[ki + kp] * mat2T[sj + kp];
                     }
                 }
+//                for(size_t rp=r; rp<r_end; ++rp)
+//                    for(size_t cp=c; cp<c_end; ++cp) {
+//                        for(size_t kp=k; kp<k_end; ++kp)
+//                            ret(rp, cp) += mat1(rp, kp) * mat2T(kp, cp);
+//                    }
             }
         }
     }
@@ -224,6 +230,8 @@ PYBIND11_MODULE(_matrix, m) {
     m.def("initialize", &initialize);
     py::class_<Matrix>(m, "Matrix")
             .def(py::init<int, int>())
+            .def_property_readonly("nrow", &Matrix::nrow)
+            .def_property_readonly("ncol", &Matrix::ncol)
             .def("__eq__", [](Matrix & self, Matrix & another) { return self == another; })
             .def("__getitem__", [](Matrix & self, std::pair<size_t, size_t> pair) { return self(pair.first, pair.second); })
             .def("__setitem__", [](Matrix & self, std::pair<size_t, size_t> pair, double item) { self(pair.first, pair.second) = item; });
