@@ -225,5 +225,6 @@ PYBIND11_MODULE(_matrix, m) {
     py::class_<Matrix>(m, "Matrix")
             .def(py::init<int, int>())
             .def("__eq__", [](Matrix & self, Matrix & another) { return self == another; })
-            .def("__getitem__", [](Matrix & self, std::pair<size_t, size_t> pair) { return self(pair.first, pair.second); });
+            .def("__getitem__", [](Matrix & self, std::pair<size_t, size_t> pair) { return self(pair.first, pair.second); })
+            .def("__setitem__", [](Matrix & self, std::pair<size_t, size_t> pair, double item) { self(pair.first, pair.second) = item; });
 }
