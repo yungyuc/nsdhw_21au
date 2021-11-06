@@ -1,0 +1,11 @@
+Start multiply_naive (repeat=5), take min = 16.249366291000115 seconds
+Start multiply_tile_32 (repeat=5), take min = 7.677025142000275 seconds
+Start multiply_tile_64 (repeat=5), take min = 7.623788454999158 seconds
+Start multiply_tile_128 (repeat=5), take min = 7.749990063999576 seconds
+Start multiply_tile_256 (repeat=5), take min = 7.9122547160004615 seconds
+Start multiply_mkl (repeat=5), take min = 0.08112250400154153 seconds
+Tile_32 speed-up over naive: 2.11662 x
+Tile_64 speed-up over naive: 2.1314 x
+Tile_128 speed-up over naive: 2.0967 x
+Tile_256 speed-up over naive: 2.0537 x
+MKL speed-up over naive: 200.307 x
