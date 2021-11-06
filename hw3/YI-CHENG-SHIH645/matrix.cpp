@@ -72,7 +72,7 @@ public:
     bool operator==(Matrix const & other) {
         if(nrow() != other.nrow() || ncol() != other.ncol())
             return false;
-        for(int i=0; i<size(); ++i)
+        for(size_t i=0; i<size(); ++i)
             if((*this)[i] != other[i])
                 return false;
         return true;
@@ -145,7 +145,9 @@ void initialize(Matrix & mat)
 }
 
 Matrix multiply_naive(const Matrix & mat1, const Matrix & mat2) {
-    static Matrix ret(mat1.nrow(), mat2.ncol());
+    if (mat1.ncol() != mat2.nrow())
+        throw std::out_of_range("k not eq");
+    Matrix ret(mat1.nrow(), mat2.ncol());
     for (size_t i=0; i<mat1.nrow(); ++i)
     {
         for (size_t k=0; k<mat2.ncol(); ++k)
@@ -162,11 +164,13 @@ Matrix multiply_naive(const Matrix & mat1, const Matrix & mat2) {
 }
 
 Matrix multiply_tile(const Matrix & mat1, const Matrix & mat2, int width) {
+    if (mat1.ncol() != mat2.nrow())
+        throw std::out_of_range("k not eq");
     size_t R = mat1.nrow();
     size_t C = mat2.ncol();
     size_t K = mat1.ncol();
     Matrix mat2T = mat2.transpose();
-    static Matrix ret(R, C);
+    Matrix ret(R, C);
 
     for(size_t r=0; r<R; ++r)
         for(size_t c=0; c<C; ++c)
@@ -191,7 +195,7 @@ Matrix multiply_tile(const Matrix & mat1, const Matrix & mat2, int width) {
 //                for(size_t rp=r; rp<r_end; ++rp)
 //                    for(size_t cp=c; cp<c_end; ++cp) {
 //                        for(size_t kp=k; kp<k_end; ++kp)
-//                            ret(rp, cp) += mat1(rp, kp) * mat2T(kp, cp);
+//                            ret(rp, cp) += mat1(rp, kp) * mat2(kp, cp);
 //                    }
             }
         }
@@ -209,19 +213,19 @@ Matrix multiply_mkl(const Matrix & mat1, const Matrix & mat2) {
     return ret;
 }
 
-int main()
-{
-    Matrix mat1(1 * 1024, 1 * 1024);
-    initialize(mat1);
-    Matrix mat2 = mat1;
-    Matrix naive_ret = multiply_naive(mat1, mat2);
-    Matrix tile_ret = multiply_tile(mat1, mat2, 64/sizeof(float));
-    Matrix mkl_ret = multiply_mkl(mat1, mat2);
-    std::cout << (naive_ret==tile_ret) << std::endl;
-    std::cout << (tile_ret==mkl_ret) << std::endl;
-
-    return 0;
-}
+//int main()
+//{
+//    Matrix mat1(1 * 1024, 1 * 1024);
+//    initialize(mat1);
+//    Matrix mat2 = mat1;
+//    Matrix naive_ret = multiply_naive(mat1, mat2);
+//    Matrix tile_ret = multiply_tile(mat1, mat2, 64/sizeof(float));
+//    Matrix mkl_ret = multiply_mkl(mat1, mat2);
+//    std::cout << (naive_ret==tile_ret) << std::endl;
+//    std::cout << (tile_ret==mkl_ret) << std::endl;
+//
+//    return 0;
+//}
 
 PYBIND11_MODULE(_matrix, m) {
     m.def("multiply_naive", &multiply_naive);
@@ -232,7 +236,7 @@ PYBIND11_MODULE(_matrix, m) {
             .def(py::init<int, int>())
             .def_property_readonly("nrow", &Matrix::nrow)
             .def_property_readonly("ncol", &Matrix::ncol)
-            .def("__eq__", [](Matrix & self, Matrix & another) { return self == another; })
+            .def("__eq__",  &Matrix::operator==)
             .def("__getitem__", [](Matrix & self, std::pair<size_t, size_t> pair) { return self(pair.first, pair.second); })
             .def("__setitem__", [](Matrix & self, std::pair<size_t, size_t> pair, double item) { self(pair.first, pair.second) = item; });
 }
