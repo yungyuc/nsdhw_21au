@@ -1,0 +1,11 @@
+Flavour          Time (s)  Speedup
+Naive            2.882     1
+Tile (size 1)    9.77      0.295
+Tile (size 2)    2.817     1.023
+Tile (size 4)    1.462     1.971
+Tile (size 8)    0.8783    3.282
+Tile (size 16)   0.8895    3.24
+Tile (size 32)   1.086     2.654
+Tile (size 64)   1.228     2.348
+Tile (size 128)  1.509     1.91
+MKL              0.03659   78.76
