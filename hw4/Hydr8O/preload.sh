@@ -1,0 +1,1 @@
+export LD_PRELOAD=/home/egor/intel/oneapi/mkl/2021.4.0/lib/intel64/libmkl_core.so:/home/egor/intel/oneapi/mkl/2021.4.0/lib/intel64/libmkl_intel_lp64.so:/home/egor/intel/oneapi/mkl/2021.4.0/lib/intel64/libmkl_sequential.so
