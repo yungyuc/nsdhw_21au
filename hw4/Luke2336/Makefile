@@ -1,5 +1,5 @@
 CXX := clang++
-CFLAGS := --std=c++11 -O3 -m64
+CFLAGS := --std=c++17 -O3 -m64
 WFLAGS := -Wall -Wextra
 MKL_DIR := /usr/lib/x86_64-linux-gnu
 MKL_LIBS := ${MKL_DIR}/libmkl_def.so \
