@@ -30,7 +30,7 @@ all: $(MOD)
 $(MOD): $(BUILD_DIR)/$(MOD)
 	cp $< $@
 
-$(BUILD_DIR)/$(MOD): $(BUILD_DIR)/matrix_pybind.o $(BUILD_DIR)/matrix_mul.o
+$(BUILD_DIR)/$(MOD): $(BUILD_DIR)/matrix_pybind.o $(BUILD_DIR)/matrix_mul.o $(BUILD_DIR)/allocator.o
 	$(CXX) $(LDFLAGS) $^ $(LDLIBS) -shared -o $@
 
 $(BUILD_DIR)/%.o: %.cpp | $(BUILD_DIR)

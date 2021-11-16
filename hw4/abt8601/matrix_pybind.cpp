@@ -1,5 +1,6 @@
 #include <pybind11/pybind11.h>
 
+#include "allocator.hpp"
 #include "matrix.hpp"
 #include "matrix_mul.hpp"
 
@@ -28,4 +29,8 @@ PYBIND11_MODULE(_matrix, m) {
         py::pos_only(), "tile_size"_a);
   m.def("multiply_mkl", &multiply_mkl, "Multiply two matrices using MKL", "a"_a,
         "b"_a, py::pos_only());
+
+  m.def("bytes", &bytes_alive, "Number of bytes alive");
+  m.def("allocated", &bytes_allocated, "Number of bytes allocated");
+  m.def("deallocated", &bytes_deallocated, "Number of bytes deallocated");
 }

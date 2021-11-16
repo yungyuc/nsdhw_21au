@@ -1,33 +1,25 @@
 #pragma once
-#ifndef NSDHW_21AU_HW3_MATRIX_HPP
-#define NSDHW_21AU_HW3_MATRIX_HPP
+#ifndef NSDHW_21AU_HW4_MATRIX_HPP
+#define NSDHW_21AU_HW4_MATRIX_HPP
 
-#include <algorithm>
 #include <cstddef>
 #include <sstream>
 #include <string>
 #include <utility>
+#include <vector>
+
+#include "allocator.hpp"
 
 class Matrix {
 public:
-  Matrix() : m_nrow(0), m_ncol(0), m_elems(nullptr) {}
+  Matrix() : m_nrow(0), m_ncol(0) {}
 
-  Matrix(const Matrix &other) : m_nrow(other.m_nrow), m_ncol(other.m_ncol) {
-    if (other.m_elems) {
-      const size_t nelems = m_nrow * m_ncol;
-      m_elems = new double[nelems];
-      std::copy_n(other.m_elems, nelems, m_elems);
-    } else {
-      m_elems = nullptr;
-    }
-  }
+  Matrix(const Matrix &other)
+      : m_nrow(other.m_nrow), m_ncol(other.m_ncol), m_elems(other.m_elems) {}
 
   Matrix(Matrix &&other)
-      : m_nrow(other.m_nrow), m_ncol(other.m_ncol), m_elems(other.m_elems) {
-    other.m_nrow = 0;
-    other.m_ncol = 0;
-    other.m_elems = nullptr;
-  }
+      : m_nrow(other.m_nrow), m_ncol(other.m_ncol),
+        m_elems(std::move(other.m_elems)) {}
 
   Matrix &operator=(const Matrix &other) {
     if (this == &other)
@@ -35,17 +27,7 @@ public:
 
     m_nrow = other.m_nrow;
     m_ncol = other.m_ncol;
-
-    if (m_elems)
-      delete[] m_elems;
-
-    if (other.m_elems) {
-      const size_t nelems = m_nrow * m_ncol;
-      m_elems = new double[nelems];
-      std::copy_n(other.m_elems, nelems, m_elems);
-    } else {
-      m_elems = nullptr;
-    }
+    m_elems = other.m_elems;
 
     return *this;
   }
@@ -61,33 +43,21 @@ public:
     return *this;
   }
 
-  virtual ~Matrix() {
-    if (m_elems)
-      delete[] m_elems;
-  }
+  virtual ~Matrix() = default;
 
-  Matrix(const size_t nrow, const size_t ncol) : m_nrow(nrow), m_ncol(ncol) {
-    const size_t nelems = m_nrow * m_ncol;
-    if (nelems > 0) {
-      m_elems = new double[nelems];
-    } else {
-      m_elems = nullptr;
-    }
-  }
+  Matrix(const size_t nrow, const size_t ncol)
+      : m_nrow(nrow), m_ncol(ncol), m_elems(nrow * ncol) {}
 
   static Matrix zeros(const size_t nrow, const size_t ncol) {
-    const size_t nelems = nrow * ncol;
-    double *elems = nullptr;
-    if (nelems > 0)
-      elems = new double[nelems]();
-
-    return Matrix(nrow, ncol, elems);
+    return Matrix(
+        nrow, ncol,
+        std::vector<double, ByteCountAllocator<double>>(nrow * ncol, 0));
   }
 
   size_t nrow() const noexcept { return m_nrow; }
   size_t ncol() const noexcept { return m_ncol; }
-  const double *data() const noexcept { return m_elems; }
-  double *data() noexcept { return m_elems; }
+  const double *data() const noexcept { return m_elems.data(); }
+  double *data() noexcept { return m_elems.data(); }
 
   double operator[](const std::pair<size_t, size_t> ix) const noexcept {
     const size_t i = ix.first, j = ix.second;
@@ -149,8 +119,9 @@ public:
   }
 
 protected:
-  Matrix(const size_t nrow, const size_t ncol, double *const elems) noexcept
-      : m_nrow(nrow), m_ncol(ncol), m_elems(elems) {}
+  Matrix(const size_t nrow, const size_t ncol,
+         std::vector<double, ByteCountAllocator<double>> &&elems) noexcept
+      : m_nrow(nrow), m_ncol(ncol), m_elems(std::move(elems)) {}
 
   void check_ix(const std::pair<size_t, size_t> ix) const {
     const size_t i = ix.first, j = ix.second;
@@ -159,7 +130,7 @@ protected:
   }
 
   size_t m_nrow, m_ncol;
-  double *m_elems;
+  std::vector<double, ByteCountAllocator<double>> m_elems;
 };
 
 #endif
