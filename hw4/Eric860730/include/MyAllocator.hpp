@@ -123,7 +123,6 @@ struct MyAllocator
 
   T * allocate(std::size_t n)
   {
-    printf("enter allocater.\n");
     if (n > std::numeric_limits<std::size_t>::max() / sizeof(T))
     {
       throw std::bad_alloc();
@@ -133,7 +132,6 @@ struct MyAllocator
     if (p)
     {
       counter.increase(bytes);
-      printf("%lu", counter.bytes());
       return p;
     }
     else

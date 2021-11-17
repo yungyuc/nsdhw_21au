@@ -97,7 +97,11 @@ class Matrix {
 
     size_t size() const { return m_nrow * m_ncol; }
 
+    friend Matrix multiply_naive(Matrix const &mat1, Matrix const &mat2);
+    friend Matrix multiply_tile(Matrix const &mat1, Matrix const &mat2, size_t const tile_size);
+    friend Matrix multiply_mkl(Matrix const & mat1, Matrix const & mat2);
 
+  private:
     size_t m_nrow;
     size_t m_ncol;
     std::vector<double, MyAllocator<double>> m_buffer;

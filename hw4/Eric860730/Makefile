@@ -20,7 +20,7 @@ TARGET = _matrix
 
 all: $(TARGET).*.so
 
-$(TARGET).*.so: lib/_GEMM.cpp Matrix_pybind.cpp
+$(TARGET).*.so: lib/_GEMM.cpp
 	$(CC) $(CFLAGS) $(INCLUDE) `$(PYTHON) -m pybind11 --includes` $^ -o $(TARGET)`$(PYTHON)-config --extension-suffix` -I/usr/include/python3.8 $(LDFLAGS)
 
 test: all
