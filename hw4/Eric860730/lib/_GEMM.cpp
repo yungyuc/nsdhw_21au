@@ -121,9 +121,10 @@ bool operator==(Matrix const &mat1, Matrix const &mat2) {
   return true;
 }
 
-std::size_t bytes() { return matrix_allocator.counter.bytes(); }
-std::size_t allocated() { return matrix_allocator.counter.allocated(); }
-std::size_t deallocated() { return matrix_allocator.counter.deallocated(); }
+// increse global function for get allocator
+std::size_t bytes() { return matrix_allocator.bytes(); }
+std::size_t allocated() { return matrix_allocator.allocated(); }
+std::size_t deallocated() { return matrix_allocator.deallocated(); }
 
 // pybind11 start
 #include <pybind11/pybind11.h>
