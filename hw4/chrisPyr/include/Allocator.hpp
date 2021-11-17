@@ -60,8 +60,6 @@ public:
   std::size_t bytes() const { return m_impl->allocated - m_impl->deallocated; }
   std::size_t allocated() const { return m_impl->allocated; }
   std::size_t deallocated() const { return m_impl->deallocated; }
-  /* This is for debugging. */
-  std::size_t refcount() const { return m_impl->refcount; }
 
 private:
   void incref() { ++m_impl->refcount; }
@@ -125,22 +123,4 @@ template <class T> struct MyAllocator {
 
 }; /* end struct MyAllocator */
 
-// template <class T, class U>
-// bool operator==(const MyAllocator<T> & a, const MyAllocator<U> & b)
-//{
-//    return a.counter == b.counter;
-//}
 
-// template <class T, class U>
-// bool operator!=(const MyAllocator<T> & a, const MyAllocator<U> & b)
-//{
-//    return !(a == b);
-//}
-
-template <class T>
-std::ostream &operator<<(std::ostream &out, const MyAllocator<T> &alloc) {
-  out << "allocator: bytes = " << alloc.counter.bytes();
-  out << " allocated = " << alloc.counter.allocated();
-  out << " deallocated = " << alloc.counter.deallocated();
-  return out;
-}
