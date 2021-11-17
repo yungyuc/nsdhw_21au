@@ -7,10 +7,11 @@
 namespace py = pybind11;
 
 Matrix &Matrix::operator=(const Matrix &other) {
-  //data = other.data;
-  for (size_t i = 0; i<m_row; ++i){
-    for(size_t j = 0;j < m_col; ++j){
-      (*this).getpos(i,j) = other.getdata(i,j);
+  // data = other.data;
+  resetBuffer(other.row(), other.col());
+  for (size_t i = 0; i < m_row; ++i) {
+    for (size_t j = 0; j < m_col; ++j) {
+      (*this).getpos(i, j) = other.getdata(i, j);
     }
   }
   return *this;
@@ -105,17 +106,17 @@ Matrix multiply_mkl(Matrix const &A_mat, Matrix const &B_mat) {
   return ret;
 }
 
-std::size_t bytes() {return Allocator.counter.bytes();}
-std::size_t allocated() {return Allocator.counter.allocated();}
-std::size_t deallocated() {return Allocator.counter.deallocated();}
+std::size_t bytes() { return Allocator.counter.bytes(); }
+std::size_t allocated() { return Allocator.counter.allocated(); }
+std::size_t deallocated() { return Allocator.counter.deallocated(); }
 
 PYBIND11_MODULE(_matrix, m) {
   m.def("multiply_naive", &multiply_naive);
   m.def("multiply_tile", &multiply_tile);
   m.def("multiply_mkl", &multiply_mkl);
-  m.def("bytes",&bytes);
-  m.def("allocated",&allocated);
-  m.def("deallocated",&deallocated);
+  m.def("bytes", &bytes);
+  m.def("allocated", &allocated);
+  m.def("deallocated", &deallocated);
 
   py::class_<Matrix>(m, "Matrix")
       .def(py::init<size_t, size_t>())
