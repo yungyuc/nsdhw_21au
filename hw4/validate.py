@@ -121,7 +121,7 @@ class GradingTest(unittest.TestCase):
         base_dealloc = _matrix.deallocated()
 
         ret_naive = _matrix.multiply_naive(mat1, mat2)
-        ret_mkl = _matrix.multiply_naive(mat1, mat2)
+        ret_mkl = _matrix.multiply_mkl(mat1, mat2)
 
         self.assertEqual(size, ret_naive.nrow)
         self.assertEqual(size, ret_naive.ncol)
