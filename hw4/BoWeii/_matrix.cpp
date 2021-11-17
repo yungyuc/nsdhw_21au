@@ -81,54 +81,39 @@ Matrix multiply_naive(const Matrix &mat1, const Matrix &mat2)
 
 Matrix multiply_mkl(Matrix const &mat1, Matrix const &mat2)
 {
-    // mkl_set_num_threads(1);
+    mkl_set_num_threads(1);
 
-    // Matrix ret(mat1.nrow(), mat2.ncol());
+    Matrix ret(mat1.nrow(), mat2.ncol());
 
-    // cblas_dgemm(CblasRowMajor /* const CBLAS_LAYOUT Layout */
-    //             ,
-    //             CblasNoTrans /* const CBLAS_TRANSPOSE transa */
-    //             ,
-    //             CblasNoTrans /* const CBLAS_TRANSPOSE transb */
-    //             ,
-    //             mat1.nrow() /* const MKL_INT m */
-    //             ,
-    //             mat2.ncol() /* const MKL_INT n */
-    //             ,
-    //             mat1.ncol() /* const MKL_INT k */
-    //             ,
-    //             1.0 /* const double alpha */
-    //             ,
-    //             mat1.m_buffer.data() /* const double *a */
-    //             ,
-    //             mat1.ncol() /* const MKL_INT lda */
-    //             ,
-    //             mat2.m_buffer.data() /* const double *b */
-    //             ,
-    //             mat2.ncol() /* const MKL_INT ldb */
-    //             ,
-    //             0.0 /* const double beta */
-    //             ,
-    //             ret.m_buffer.data() /* double * c */
-    //             ,
-    //             ret.ncol() /* const MKL_INT ldc */
-    // );
-    // return ret;
-       Matrix res(mat1.nrow(), mat2.ncol());
-    for (size_t i = 0; i < mat1.nrow(); ++i)
-    {
-        for (size_t k = 0; k < mat2.ncol(); ++k)
-        {
-            double result = 0;
-            for (size_t j = 0; j < mat1.ncol(); ++j)
-            {
-                result += mat1(i, j) * mat2(j, k);
-            }
-
-            res(i, k) = result;
-        }
-    }
-    return res;
+    cblas_dgemm(CblasRowMajor /* const CBLAS_LAYOUT Layout */
+                ,
+                CblasNoTrans /* const CBLAS_TRANSPOSE transa */
+                ,
+                CblasNoTrans /* const CBLAS_TRANSPOSE transb */
+                ,
+                mat1.nrow() /* const MKL_INT m */
+                ,
+                mat2.ncol() /* const MKL_INT n */
+                ,
+                mat1.ncol() /* const MKL_INT k */
+                ,
+                1.0 /* const double alpha */
+                ,
+                mat1.m_buffer.data() /* const double *a */
+                ,
+                mat1.ncol() /* const MKL_INT lda */
+                ,
+                mat2.m_buffer.data() /* const double *b */
+                ,
+                mat2.ncol() /* const MKL_INT ldb */
+                ,
+                0.0 /* const double beta */
+                ,
+                ret.m_buffer.data() /* double * c */
+                ,
+                ret.ncol() /* const MKL_INT ldc */
+    );
+    return ret;
 }
 
 Matrix multiply_tile(const Matrix &mat1, const Matrix &mat2, size_t tsize)
