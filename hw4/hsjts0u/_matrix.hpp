@@ -1,6 +1,7 @@
 #include <cstring>
 #include <cstddef>
 #include <algorithm>
+#include <utility>
 #include <vector>
 #include <atomic>
 #include <limits>
@@ -11,9 +12,9 @@
 struct ByteCounterImpl
 {
 
-    std::atomic_size_t allocated = {0};
-    std::atomic_size_t deallocated = {0};
-    std::atomic_size_t refcount = {0};
+    std::atomic_size_t allocated = 0;
+    std::atomic_size_t deallocated = 0;
+    std::atomic_size_t refcount = 0;
 
 };
 
@@ -154,66 +155,26 @@ struct MyAllocator
 };
 
 
-static MyAllocator<double> alloc;
-
-
 class Matrix 
 {
 
 public:
     
-    Matrix(size_t nrow, size_t ncol): m_nrow(nrow), m_ncol(ncol), m_buffer(alloc)
-    {
-        reset(nrow, ncol);
-    }
-    
+    Matrix(size_t nrow, size_t ncol);
+    Matrix(const Matrix &M);
+    Matrix(Matrix && M);
     ~Matrix() = default;
 
-    Matrix(const Matrix &M)
-    {
-        m_nrow = M.m_nrow;
-        m_ncol = M.m_ncol;
-        reset(m_nrow, m_ncol);
-        
-        for (size_t i = 0; i < m_nrow; ++i)
-            for (size_t j = 0; j < m_ncol; ++j)
-                (*this)(i, j) = M(i, j);
-    }
-    
-    Matrix& operator= (const Matrix& M) 
-    {
-        if (this == &M) { return *this; }
+    Matrix& operator= (const Matrix& M);
 
-        if (m_nrow != M.m_nrow || m_ncol != M.m_ncol) reset(M.m_nrow, M.m_ncol);
-        for (size_t i = 0; i < m_nrow; i++)
-            for (size_t j = 0; j < m_ncol; j++)
-                (*this)(i, j) = M(i, j);
+    bool operator== (Matrix const &M) const;
 
-        return *this;
+    double   operator() (size_t row, size_t col) const ;
+    double & operator() (size_t row, size_t col)       ;
+    size_t   nrow() const ;
+    size_t   ncol() const ;
 
-    }
-
-    bool operator== (Matrix const &M) const 
-    {
-        for (size_t i = 0; i < m_nrow; i++) 
-            for (size_t j = 0;j < m_ncol; j++)
-                if (m_buffer[i*m_ncol + j] != M(i, j)) return false;
-                
-        return true;
-    }
-
-    double   operator() (size_t row, size_t col) const { return m_buffer[row*m_ncol + col]; }
-    double & operator() (size_t row, size_t col)       { return m_buffer[row*m_ncol + col]; }
-    size_t nrow() const { return m_nrow; }
-    size_t ncol() const { return m_ncol; }
-    
-    void reset(size_t nrow, size_t ncol) 
-    {
-        size_t nelement = nrow * ncol;
-        m_buffer.resize(nelement, 0);
-        m_nrow = nrow;
-        m_ncol = ncol;
-    }
+    void reset(size_t nrow, size_t ncol);
 
     size_t m_nrow;
     size_t m_ncol;
