@@ -8,15 +8,12 @@ TARGET = main
 
 .PHONY: clean test
 
-$(TARGET): _matrix_pybind.cpp _matrix.hpp _matrix.o
+$(TARGET): _matrix_pybind.cpp _matrix.cpp _matrix.hpp
         $(CXX) $(CFLAGS) -shared -fPIC $(INCLUDES) $(MKL_INC) $(MKL_LIB) $^ -o $(OUT) -lblas
 
-_matrix.o: _matrix.cpp _matrix.hpp
-        $(CXX) $(CFLAGS) -c $(MKL_INC) $< -o $@ 
-
 clean:
-        rm -f *.o $(TARGET) _matrix*.so performance.txt
+        rm -f _matrix*.so performance.txt
         rm -rf __pycache__ .pytest_cache
 
 test: $(TARGET)
-        python3 _matrix_test.py
+        python3 -m pytest ../validate.py

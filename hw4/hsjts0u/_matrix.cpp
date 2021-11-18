@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <cstddef>
 
+
 Matrix multiply_naive(Matrix const & mat1, Matrix const & mat2)
 {
     
@@ -23,6 +24,7 @@ Matrix multiply_naive(Matrix const & mat1, Matrix const & mat2)
      
 }
 
+
 Matrix multiply_tile(Matrix const & mat1, Matrix const & mat2, size_t tsize)
 {
     
@@ -39,7 +41,8 @@ Matrix multiply_tile(Matrix const & mat1, Matrix const & mat2, size_t tsize)
                 {
                     for (size_t i = row; i < std::min(mat1.nrow(), row + tsize); i++) 
                     {
-                        for (size_t j = col; j < std::min(mat2.ncol(), col + tsize); j++) {
+                        for (size_t j = col; j < std::min(mat2.ncol(), col + tsize); j++) 
+                        {
                             ret(i, j) += mat1(i, k) * mat2(k, j);
                         }
                     }
@@ -51,6 +54,7 @@ Matrix multiply_tile(Matrix const & mat1, Matrix const & mat2, size_t tsize)
     return ret;
 
 }
+
 
 Matrix multiply_mkl(Matrix const & mat1, Matrix const & mat2)
 {
@@ -80,3 +84,8 @@ Matrix multiply_mkl(Matrix const & mat1, Matrix const & mat2)
     return ret;
 
 }
+
+
+size_t bytes() { return alloc.bytes(); }
+size_t allocated() { return alloc.allocated(); }
+size_t deallocated() { return alloc.deallocated(); }
