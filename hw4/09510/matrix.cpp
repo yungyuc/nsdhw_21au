@@ -5,7 +5,7 @@
 #include <vector>
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
-
+#include <iomanip>
 namespace pybind = pybind11;
 using namespace std;
 
@@ -175,7 +175,7 @@ struct MyAllocator
 static MyAllocator<double> allocate;
 class Matrix {
   public:
-    Matrix(size_t nrow, size_t ncol): m_nrow(nrow), m_ncol(ncol), m_buffer(allocate) {}
+    Matrix(size_t nrow, size_t ncol): m_nrow(nrow), m_ncol(ncol), m_buffer(allocate) {initial(nrow, ncol);}
     Matrix(const vector<vector<double>> &m)
     {
       m_nrow = m.size();
@@ -217,6 +217,12 @@ class Matrix {
     const double *buffer() const { return m_buffer.data(); }
 
   private:
+    void initial(size_t nrow, size_t ncol)
+      {
+          m_buffer.reserve(nrow*ncol);	
+          m_nrow = nrow;
+          m_ncol = ncol;
+      }
     size_t m_nrow;
     size_t m_ncol;
     vector<double,MyAllocator<double> > m_buffer;

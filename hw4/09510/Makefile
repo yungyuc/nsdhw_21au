@@ -17,5 +17,5 @@ ${OUT}: matrix.cpp
 	g++ `python3 -m pybind11 --includes` $< -o $@ -O3 -Wl,--no-as-needed -shared -std=c++17 -fPIC ${CXXFLAGS}
 
 clean:
-	rm -rf *.so __pycache__ .pytest_cache performance.txt
+	rm -rf *.so __pycache__ .pytest_cache 
 
