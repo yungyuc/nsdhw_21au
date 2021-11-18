@@ -68,19 +68,15 @@ Matrix multiply_mkl(Matrix const & mat1, Matrix const & mat2)
         mat2.ncol(),
         mat1.ncol(),
         alpha,
-        mat1.get_buffer(),
+        mat1.m_buffer.data(),
         mat1.ncol(),
-        mat2.get_buffer(),
+        mat2.m_buffer.data(),
         mat2.ncol(),
         beta,
-        ret.get_buffer(),
+        ret.m_buffer.data(),
         ret.ncol()
     );
 
     return ret;
 
 }
-
-size_t bytes() { return alloc.bytes(); }
-size_t allocated() { return alloc.allocated(); }
-size_t deallocated() { return alloc.deallocated(); }
