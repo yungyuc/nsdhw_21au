@@ -3,6 +3,54 @@
 #include <algorithm>
 #include <iostream>
 
+static CustomAllocator<double> alloc;
+
+Matrix::Matrix(size_t nrow, size_t ncol)
+    : m_nrow(nrow), m_ncol(ncol), m_buffer(alloc) {
+    reset_buffer(nrow, ncol);
+}
+
+Matrix::Matrix(const Matrix & other)
+    : m_nrow(other.m_nrow), m_ncol(other.m_ncol) {
+    
+    reset_buffer(other.m_nrow, other.m_ncol);
+    for (size_t i = 0; i < m_nrow; ++i)
+        for (size_t j = 0; j < m_ncol; ++j)
+            (*this)(i, j) = other(i, j);
+}
+
+Matrix::Matrix(Matrix && other)
+    : m_nrow(std::exchange(other.m_nrow, 0))
+    , m_ncol(std::exchange(other.m_ncol, 0))
+    , m_buffer(std::move(other.m_buffer)) {}
+
+Matrix & Matrix::operator=(const Matrix & other) {
+        
+    if (this == &other) { return *this; }
+    if (m_nrow != other.m_nrow || m_ncol != other.m_ncol)
+        reset_buffer(other.m_nrow, other.m_ncol);
+    
+    for (size_t i = 0; i < m_nrow; i++)
+        for (size_t j = 0; j < m_ncol; j++)
+            (*this)(i, j) = other(i, j);
+        
+    return *this;
+}
+
+Matrix::~Matrix() {  reset_buffer(0, 0); }
+
+bool Matrix::operator== (Matrix const & mt) const {
+    if ((m_ncol != mt.m_ncol) && (m_nrow != mt.m_nrow))
+        return false;
+
+    for (size_t i = 0; i < m_nrow; i++)
+        for (size_t j = 0; j < m_ncol; j++)
+            if ((*this)(i, j) != mt(i, j))
+                return false;
+    
+    return true;
+}
+
 inline size_t cmp(size_t a, size_t b) {
     if (a < b)
         return a;
@@ -111,3 +159,7 @@ Matrix multiply_mkl(const Matrix &mt1, const Matrix &mt2) {
     
     return ret;
 }
+
+std::size_t bytes() { return alloc.bytes(); }
+std::size_t allocated() { return alloc.allocated(); }
+std::size_t deallocated() { return alloc.deallocated(); }

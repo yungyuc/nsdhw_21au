@@ -8,10 +8,6 @@
 
 namespace py = pybind11;
 
-std::size_t bytes() { return alloc.bytes(); }
-std::size_t allocated() { return alloc.allocated(); }
-std::size_t deallocated() { return alloc.deallocated(); }
-
 PYBIND11_MODULE(_matrix, m) {
     m.def("multiply_naive", &multiply_naive);
     m.def("multiply_tile", &multiply_tile);
