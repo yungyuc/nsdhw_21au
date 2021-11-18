@@ -53,7 +53,9 @@ ByteCounter::~ByteCounter()
 
 void ByteCounter::swap(ByteCounter &other)
 {
-    swap(m_impl, other.m_impl);
+    ByteCounterImpl *temp = m_impl;
+    m_impl = other.m_impl;
+    other.m_impl = temp;
 }
 
 void ByteCounter::increase(size_t amount)
@@ -95,7 +97,9 @@ void ByteCounter::incref()
 void ByteCounter::decref()
 {
     if(m_impl == nullptr)
+    {
         // Do nothing.
+    }
     else if(m_impl->refcount == 1)
     {
         delete m_impl;
@@ -103,6 +107,5 @@ void ByteCounter::decref()
     }
     else
         --m_impl->refcount;
-    }
 }
 

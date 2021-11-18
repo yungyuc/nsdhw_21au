@@ -2,35 +2,32 @@
 #include <mkl.h>
 #include <pybind11/pybind11.h>
 
+static CustomAllocator<double> my_allocator;
+
 // default constructor
 Matrix::Matrix()
+  : m_buffer(my_allocator)
 {
     m_nrow = 0;
     m_ncol = 0;
-    m_buffer = nullptr;
 }
 
 // copy constructor
 Matrix::Matrix(Matrix const &cp)
+  : m_buffer(my_allocator)
 {
     m_nrow = cp.m_nrow;
     m_ncol = cp.m_ncol;
-
-    //if(m_buffer)
-    //    delete[] m_buffer;
-    size_t nelement = m_nrow * m_ncol;
-    m_buffer = new double[nelement]();
-    for(size_t i=0; i<nelement; i++)
-        m_buffer[i] = cp.m_buffer[i];
+    m_buffer = cp.m_buffer;
 }
 
 // move constructor
 Matrix::Matrix(Matrix &&mv)
+  : m_buffer(my_allocator)
 {
     m_nrow = mv.m_nrow;
     m_ncol = mv.m_ncol;
-    m_buffer = mv.m_buffer;
-    mv.m_buffer = nullptr;
+    std::swap(m_buffer, mv.m_buffer);
 }
 
 // copy assignment operator
@@ -41,13 +38,7 @@ Matrix & Matrix::operator=(Matrix const &cp_rval)
 
     m_nrow = cp_rval.m_nrow;
     m_ncol = cp_rval.m_ncol;
-
-    //if(m_buffer)
-    //    delete[] m_buffer;
-    size_t nelement = m_nrow * m_ncol;
-    m_buffer = new double[nelement]();
-    for(size_t i=0; i<nelement; i++)
-        m_buffer[i] = cp_rval.m_buffer[i];
+    m_buffer = cp_rval.m_buffer;
 
     return *this;
 }
@@ -60,26 +51,25 @@ Matrix & Matrix::operator=(Matrix &&mv_rval)
 
     m_nrow = mv_rval.m_nrow;
     m_ncol = mv_rval.m_ncol;
-    m_buffer = mv_rval.m_buffer;
-    mv_rval.m_buffer = nullptr;
+    std::swap(m_buffer, mv_rval.m_buffer);
 
     return *this;
 }
 
 // custom constructor
 Matrix::Matrix(size_t nrow, size_t ncol)
+  : m_buffer(my_allocator)
 {
     m_nrow = nrow;
     m_ncol = ncol;
     size_t nelement = nrow * ncol;
-    m_buffer = new double[nelement]();
+    m_buffer.resize(nelement);
 }
 
 // destructor
 Matrix::~Matrix()
 {
-    if(m_buffer)
-        delete[] m_buffer;
+    m_buffer.clear();
 }
 
 // access the number of rows
@@ -92,12 +82,6 @@ size_t Matrix::nrow() const
 size_t Matrix::ncol() const
 {
     return m_ncol;
-}
-
-// access the raw contents of the buffer
-double* Matrix::buff() const
-{
-    return m_buffer;
 }
 
 // element getter
@@ -180,28 +164,41 @@ Matrix multiply_tile(Matrix const &matA, Matrix const &matB, size_t const tile_s
 // Call DGEMM for the multiplication
 Matrix multiply_mkl(Matrix const &matA, Matrix const &matB)
 {
-    //mkl_set_num_threads(1);
-
     Matrix matC(matA.nrow(), matB.ncol());
 
     cblas_dgemm(
-        CblasRowMajor,  /* const CBLAS_LAYOUT Layout */
-        CblasNoTrans,   /* const CBLAS_TRANSPOSE transa */
-        CblasNoTrans,   /* const CBLAS_TRANSPOSE transb */
-        matA.nrow(),    /* const MKL_INT m */
-        matB.ncol(),    /* const MKL_INT n */
-        matA.ncol(),    /* const MKL_INT k */
-        1.0,            /* const double alpha */
-        matA.buff(),    /* const double *a */
-        matA.ncol(),    /* const MKL_INT lda */
-        matB.buff(),    /* const double *b */
-        matB.ncol(),    /* const MKL_INT ldb */
-        0.0,            /* const double beta */
-        matC.buff(),    /* double * c */
-        matC.ncol()     /* const MKL_INT ldc */
+        CblasRowMajor,          /* const CBLAS_LAYOUT Layout */
+        CblasNoTrans,           /* const CBLAS_TRANSPOSE transa */
+        CblasNoTrans,           /* const CBLAS_TRANSPOSE transb */
+        matA.nrow(),            /* const MKL_INT m */
+        matB.ncol(),            /* const MKL_INT n */
+        matA.ncol(),            /* const MKL_INT k */
+        1.0,                    /* const double alpha */
+        matA.m_buffer.data(),   /* const double *a */
+        matA.ncol(),            /* const MKL_INT lda */
+        matB.m_buffer.data(),   /* const double *b */
+        matB.ncol(),            /* const MKL_INT ldb */
+        0.0,                    /* const double beta */
+        matC.m_buffer.data(),   /* double * c */
+        matC.ncol()             /* const MKL_INT ldc */
     );
 
     return matC;
+}
+
+size_t bytes()
+{
+    return my_allocator.counter.bytes();
+}
+
+size_t allocated()
+{
+    return my_allocator.counter.allocated();
+}
+
+size_t deallocated()
+{
+    return my_allocator.counter.deallocated();
 }
 
 PYBIND11_MODULE(_matrix, m)
@@ -209,6 +206,9 @@ PYBIND11_MODULE(_matrix, m)
     m.def("multiply_naive", &multiply_naive);
     m.def("multiply_tile", &multiply_tile);
     m.def("multiply_mkl", &multiply_mkl);
+    m.def("bytes", &bytes);
+    m.def("allocated", &allocated);
+    m.def("deallocated", &deallocated);
 
     pybind11::class_<Matrix>(m, "Matrix")
         .def(pybind11::init<size_t, size_t>())

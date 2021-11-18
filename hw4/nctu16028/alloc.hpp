@@ -3,15 +3,16 @@
 #include <new>
 #include <memory>
 #include <limits>
+#include <stdexcept>
 #include <atomic>
 #include <vector>
 using namespace std;
 
 struct ByteCounterImpl
 {
-    atomic_size_t allocated = 0;
-    atomic_size_t deallocated = 0;
-    atomic_size_t refcount = 0;
+    std::atomic_size_t allocated = 0;
+    std::atomic_size_t deallocated = 0;
+    std::atomic_size_t refcount = 0;
 }; /* end struct ByteCounterImpl */
 
 /**
@@ -35,12 +36,12 @@ public:
     size_t bytes() const;                           // getter
     size_t allocated() const;                       // getter
     size_t deallocated() const;                     // getter
-    size_t refcount() const                         // getter (for debugging)
+    size_t refcount() const;                        // getter (for debugging)
+    ByteCounterImpl *m_impl;
 
 private:
     void incref();
     void decref();
-    ByteCounterImpl *m_impl;
 }; /* end of class ByteCounter */
 
 /**
@@ -90,4 +91,21 @@ struct CustomAllocator
     ByteCounter counter;
 
 }; /* end of struct CustomAllocator */
+
+template <class T, class U>
+bool operator==(const CustomAllocator<T> & a, const CustomAllocator<U> & b)
+{
+    //return a.counter == b.counter;
+    if(a.counter.m_impl->allocated != b.counter.m_impl->allocated)
+        return false;
+    if(a.counter.m_impl->deallocated != b.counter.m_impl->deallocated)
+        return false;
+    return (a.counter.m_impl->refcount == b.counter.m_impl->refcount);
+}
+
+template <class T, class U>
+bool operator!=(const CustomAllocator<T> & a, const CustomAllocator<U> & b)
+{
+    return !(a == b);
+}
 
