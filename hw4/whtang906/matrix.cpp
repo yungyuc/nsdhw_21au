@@ -5,6 +5,7 @@
 
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
+#include <pybind11/operators.h>
 #include <mkl.h>
 #include "CustomAllocator.h"
 
@@ -78,7 +79,7 @@ public:
     }
 
     Matrix(Matrix && other)
-      : m_nrow(other.m_nrow), m_ncol(other.m_ncol)
+      : m_buffer(std::move(other.m_buffer))
     {
         m_buffer.clear();
         std::swap(m_nrow, other.m_nrow);
@@ -93,6 +94,19 @@ public:
         std::swap(m_ncol, other.m_ncol);
         std::swap(m_buffer, other.m_buffer);
         return *this;
+    }
+
+    bool operator==(Matrix const &other) const
+    {
+        if ((m_nrow != other.nrow()) || (m_ncol != other.ncol()))
+            return false;
+
+        for (size_t i = 0; i < m_nrow; i++)
+            for (size_t j = 0; j < m_ncol; j++)
+                if (m_buffer[index(i, j)] != other(i, j))
+                    return false;
+
+        return true;
     }
 
     ~Matrix()
@@ -315,5 +329,6 @@ PYBIND11_MODULE(_matrix, m)
       .def_property_readonly("nrow", &Matrix::nrow)
       .def_property_readonly("ncol", &Matrix::ncol)
       .def("__setitem__", &Matrix::set_data)
-      .def("__getitem__", &Matrix::get_data);
+      .def("__getitem__", &Matrix::get_data)
+      .def(pybind11::self == pybind11::self);
 }
