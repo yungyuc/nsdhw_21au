@@ -145,10 +145,6 @@ struct CustomAllocator
         counter.decrease(bytes);
     }
 
-    std::size_t bytes() const { return counter.bytes(); }
-    std::size_t allocated() const { return counter.allocated(); }
-    std::size_t deallocated() const { return counter.deallocated(); }
-
     ByteCounter counter;
 
 }; /* end struct CustomAllocator */
