@@ -5,7 +5,7 @@
 # @version 0.1
 
 CXX = g++
-CFLAGS = --std=c++11
+CFLAGS = --std=c++17
 WFLAGS = -O3 -Wall -shared
 MODULE = _matrix
 SOFILE = $(MODULE)$(shell python3-config --extension-suffix)
