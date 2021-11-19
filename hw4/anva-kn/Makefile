@@ -14,7 +14,7 @@ LBS = -I /usr/include/mkl -L /usr/lib/x86_64-linux-gnu/mkl -lblas
 .PHONY: all test clean
 all: $(SOFILE)
 
-$(SOFILE): matrix.cpp matrix.hpp
+$(SOFILE): matrix.cpp matrix.hpp CustomAllocator.h
 	$(CXX) $(WFLAGS) $(CFLAGS) -fPIC $(shell python3-config --includes) -Iextern/pybind11/include matrix.cpp -o $(SOFILE) $(LBS)
 
 test: $(SOFILE)
