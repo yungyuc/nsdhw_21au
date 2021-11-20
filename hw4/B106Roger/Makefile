@@ -1,10 +1,10 @@
 CXX = g++
 
-# INCLUDE_DIRS = /home/user/anaconda3/include
-INCLUDE_DIRS = /usr/include/mkl
+INCLUDE_DIRS = /home/user/anaconda3/include
+# INCLUDE_DIRS = /usr/include/mkl
 
-# MKL_DIR = /home/user/anaconda3/lib
-MKL_DIR = /usr/lib/x86_64-linux-gnu
+MKL_DIR = /home/user/anaconda3/lib
+# MKL_DIR = /usr/lib/x86_64-linux-gnu
 
 # MKL_LIBS = -lmkl_def -lmkl_avx2 -lmkl_core -lmkl_intel_lp64 -lmkl_sequential
 MKL_LIBS = ${MKL_DIR}/libmkl_def.so \
@@ -15,7 +15,7 @@ MKL_LIBS = ${MKL_DIR}/libmkl_def.so \
 
 FPIC = `python3 -m pybind11 --includes`
 INCLUDE = `python3-config --includes`
-CXXFLAGS = -O3 -Wall -Wl,--no-as-needed -shared -std=c++11 -fPIC -I${INCLUDE_DIRS} $(MKL_LIBS) -ldl -lpthread -lm $(INCLUDE)
+CXXFLAGS = -O3 -Wall -Wl,--no-as-needed -shared -std=c++17 -fPIC -I${INCLUDE_DIRS} $(MKL_LIBS) -ldl -lpthread -lm $(INCLUDE)
 
 MATLIB = _matrix${shell python3-config --extension-suffix}
 
@@ -26,9 +26,9 @@ ${MATLIB}: matrix.cpp
 	${CXX} ${FPIC} $< -o $@ ${CXXFLAGS} 
 	
 
-# test: ${MATLIB}
-# 	python performance_test.py
-# 	python -m unittest unit_test.py
+test: ${MATLIB}
+	python performance_test.py
+	python -m unittest unit_test.py
 
 clean:
 	rm -rf *.so __pycache__ .pytest_cache 
