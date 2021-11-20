@@ -1,10 +1,10 @@
 CXX = g++
 
-INCLUDE_DIRS = /home/user/anaconda3/include
-# INCLUDE_DIRS = /usr/include/mkl
+# INCLUDE_DIRS = /home/user/anaconda3/include
+INCLUDE_DIRS = /usr/include/mkl
 
-MKL_DIR = /home/user/anaconda3/lib
-# MKL_DIR = /usr/lib/x86_64-linux-gnu
+# MKL_DIR = /home/user/anaconda3/lib
+MKL_DIR = /usr/lib/x86_64-linux-gnu
 
 # MKL_LIBS = -lmkl_def -lmkl_avx2 -lmkl_core -lmkl_intel_lp64 -lmkl_sequential
 MKL_LIBS = ${MKL_DIR}/libmkl_def.so \
