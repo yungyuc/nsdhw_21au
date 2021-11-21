@@ -161,12 +161,12 @@ Matrix multiply_mkl(Matrix const & mat1, Matrix const & mat2)
       , mat2.ncol() /* const MKL_INT n */
       , mat1.ncol() /* const MKL_INT k */
       , 1.0 /* const double alpha */
-      , mat1.buffer_ /* const double *a */
+      , mat1.buffer_.data() /* const double *a */
       , mat1.ncol() /* const MKL_INT lda */
-      , mat2.buffer_ /* const double *b */
+      , mat2.buffer_.data() /* const double *b */
       , mat2.ncol() /* const MKL_INT ldb */
       , 0.0 /* const double beta */
-      , mat3.buffer_ /* double * c */
+      , mat3.buffer_.data() /* double * c */
       , mat3.ncol() /* const MKL_INT ldc */
     );
 
