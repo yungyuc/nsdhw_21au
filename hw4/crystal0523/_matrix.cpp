@@ -174,39 +174,6 @@ Matrix multiply_mkl(Matrix const & mat1, Matrix const & mat2)
 }
 
 
-
-/*int main()
-{
-    Matrix m(3,2);
-    for(int i=0;i<3;i++)
-    {
-        for(int j=0;j<2;j++)
-        {
-            m(i,j)=1;
-        }
-    }
-    Matrix m1(2,2);
-    for(int i=0;i<2;i++)
-    {
-        for(int j=0;j<2;j++)
-        {
-            m1(i,j)=2;
-        }
-    }
-    Matrix m3(3,2);
-    m3 = multiply_naive(m, m1);
-    for(int i=0;i<3;i++)
-    {
-        for(int j=0;j<2;j++)
-        {
-            std::cout << m3(i,j) << " ";
-        }
-        std::cout<< std::endl;
-    }
-
-}*/
-
-
 PYBIND11_MODULE(_matrix, m) {
     m.def("multiply_naive", &multiply_naive);
     m.def("multiply_tile", &multiply_tile);
@@ -227,5 +194,4 @@ PYBIND11_MODULE(_matrix, m) {
         .def_property_readonly("nrow", &Matrix::nrow)
         .def_property_readonly("ncol", &Matrix::ncol);
 
-       
 }
