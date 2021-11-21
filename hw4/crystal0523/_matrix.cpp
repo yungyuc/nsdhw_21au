@@ -213,7 +213,7 @@ PYBIND11_MODULE(_matrix, m) {
     m.def("multiply_mkl", &multiply_mkl);
     m.def("allocated", &allocated);
     m.def("deallocated", &deallocated);
-    m.def("byted", &bytes);
+    m.def("bytes", &bytes);
      py::class_<Matrix>(m, "Matrix")
         .def(py::init<size_t, size_t>())
         .def("__getitem__", [](Matrix &m, std::pair<size_t, size_t>i){
