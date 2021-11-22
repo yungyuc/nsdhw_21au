@@ -19,7 +19,7 @@ public:
 
     Matrix(size_t nrow, size_t ncol): row_(nrow), col_(ncol), buffer_(alloc)
     {
-        buffer_.reserve(size());
+        buffer_.resize(size());
     }
     ~Matrix()
     {
