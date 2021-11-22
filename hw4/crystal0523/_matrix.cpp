@@ -19,11 +19,7 @@ public:
 
     Matrix(size_t nrow, size_t ncol): row_(nrow), col_(ncol), buffer_(alloc)
     {
-        buffer_.resize(size());
-    }
-    ~Matrix()
-    {
-        reset_buffer(0,0);
+        reset_buffer(nrow, ncol);
     }
     Matrix & operator=(Matrix const & other);
     bool operator== (Matrix const & mat1)const;
@@ -35,8 +31,7 @@ public:
     size_t index(size_t row, size_t col) const{ return row * col_ + col; }
     void reset_buffer(size_t nrow, size_t ncol)
     {
-        const size_t nelement = nrow * ncol;
-        buffer_.resize(nelement, 0);
+        buffer_.reserve(nrow * ncol);
         row_ = nrow;
         col_ = ncol;
     }
@@ -44,7 +39,6 @@ public:
 private:
     size_t row_ = 0;
     size_t col_ = 0;
-    
     
 };
 
@@ -56,7 +50,7 @@ size_t bytes() { return alloc.counter.bytes(); };
 Matrix & Matrix::operator=(Matrix const & other)
 {
     if (this == &other) { return *this; }
-    if (row_ != other.row_ || col_ != other.col_)
+    else if (row_ != other.row_ || col_ != other.col_)
     {
         reset_buffer(other.row_, other.col_);
     }
@@ -190,7 +184,6 @@ Matrix multiply_mkl(Matrix const & mat1, Matrix const & mat2)
 }
 
 
-
 PYBIND11_MODULE(_matrix, m) {
     m.def("multiply_naive", &multiply_naive);
     m.def("multiply_tile", &multiply_tile);
@@ -207,7 +200,8 @@ PYBIND11_MODULE(_matrix, m) {
             return m(i.first, i.second)=v;
         }, py::is_operator())     
         .def("reset_buffer", &Matrix::reset_buffer)
-        .def("assign", &Matrix::operator=)
+        .def("assign", static_cast<Matrix & (Matrix::*)(const Matrix &)>(&Matrix::operator=))
+        //.def("assign", &Matrix::operator=)
         .def(py::self==py::self)   
         .def_property_readonly("nrow", &Matrix::nrow)
         .def_property_readonly("ncol", &Matrix::ncol);
