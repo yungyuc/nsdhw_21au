@@ -1,10 +1,7 @@
 #include <cstdlib>
 #include <new>
-#include <memory>
 #include <limits>
 #include <atomic>
-#include <vector>
-#include <iostream>
 
 
 struct ByteCounterImpl
@@ -35,33 +32,6 @@ public:
       : m_impl(other.m_impl)
     { incref(); }
 
-    ByteCounter & operator=(ByteCounter const & other)
-    {
-        if (&other != this)
-        {
-            decref();
-            m_impl = other.m_impl;
-            incref();
-        }
-
-        return *this;
-    }
-
-    ByteCounter(ByteCounter && other)
-      : m_impl(other.m_impl)
-    { incref(); }
-
-    ByteCounter & operator=(ByteCounter && other)
-    {
-        if (&other != this)
-        {
-            decref();
-            m_impl = other.m_impl;
-            incref();
-        }
-
-        return *this;
-    }
 
     ~ByteCounter() { decref(); }
 
@@ -83,8 +53,6 @@ public:
     std::size_t bytes() const { return m_impl->allocated - m_impl->deallocated; }
     std::size_t allocated() const { return m_impl->allocated; }
     std::size_t deallocated() const { return m_impl->deallocated; }
-    /* This is for debugging. */
-    std::size_t refcount() const { return m_impl->refcount; }
 
 private:
 
@@ -127,11 +95,11 @@ struct MyAllocator
     // "counter".
     MyAllocator() = default;
 
-    /*template <class U> constexpr
+    template <class U> constexpr
     MyAllocator(const MyAllocator<U> & other) noexcept
     {
         counter = other.counter;
-    }*/
+    }
 
     T * allocate(std::size_t n)
     {

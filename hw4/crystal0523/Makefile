@@ -17,7 +17,7 @@ LDFLAGS=${MKL_LIB_DIR}/libmkl_def.so \
 
 
 all:
-	$(CXX) $(CFLAG) -I/usr/include/mkl $(pybind11) _matrix.cpp MyAllocater.cpp -o _matrix$(suffix) -I/usr/include/python3.8 $(LDFLAGS)
+	$(CXX) $(CFLAG) -I/usr/include/mkl $(pybind11) _matrix.cpp -o _matrix$(suffix) -I/usr/include/python3.8 $(LDFLAGS)
 
 
 clean:
