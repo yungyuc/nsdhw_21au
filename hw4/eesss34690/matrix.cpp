@@ -167,12 +167,27 @@ struct MyAllocator
 
 }; /* end struct MyAllocator */
 
+template <class T, class U>
+bool operator==(const MyAllocator<T> & a, const MyAllocator<U> & b)
+{
+    return a.counter == b.counter;
+}
+
+template <class T, class U>
+bool operator!=(const MyAllocator<T> & a, const MyAllocator<U> & b)
+{
+    return !(a == b);
+}
+
 static MyAllocator<double> alloc;
 
 class Matrix {
  public:
   Matrix(size_t nrow, size_t ncol)
-      : m_nrow(nrow), m_ncol(ncol), m_buffer(nrow * ncol, 0.0) {}
+      : m_nrow(nrow), m_ncol(ncol), m_buffer(alloc)
+  {
+  	m_buffer.resize(m_nrow* m_ncol, 0.0);
+  }
   Matrix(const vector<vector<double>> &m);
 
   bool operator==(const Matrix &other);
@@ -197,6 +212,7 @@ class Matrix {
 Matrix::Matrix(const vector<vector<double>> &m) {
   m_nrow = m.size();
   m_ncol = m[0].size();
+  //m_buffer = alloc;
   for (auto &i: m) {
     m_buffer.insert(end(m_buffer), begin(i), end(i));
   }
