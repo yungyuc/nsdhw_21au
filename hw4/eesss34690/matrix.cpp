@@ -1,10 +1,15 @@
 #include <cstddef>
 #include <vector>
+#include <memory>
+#include <cstdlib>
+#include <new>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
+#include <pybind11/operators.h>
 
 #include <algorithm>
+#include <atomic>
 #include "mkl.h"
 
 namespace py = pybind11;
