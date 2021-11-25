@@ -3,6 +3,7 @@
 #include <memory>
 #include <cstdlib>
 #include <new>
+#include <iostream>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
@@ -18,9 +19,9 @@ using namespace std;
 struct ByteCounterImpl
 {
 
-    std::atomic_size_t allocated = 0;
-    std::atomic_size_t deallocated = 0;
-    std::atomic_size_t refcount = 0;
+    std::size_t allocated = 0;
+    std::size_t deallocated = 0;
+    std::size_t refcount = 0;
 
 }; /* end struct ByteCounterImpl */
 
@@ -295,6 +296,10 @@ Matrix multiply_mkl(const Matrix &m1, const Matrix &m2) {
   );
   return m3;
 }
+
+size_t bytes() { return alloc.counter.bytes(); }
+size_t allocated() { return alloc.counter.allocated(); }
+size_t deallocated() { return alloc.counter.deallocated(); }
 
 PYBIND11_MODULE(_matrix, m) {
   m.def("multiply_naive", &multiply_naive);
