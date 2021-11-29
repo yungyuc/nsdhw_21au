@@ -1,7 +1,7 @@
 CXX=clang++
 CXXFLAGS=-std=c++17 -O3  -m64 -shared -fPIC \
 		-I ./ \
-		-I /usr/include/mkl 
+		-I /usr/include/mkl \
 
 
 PYBIND=`python3 -m pybind11 --includes`
