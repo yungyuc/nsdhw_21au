@@ -1,47 +1,25 @@
-CXX = clang++
+.PHONY:clean all test target
 
-PYTHON = python3
-NUMPY_PATH := $(shell ${PYTHON} -c "import numpy; print(numpy.get_include())")
+NUMPY_PATH := $(shell python3 -c "import numpy; print(numpy.get_include())")
+MKLLIB=-I/usr/include/mkl
+PYTHON=python3
 
-UNAME_S := $(shell uname -s)
+MKL_LIB_DIR=/usr/lib/x86_64-linux-gnu
+MKL_LIBS=${MKL_LIB_DIR}/libmkl_def.so \
+		${MKL_LIB_DIR}/libmkl_avx2.so \
+		${MKL_LIB_DIR}/libmkl_core.so \
+		${MKL_LIB_DIR}/libmkl_intel_lp64.so \
+		${MKL_LIB_DIR}/libmkl_sequential.so
 
-ifeq ($(UNAME_S),Darwin)
-	MKLROOT ?= /opt/intel/mkl
-	MKLEXT ?= a
-CXXFLAGS :=
-endif
+CXX=clang++
+CXXFLAGS=-std=c++14 -O3 -Wall -Wextra -fPIC -shared -m64
 
-ifeq ($(UNAME_S),Linux)
-	MKLROOT ?= ${HOME}/opt/conda
-	MKLEXT ?= so
-CXXFLAGS := -Wl,--no-as-needed
-endif
+all: target
 
-MKLLINKLINE := \
-    ${MKLROOT}/lib/libmkl_def.${MKLEXT} \
-    ${MKLROOT}/lib/libmkl_avx2.${MKLEXT} \
-    ${MKLROOT}/lib/libmkl_intel_lp64.${MKLEXT} \
-    ${MKLROOT}/lib/libmkl_sequential.${MKLEXT} \
-    ${MKLROOT}/lib/libmkl_core.${MKLEXT} \
-    -lpthread -lm -ldl
+test: matrix.*.so
+	python3 -m pytest -v
 
-CXXFLAGS := ${CXXFLAGS} \
-    -std=c++17 -O3 -g -m64 \
-	-fsized-deallocation \
-	-ftree-vectorize -funroll-loops -ffast-math \
-    -I${MKLROOT}/include \
-	-I${NUMPY_PATH} \
-	-I./ \
-    ${MKLLINKLINE} -shared -fPIC
-
-BIN := _matrix
-
-.PHONY: default
-default: ${BIN}.*.so
-
-${BIN}.*.so: matrix.hpp
-	$(CXX) $(CXXFLAGS) `$(PYTHON) -m pybind11 --includes` ../mod.cpp -o $(BIN)`$(PYTHON)-config --extension-suffix`
-
-.PHONY: clean
+target: ../mod.cpp
+	$(CXX) $(CXXFLAGS) -I./ -I$(NUMPY_PATH) $(MKL_LIBS) $(MKLLIB) `$(PYTHON) -m pybind11 --includes` $< -o _matrix`$(PYTHON)-config --extension-suffix` -I /usr/include/python3.8 -lblas -lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -liomp5 -lpthread -lm
 clean:
-	$(RM) ${BIN} *.so
+	$(RM) -r $(TARGET) *.so *.txt
