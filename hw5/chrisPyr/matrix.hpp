@@ -26,10 +26,8 @@ public:
     }
   };
 
-  //~Matrix() {
-  //  if(data){
-  //  delete []data;}
-  //};
+  ~Matrix() {
+  };
 
   Matrix &operator=(const Matrix &other);
   bool operator==(const Matrix &other) const;
