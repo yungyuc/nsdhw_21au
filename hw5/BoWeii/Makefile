@@ -1,7 +1,7 @@
 CXX=clang++
 CXXFLAGS=-std=c++17 -O3  -m64 -shared -fPIC \
 		-I ./ \
-		-I /usr/include/mkl \
+		-I /usr/include/mkl 
 
 
 PYBIND=`python3 -m pybind11 --includes`
@@ -15,7 +15,7 @@ MKL_LIBS=${MKL_LIB_DIR}/libmkl_def.so \
 		${MKL_LIB_DIR}/libmkl_sequential.so
 
 all:
-	${CXX} $(CXXFLAGS) $(MKL_LIBS) $(PYBIND) ../mod.cpp -o _matrix$(PYCONFIG) -I /usr/include/python3.6
+	${CXX} $(CXXFLAGS)  $(PYBIND) ../mod.cpp -o _matrix$(PYCONFIG) -I /usr/include/python3.8 $(MKL_LIBS)
 
 clean:
 	rm -rf *.so __pycache__ ../.pytest_cache .pytest_cache ../.vscode performance.txt
