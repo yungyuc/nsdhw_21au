@@ -54,8 +54,8 @@ Project List
 #. `YI-CHENG-SHIH645 <https://github.com/YI-CHENG-SHIH645>`__ for `Recommender
    System <YI-CHENG-SHIH645/README.rst>`__:
    https://github.com/YI-CHENG-SHIH645/RecommenderSystem
-#. `abt8601 <https://github.com/abt8601>`__ for `abt8601
-   <abt8601/README.rst>`__: missing
+#. `abt8601 <https://github.com/abt8601>`__ for `Diffusion Maps
+   <abt8601/README.rst>`__: https://github.com/abt8601/diffusion-maps
 #. `aiiuii <https://github.com/aiiuii>`__ for `Xsarms <aiiuii/README.rst>`__:
    https://github.com/aiiuii/Interbotix_Ros_Xsarms_Toolkits
 #. `anva-kn <https://github.com/anva-kn>`__ for `Ramanflow
