@@ -3,7 +3,7 @@ MOD = $(MOD_NAME)$(shell python3-config --extension-suffix)
 
 CPPFLAGS_DEFAULT = -DNDEBUG
 
-CXXFLAGS_BASE    = -std=c++14 -pedantic -Wall -Wextra -Werror -I. $(shell python3-config --includes) -I/usr/include/mkl
+CXXFLAGS_BASE    = -std=c++14 -pedantic -Wall -Wextra -Werror -Wno-error=unused-function -I. $(shell python3-config --includes) -I/usr/include/mkl
 CXXFLAGS_DEBUG   = -g -fsanitize=address -fsanitize=undefined
 CXXFLAGS_DEFAULT = -O3 -funroll-loops -march=native
 
