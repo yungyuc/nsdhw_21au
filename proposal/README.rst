@@ -27,7 +27,7 @@ Project List
 ============
 
 #. `09510 <https://github.com/09510>`__ for
-   `Encryption Acceleration <09510/README.rst>`__:
+   `Faster Decision Tree <09510/README.rst>`__:
    https://github.com/09510/Encryption-Acceleration
 #. `B106Roger <https://github.com/B106Roger>`__ for
    `Simple ML Framework <B106Roger/README.rst>`__:
