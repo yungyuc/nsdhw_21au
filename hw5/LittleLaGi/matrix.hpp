@@ -7,6 +7,7 @@
 #include <stdexcept>
 #include <vector>
 
+
 struct Matrix {
     ~Matrix() { reset_buffer(0, 0); }
 
