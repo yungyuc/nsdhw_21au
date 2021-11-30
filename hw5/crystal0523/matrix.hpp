@@ -1,8 +1,6 @@
-#include <stdexcept>
 #include <mkl.h>
 
 class Matrix {
-
 public:
 
     Matrix(const size_t nrow, const size_t ncol): nrow(nrow), ncol(ncol)
@@ -59,13 +57,7 @@ bool Matrix::operator== (Matrix const & mat1)const
 
 Matrix multiply_naive(Matrix const & mat1, Matrix const & mat2)
 {
-    if (mat1.ncol != mat2.nrow)
-    {
-        throw std::out_of_range(
-            "the number of first matrix column "
-            "differs from that of second matrix row");
-    }
-
+   
     Matrix mat3(mat1.nrow, mat2.ncol);
 
     for (size_t i=0; i<mat3.nrow; i++)
@@ -91,14 +83,6 @@ Matrix multiply_naive(Matrix const & mat1, Matrix const & mat2)
 
 Matrix multiply_tile(Matrix const & mat1, Matrix const & mat2, size_t size)
 {
-    if (mat1.ncol != mat2.nrow)
-    {
-        throw std::out_of_range(
-            "the number of first matrix column "
-            "differs from that of second matrix row");
-    }
-
-   
     Matrix mat3(mat1.nrow, mat2.ncol);
 
     for (size_t it=0; it<mat1.nrow; it+=size)
