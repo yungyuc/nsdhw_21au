@@ -6,7 +6,7 @@
 
 #include <algorithm>
 #include "mkl.h"
-
+#include "matrix.hpp"
 namespace py = pybind11;
 using namespace std;
 
@@ -19,13 +19,13 @@ Matrix::Matrix(const vector<vector<double>> &m) {
   }
 }
 
-bool Matrix::operator==(const Matrix &other) {
-  if (m_nrow != other.m_nrow || m_ncol != other.m_ncol) {
+bool operator==(const Matrix &mat1, const Matrix &mat2) {
+  if (mat1.m_nrow != mat2.m_nrow || mat1.m_ncol != mat2.m_ncol) {
     return false;
   }
-  for (size_t i = 0; i < m_nrow; ++i) {
-    for (size_t j = 0; j < m_ncol; ++j) {
-      if ((*this)(i, j) != other(i, j)) {
+  for (size_t i = 0; i < mat1.m_nrow; ++i) {
+    for (size_t j = 0; j < mat2.m_ncol; ++j) {
+      if (mat1(i, j) != mat2(i, j)) {
         return false;
       }
     }

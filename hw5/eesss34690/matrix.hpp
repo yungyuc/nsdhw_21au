@@ -1,12 +1,12 @@
 #include <vector>
-
+using namespace std;
 class Matrix {
  public:
   Matrix(size_t nrow, size_t ncol)
       : m_nrow(nrow), m_ncol(ncol), m_buffer(nrow * ncol, 0.0) {}
   Matrix(const vector<vector<double>> &m);
-
-  bool operator==(const Matrix &other);
+  friend bool operator==(Matrix const &mat1, Matrix const &mat2);
+  //bool operator==(const Matrix &other);
   double operator()(size_t row, size_t col) const {
     return m_buffer[row * m_ncol + col];
   }
@@ -28,4 +28,4 @@ class Matrix {
 Matrix multiply_mkl(Matrix const &mat1, Matrix const &mat2);
 Matrix multiply_naive(Matrix const &mat1, Matrix const &mat2);
 Matrix multiply_tile(Matrix const &mat1, Matrix const &mat2, size_t tsize);
-//bool operator==(Matrix const &mat1, Matrix const &mat2);
+bool operator==(Matrix const &mat1, Matrix const &mat2);

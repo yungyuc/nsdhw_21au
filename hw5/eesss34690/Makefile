@@ -22,3 +22,4 @@ ${SOFILE}: $(SOURCE)
 	${CXX} ${FPIC} $(SOURCE) -o $@ ${CXXFLAGS}
 
 test: ${SOFILE}
+	python -m pytest ../validate.py
