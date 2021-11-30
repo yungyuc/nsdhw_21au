@@ -1,24 +1,25 @@
-CXX = g++
-CFLAG = -Wall -std=c++14 -O3 -m64 -fPIC -shared
+.PHONY:clean all test target
 
-pybind11 = `python3 -m pybind11 --includes`
-suffix = `python3-config --extension-suffix`
-NP_INC := $(shell python3 -c "import numpy; print(numpy.get_include())")
+NUMPY_PATH := $(shell python3 -c "import numpy; print(numpy.get_include())")
+MKLLIB=-I/usr/include/mkl
+PYTHON=python3
+
 MKL_LIB_DIR=/usr/lib/x86_64-linux-gnu
-LDFLAGS=${MKL_LIB_DIR}/libmkl_def.so \
-		 ${MKL_LIB_DIR}/libmkl_avx2.so \
-		 ${MKL_LIB_DIR}/libmkl_core.so \
-		 ${MKL_LIB_DIR}/libmkl_intel_lp64.so \
-		 ${MKL_LIB_DIR}/libmkl_sequential.so \
-		 -lblas -lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -liomp5 -lpthread -lm
+MKL_LIBS=${MKL_LIB_DIR}/libmkl_def.so \
+		${MKL_LIB_DIR}/libmkl_avx2.so \
+		${MKL_LIB_DIR}/libmkl_core.so \
+		${MKL_LIB_DIR}/libmkl_intel_lp64.so \
+		${MKL_LIB_DIR}/libmkl_sequential.so
 
-
-.PHONY: clean, all
+CXX=clang++
+CXXFLAGS=-std=c++14 -O3 -Wall -Wextra -fPIC -shared -m64
 
 all: target
 
-target: ../mod.cpp
-	$(CXX) $(CFLAG) -I/usr/include/mkl -I./ -I$(NP_INC) $(pybind11) $< -o _matrix$(suffix) -I/usr/include/python3.8 $(LDFLAGS)
+test: matrix.*.so
+	python3 -m pytest -v
 
+target: ../mod.cpp
+	$(CXX) $(CXXFLAGS) -I./ -I$(NUMPY_PATH) $(MKL_LIBS) $(MKLLIB) `$(PYTHON) -m pybind11 --includes` $< -o _matrix`$(PYTHON)-config --extension-suffix` -I /usr/include/python3.8 -lblas -lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -liomp5 -lpthread -lm
 clean:
-	rm -rf *.so __pycache__  .pytest_cache performance.txt
+	$(RM) -r $(TARGET) *.so *.txt
