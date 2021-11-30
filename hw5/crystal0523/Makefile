@@ -16,7 +16,7 @@ LDFLAGS=${MKL_LIB_DIR}/libmkl_def.so \
 .PHONY: clean, all
 
 all:
-	$(CXX) $(CFLAG) -I/usr/include/mkl $(pybind11) ../mod.cpp -o _matrix$(suffix) -I/usr/include/python3.8 $(LDFLAGS)
+	$(CXX) $(CFLAG) -I/usr/include/mkl -I ./ $(pybind11) ../mod.cpp -o _matrix$(suffix) -I/usr/include/python3.8 $(LDFLAGS)
 
 clean:
 	rm -rf *.so __pycache__  .pytest_cache performance.txt
