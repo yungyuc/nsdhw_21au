@@ -1,5 +1,5 @@
 CXX = g++
-CFLAG = -Wall -std=c++17 -O3 -m64 -fPIC -shared
+CFLAG = -Wall -std=c++14 -O3 -m64 -fPIC -shared
 
 pybind11 = `python3 -m pybind11 --includes`
 suffix = `python3-config --extension-suffix`
