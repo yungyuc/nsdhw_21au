@@ -1,23 +1,19 @@
 #include <cstddef>
 #include <vector>
-#include <memory>
-#include <cstdlib>
-#include <new>
-#include <iostream>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
-#include <pybind11/operators.h>
 
 #include <algorithm>
-#include <atomic>
 #include "mkl.h"
-#include "matrix.hpp"
+
+namespace py = pybind11;
+using namespace std;
+
 
 Matrix::Matrix(const vector<vector<double>> &m) {
   m_nrow = m.size();
   m_ncol = m[0].size();
-  //m_buffer = alloc;
   for (auto &i: m) {
     m_buffer.insert(end(m_buffer), begin(i), end(i));
   }
