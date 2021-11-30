@@ -3,7 +3,6 @@ CFLAG = -Wall -std=c++17 -O3 -m64 -fPIC -shared
 
 pybind11 = `python3 -m pybind11 --includes`
 suffix = `python3-config --extension-suffix`
-NP_INC = -I$(shell python3 -c "import numpy; print(numpy.get_include())")
 
 MKL_LIB_DIR=/usr/lib/x86_64-linux-gnu
 LDFLAGS=${MKL_LIB_DIR}/libmkl_def.so \
@@ -17,7 +16,7 @@ LDFLAGS=${MKL_LIB_DIR}/libmkl_def.so \
 all: target
 
 target: ../mod.cpp
-	$(CXX) $(CFLAG) -I/usr/include/mkl -I ./ $(NP_INC) $(pybind11) $< -o _matrix$(suffix) -I/usr/include/python3.8 $(LDFLAGS)
+	$(CXX) $(CFLAG) -I/usr/include/mkl -I ./ $(pybind11) $< -o _matrix$(suffix) -I/usr/include/python3.8 $(LDFLAGS)
 
 clean:
 	rm -rf *.so __pycache__  .pytest_cache performance.txt
