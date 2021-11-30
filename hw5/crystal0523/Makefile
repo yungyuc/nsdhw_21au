@@ -6,9 +6,7 @@ suffix = `python3-config --extension-suffix`
 NP_INC = -I$(shell python3 -c "import numpy; print(numpy.get_include())")
 
 MKL_LIB_DIR=/usr/lib/x86_64-linux-gnu
-LDFLAGS=${MKL_LIB_DIR}/libmkl_def.so \
-		 ${MKL_LIB_DIR}/libmkl_avx2.so \
-		 ${MKL_LIB_DIR}/libmkl_core.so \
+LDFLAGS= ${MKL_LIB_DIR}/libmkl_core.so \
 		 ${MKL_LIB_DIR}/libmkl_intel_lp64.so \
 		 ${MKL_LIB_DIR}/libmkl_sequential.so \
 		 -lpthread -lm -ldl \
