@@ -11,8 +11,6 @@ LDFLAGS=${MKL_LIB_DIR}/libmkl_def.so \
 		 ${MKL_LIB_DIR}/libmkl_core.so \
 		 ${MKL_LIB_DIR}/libmkl_intel_lp64.so \
 		 ${MKL_LIB_DIR}/libmkl_sequential.so \
-		 -lpthread -lm \
-	     -lblas -lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -liomp5
 
 .PHONY: clean, all
 
