@@ -23,3 +23,5 @@ ${SOFILE}: $(SOURCE)
 
 test: ${SOFILE}
 	python -m pytest ../validate.py
+clean:
+	rm -rf *.so __pycache__ .pytest_cache performance.txt
