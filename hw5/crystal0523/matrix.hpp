@@ -7,7 +7,7 @@ public:
     {
         reset_buffer(nrow, ncol);
     }
-    
+
     Matrix(Matrix const & other)
       : m_nrow(other.m_nrow), m_ncol(other.m_ncol)
     {
@@ -79,7 +79,6 @@ public:
     
 };
 
-   
 bool Matrix::operator== (Matrix const & mat1)const
 {
     if ((m_ncol != mat1.m_ncol) || (m_nrow != mat1.m_nrow))return false;
