@@ -11,7 +11,7 @@ MKLFLAGS = ${MKL_DIR}/libmkl_def.so \
 
 FPIC = `python3 -m pybind11 --includes`
 INCLUDE = `python3-config --includes`
-CXXFLAGS = -O3 -Wl,--no-as-needed -shared -std=c++11 -fPIC -I${INCLUDE_DIRS} ${MKLFLAGS} -ldl -lpthread -lm $(INCLUDE)
+CXXFLAGS = -O3 -Wl,--no-as-needed -shared -std=c++17 -fPIC -I${INCLUDE_DIRS} ${MKLFLAGS} -ldl -lpthread -lm $(INCLUDE)
 
 SOFILE = _matrix${shell python3-config --extension-suffix}
 
@@ -22,7 +22,3 @@ ${SOFILE}: matrix.cpp mod.cpp
 	${CXX} ${FPIC} $< -o $@ ${CXXFLAGS}
 
 test: ${SOFILE}
-	python -m pytest test_matrix.py
-
-clean:
-	rm -rf *.so __pycache__ .pytest_cache performance.txt

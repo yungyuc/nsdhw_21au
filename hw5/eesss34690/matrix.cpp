@@ -1,96 +1,3 @@
-#include <cstddef>
-#include <vector>
-
-#include <pybind11/pybind11.h>
-#include <pybind11/stl.h>
-
-#include <algorithm>
-#include "mkl.h"
-
-namespace py = pybind11;
-using namespace std;
-
-struct ByteCounterImpl
-{
-
-    std::atomic_size_t allocated = 0;
-    std::atomic_size_t deallocated = 0;
-    std::atomic_size_t refcount = 0;
-
-}; /* end struct ByteCounterImpl */
-
-/**
- * One instance of this counter is shared among a set of allocators.
- *
- * The counter keeps track of the bytes allocated and deallocated, and report
- * those two numbers in addition to bytes that remain allocated.
- */
-class ByteCounter
-{
-
-public:
-
-    ByteCounter()
-      : m_impl(new ByteCounterImpl)
-    { incref(); }
-
-    ByteCounter(ByteCounter const & other)
-      : m_impl(other.m_impl)
-    { incref(); }
-
-    ByteCounter & operator=(ByteCounter const & other)
-    {
-        if (&other != this)
-        {
-            decref();
-            m_impl = other.m_impl;
-            incref();
-        }
-
-        return *this;
-    }
-
-    ByteCounter(ByteCounter && other)
-      : m_impl(other.m_impl)
-    { incref(); }
-
-    ByteCounter & operator=(ByteCounter && other)
-    {
-        if (&other != this)
-        {
-            decref();
-            m_impl = other.m_impl;
-            incref();
-        }
-
-        return *this;
-    }
-
-    ~ByteCounter() { decref(); }
-
-    void swap(ByteCounter & other)
-    {
-        std::swap(m_impl, other.m_impl);
-    }
-
-    void increase(std::size_t amount)
-    {
-        m_impl->allocated += amount;
-    }
-
-    void decrease(std::size_t amount)
-    {
-        m_impl->deallocated += amount;
-    }
-
-    std::size_t bytes() const { return m_impl->allocated - m_impl->deallocated; }
-    std::size_t allocated() const { return m_impl->allocated; }
-    std::size_t deallocated() const { return m_impl->deallocated; }
-    /* This is for debugging. */
-    std::size_t refcount() const { return m_impl->refcount; }
-
-private:
-
     void incref() { ++m_impl->refcount; }
 
     void decref()
@@ -161,12 +68,27 @@ struct MyAllocator
 
 }; /* end struct MyAllocator */
 
+template <class T, class U>
+bool operator==(const MyAllocator<T> & a, const MyAllocator<U> & b)
+{
+    return a.counter == b.counter;
+}
+
+template <class T, class U>
+bool operator!=(const MyAllocator<T> & a, const MyAllocator<U> & b)
+{
+    return !(a == b);
+}
+
 static MyAllocator<double> alloc;
 
 class Matrix {
  public:
   Matrix(size_t nrow, size_t ncol)
-      : m_nrow(nrow), m_ncol(ncol), m_buffer(nrow * ncol, 0.0) {}
+      : m_nrow(nrow), m_ncol(ncol), m_buffer(alloc)
+  {
+  	m_buffer.resize(m_nrow* m_ncol, 0.0);
+  }
   Matrix(const vector<vector<double>> &m);
 
   bool operator==(const Matrix &other);
@@ -191,6 +113,7 @@ class Matrix {
 Matrix::Matrix(const vector<vector<double>> &m) {
   m_nrow = m.size();
   m_ncol = m[0].size();
+  //m_buffer = alloc;
   for (auto &i: m) {
     m_buffer.insert(end(m_buffer), begin(i), end(i));
   }
@@ -290,6 +213,10 @@ Matrix multiply_mkl(const Matrix &m1, const Matrix &m2) {
   );
   return m3;
 }
+
+size_t bytes() { return alloc.counter.bytes(); }
+size_t allocated() { return alloc.counter.allocated(); }
+size_t deallocated() { return alloc.counter.deallocated(); }
 
 PYBIND11_MODULE(_matrix, m) {
   m.def("multiply_naive", &multiply_naive);
