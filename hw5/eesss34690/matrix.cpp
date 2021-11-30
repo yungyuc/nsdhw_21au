@@ -1,3 +1,103 @@
+#include <cstddef>
+#include <vector>
+#include <memory>
+#include <cstdlib>
+#include <new>
+#include <iostream>
+
+#include <pybind11/pybind11.h>
+#include <pybind11/stl.h>
+#include <pybind11/operators.h>
+
+#include <algorithm>
+#include <atomic>
+#include "mkl.h"
+#include "matrix.hpp"
+
+namespace py = pybind11;
+using namespace std;
+
+struct ByteCounterImpl
+{
+
+    std::size_t allocated = 0;
+    std::size_t deallocated = 0;
+    std::size_t refcount = 0;
+
+}; /* end struct ByteCounterImpl */
+
+/**
+ * One instance of this counter is shared among a set of allocators.
+ *
+ * The counter keeps track of the bytes allocated and deallocated, and report
+ * those two numbers in addition to bytes that remain allocated.
+ */
+class ByteCounter
+{
+
+public:
+
+    ByteCounter()
+      : m_impl(new ByteCounterImpl)
+    { incref(); }
+
+    ByteCounter(ByteCounter const & other)
+      : m_impl(other.m_impl)
+    { incref(); }
+
+    ByteCounter & operator=(ByteCounter const & other)
+    {
+        if (&other != this)
+        {
+            decref();
+            m_impl = other.m_impl;
+            incref();
+        }
+
+        return *this;
+    }
+
+    ByteCounter(ByteCounter && other)
+      : m_impl(other.m_impl)
+    { incref(); }
+
+    ByteCounter & operator=(ByteCounter && other)
+    {
+        if (&other != this)
+        {
+            decref();
+            m_impl = other.m_impl;
+            incref();
+        }
+
+        return *this;
+    }
+
+    ~ByteCounter() { decref(); }
+
+    void swap(ByteCounter & other)
+    {
+        std::swap(m_impl, other.m_impl);
+    }
+
+    void increase(std::size_t amount)
+    {
+        m_impl->allocated += amount;
+    }
+
+    void decrease(std::size_t amount)
+    {
+        m_impl->deallocated += amount;
+    }
+
+    std::size_t bytes() const { return m_impl->allocated - m_impl->deallocated; }
+    std::size_t allocated() const { return m_impl->allocated; }
+    std::size_t deallocated() const { return m_impl->deallocated; }
+    /* This is for debugging. */
+    std::size_t refcount() const { return m_impl->refcount; }
+
+private:
+
     void incref() { ++m_impl->refcount; }
 
     void decref()

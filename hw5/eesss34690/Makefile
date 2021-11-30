@@ -14,11 +14,11 @@ INCLUDE = `python3-config --includes`
 CXXFLAGS = -O3 -Wl,--no-as-needed -shared -std=c++17 -fPIC -I${INCLUDE_DIRS} ${MKLFLAGS} -ldl -lpthread -lm $(INCLUDE)
 
 SOFILE = _matrix${shell python3-config --extension-suffix}
-
+SOURCE = matrix.cpp mod.cpp
 .PHONY: all
 all: ${SOFILE}
 
-${SOFILE}: matrix.cpp mod.cpp
-	${CXX} ${FPIC} $< -o $@ ${CXXFLAGS}
+${SOFILE}: $(SOURCE)
+	${CXX} ${FPIC} $(SOURCE) -o $@ ${CXXFLAGS}
 
 test: ${SOFILE}
