@@ -3,7 +3,7 @@
 class Matrix {
 public:
 
-    Matrix(const size_t nrow, const size_t ncol): nrow(nrow), ncol(ncol)
+    Matrix(const size_t nrow, const size_t ncol): m_nrow(nrow), m_ncol(ncol)
     {
         reset_buffer(nrow, ncol);
     }
@@ -13,34 +13,35 @@ public:
     }
 
     bool operator== (Matrix const & mat1)const;
-    double   operator() (size_t row, size_t col) const { return buffer[index(row, col)]; }
-    double & operator() (size_t row, size_t col) { return buffer[index(row, col)]; }
-    size_t index(size_t row, size_t col) const{ return row * ncol + col; }
+    double   operator() (size_t row, size_t col) const { return m_buffer[index(row, col)]; }
+    double & operator() (size_t row, size_t col) { return m_buffer[index(row, col)]; }
+    size_t index(size_t row, size_t col) const{ return row * m_ncol + col; }
     void reset_buffer(size_t row, size_t col)
     {
-        if (buffer) { delete[] buffer; }
-        const size_t nelement = nrow * ncol;
-        if (nelement) { buffer = new double[nelement]; }
-        else          { buffer = nullptr; }
-        nrow = row;
-        ncol = col;
+        if (m_buffer) { delete[] m_buffer; }
+        const size_t nelement = row * col;
+        if (nelement) { m_buffer = new double[nelement]; }
+        else          { m_buffer = nullptr; }
+        m_nrow = row;
+        m_ncol = col;
         
     }
-    
-    size_t nrow = 0;
-    size_t ncol = 0;
-    double * buffer = nullptr;
+    size_t nrow() const { return m_nrow; }
+    size_t ncol() const { return m_ncol; }
+    size_t m_nrow = 0;
+    size_t m_ncol = 0;
+    double * m_buffer = nullptr;
     
 };
 
    
 bool Matrix::operator== (Matrix const & mat1)const
 {
-    if (((*this).ncol != mat1.ncol) || ((*this).nrow != mat1.nrow))return false;
+    if (((*this).m_ncol != mat1.m_ncol) || ((*this).m_nrow != mat1.m_nrow))return false;
     
-    for (size_t i=0; i< nrow; i++)
+    for (size_t i=0; i< m_nrow; i++)
     {
-        for (size_t j=0; j< ncol; j++)
+        for (size_t j=0; j< m_ncol; j++)
         {
             if ((*this)(i, j) != mat1(i, j)) return false;
         }
@@ -58,14 +59,14 @@ bool Matrix::operator== (Matrix const & mat1)const
 Matrix multiply_naive(Matrix const & mat1, Matrix const & mat2)
 {
    
-    Matrix mat3(mat1.nrow, mat2.ncol);
+    Matrix mat3(mat1.m_nrow, mat2.m_ncol);
 
-    for (size_t i=0; i<mat3.nrow; i++)
+    for (size_t i=0; i<mat3.m_nrow; i++)
     {
-        for (size_t j=0; j<mat3.ncol; j++)
+        for (size_t j=0; j<mat3.m_ncol; j++)
         {
             double v = 0;
-            for (size_t k=0; k<mat1.ncol; k++)
+            for (size_t k=0; k<mat1.m_ncol; k++)
             {
                 v += mat1(i,k) * mat2(k,j);
             }
@@ -83,19 +84,19 @@ Matrix multiply_naive(Matrix const & mat1, Matrix const & mat2)
 
 Matrix multiply_tile(Matrix const & mat1, Matrix const & mat2, size_t size)
 {
-    Matrix mat3(mat1.nrow, mat2.ncol);
+    Matrix mat3(mat1.m_nrow, mat2.m_ncol);
 
-    for (size_t it=0; it<mat1.nrow; it+=size)
+    for (size_t it=0; it<mat1.m_nrow; it+=size)
     {
-        for (size_t kt=0; kt<mat2.ncol; kt+=size)
+        for (size_t kt=0; kt<mat2.m_ncol; kt+=size)
         {
-            for (size_t jt=0; jt<mat1.ncol; jt+=size)
+            for (size_t jt=0; jt<mat1.m_ncol; jt+=size)
             {
-                 for (size_t k = jt; k < std::min(mat1.ncol, jt + size); k++) 
+                 for (size_t k = jt; k < std::min(mat1.m_ncol, jt + size); k++) 
                 {
-                    for (size_t i = it; i < std::min(mat1.nrow, it + size); i++) 
+                    for (size_t i = it; i < std::min(mat1.m_nrow, it + size); i++) 
                     {
-                        for (size_t j =kt; j < std::min(mat2.ncol, kt + size); j++) {
+                        for (size_t j =kt; j < std::min(mat2.m_ncol, kt + size); j++) {
                             mat3(i, j) += mat1(i, k) * mat2(k, j);
                         }
                     }
@@ -116,23 +117,23 @@ Matrix multiply_mkl(Matrix const & mat1, Matrix const & mat2)
 {
     mkl_set_num_threads(1);
     
-    Matrix mat3(mat1.nrow, mat2.ncol);
+    Matrix mat3(mat1.m_nrow, mat2.m_ncol);
 
     cblas_dgemm(
         CblasRowMajor /* const CBLAS_LAYOUT Layout */
       , CblasNoTrans /* const CBLAS_TRANSPOSE transa */
       , CblasNoTrans /* const CBLAS_TRANSPOSE transb */
-      , mat1.nrow /* const MKL_INT m */
-      , mat2.ncol /* const MKL_INT n */
-      , mat1.ncol /* const MKL_INT k */
+      , mat1.m_nrow /* const MKL_INT m */
+      , mat2.m_ncol /* const MKL_INT n */
+      , mat1.m_ncol /* const MKL_INT k */
       , 1.0 /* const double alpha */
-      , mat1.buffer /* const double *a */
-      , mat1.ncol /* const MKL_INT lda */
-      , mat2.buffer /* const double *b */
-      , mat2.ncol /* const MKL_INT ldb */
+      , mat1.m_buffer /* const double *a */
+      , mat1.m_ncol /* const MKL_INT lda */
+      , mat2.m_buffer /* const double *b */
+      , mat2.m_ncol /* const MKL_INT ldb */
       , 0.0 /* const double beta */
-      , mat3.buffer /* double * c */
-      , mat3.ncol /* const MKL_INT ldc */
+      , mat3.m_buffer /* double * c */
+      , mat3.m_ncol /* const MKL_INT ldc */
     );
 
     return mat3;
