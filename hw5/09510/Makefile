@@ -1,10 +1,10 @@
 INCLUDE_DIRS = /usr/include/mkl
 MKL_DIR = /usr/lib/x86_64-linux-gnu
-MKLFLAGS = ${MKL_DIR}/libmkl_def.so.1 \
-	${MKL_DIR}/libmkl_avx2.so.1 \
-	${MKL_DIR}/libmkl_core.so.1 \
-	${MKL_DIR}/libmkl_intel_lp64.so.1 \
-	${MKL_DIR}/libmkl_sequential.so.1
+MKLFLAGS = ${MKL_DIR}/libmkl_def.so \
+	${MKL_DIR}/libmkl_avx2.so \
+	${MKL_DIR}/libmkl_core.so \
+	${MKL_DIR}/libmkl_intel_lp64.so \
+	${MKL_DIR}/libmkl_sequential.so
 
 PYTHON_INCLUDE = -I /home/jack/.local/lib/python3.8/site-packages/numpy/core/include -I./
 
