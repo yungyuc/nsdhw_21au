@@ -9,6 +9,7 @@ namespace pybind = pybind11;
 using namespace std;
 
 
+
 class Matrix {
   public:
     Matrix(size_t nrow, size_t ncol): m_nrow(nrow), m_ncol(ncol), m_buffer(nrow * ncol, 0.0) {}
@@ -21,15 +22,15 @@ class Matrix {
       }
     }
 
-    bool operator==(const Matrix &other)
+    bool operator==(Matrix const &other)const
     {
-      if (m_nrow != other.m_nrow || m_ncol != other.m_ncol) 
+      if (m_nrow != other.m_nrow || m_ncol != other.m_ncol)
       {
         return false;
       }
-      for (size_t i = 0; i < m_nrow; ++i) 
+      for (size_t i = 0; i < m_nrow; ++i)
       {
-        for (size_t j = 0; j < m_ncol; ++j) 
+        for (size_t j = 0; j < m_ncol; ++j)
         {
           if ((*this)(i, j) != other(i, j)) {return false;}
         }
@@ -38,11 +39,11 @@ class Matrix {
     }
 
 
-    double operator()(size_t row, size_t col) const 
+    double operator()(size_t row, size_t col) const
     {
       return m_buffer[row * m_ncol + col];
     }
-    double &operator()(size_t row, size_t col) 
+    double &operator()(size_t row, size_t col)
     {
       return m_buffer[row * m_ncol + col];
     }
@@ -57,6 +58,8 @@ class Matrix {
     size_t m_ncol;
     vector<double> m_buffer;
 };
+
+
 
 
 Matrix multiply_naive(const Matrix &a, const Matrix &b) {
@@ -79,6 +82,8 @@ Matrix multiply_naive(const Matrix &a, const Matrix &b) {
   }
   return ans;
 }
+
+
 
 Matrix multiply_tile(const Matrix &a, const Matrix &b, size_t tsize) {
   
@@ -132,23 +137,3 @@ Matrix multiply_mkl(const Matrix &a, const Matrix &b) {
 
 
 
-
-
-PYBIND11_MODULE(_matrix, m) {
-  
-  m.doc() = "Matrix multiply";
-  m.def("multiply_naive", &multiply_naive);
-  m.def("multiply_tile", &multiply_tile);
-  m.def("multiply_mkl", &multiply_mkl);
-
-  pybind::class_<Matrix>(m, "Matrix")
-      .def(pybind::init<size_t, size_t>())
-      .def(pybind::init<const std::vector<std::vector<double>> &>())
-
-      .def_property_readonly("nrow", &Matrix::nrow)
-      .def_property_readonly("ncol", &Matrix::ncol)
-
-      .def("__eq__", &Matrix::operator==)
-      .def("__getitem__",[](const Matrix &m, array<int, 2> idx) { return m(idx[0], idx[1]); })
-      .def("__setitem__", [](Matrix &m, array<int, 2> idx, double val) {m(idx[0], idx[1]) = val;});
-}
