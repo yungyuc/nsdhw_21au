@@ -1,12 +1,12 @@
-#include <pybind11/pybind11.h>
 #include <iostream>
+#include <string.h>
 #include <math.h>
 #include <mkl.h>
 // #include <mkl_cblas.h>
 // #include <mkl_blas.h>
 // #include <mkl_lapack.h>
 // #include <mkl_lapacke.h> 
-namespace py = pybind11;
+
 
 class Block {
 public:
@@ -70,6 +70,7 @@ public:
     Matrix(size_t nrow, size_t ncol)
       : m_nrow(nrow), m_ncol(ncol)
     {
+        // cnt+=1;
         size_t nelement = nrow * ncol;
         m_buffer = new double[nelement];
         memset(m_buffer, 0, nelement*sizeof(double));
@@ -195,7 +196,7 @@ private:
     size_t m_nrow;
     size_t m_ncol;
     double * m_buffer;
-
+    // static int cnt = 0;
 };
 
 Matrix multiply_naive_bk(const Block &mat1, const Block &mat2) {
@@ -281,28 +282,3 @@ Matrix multiply_mkl(Matrix &mat1, Matrix &mat2) {
 
     return ret;
 }
-
-
-PYBIND11_MODULE(_matrix, m) {
-    m.doc() = "nsd21au hw3 pybind implementation"; // optional module docstring
-    py::class_<Matrix>(m, "Matrix")
-        .def(pybind11::init<int,int>())
-        .def("__setitem__", [](Matrix &mat, std::pair<size_t, size_t> idx, double val) { return mat(idx.first, idx.second) = val; })
-        .def("__getitem__", [](const Matrix &mat, std::pair<size_t, size_t> idx) { return mat(idx.first, idx.second); })
-        // .def("__iadd__", [](Matrix &mat, const Matrix &mat2) { mat+=mat2; })
-        // .def("__add__", [](const Matrix &mat1, const Matrix &mat2) { return mat1+mat2; })
-        // .def("__isub__", [](Matrix &mat, const Matrix &mat2) { mat-=mat2; })
-        // .def("__sub__", [](const Matrix &mat1, const Matrix &mat2) { return mat1-mat2; })
-        .def("__eq__", [](const Matrix &mat1, const Matrix &mat2) { return mat1 == mat2; })
-        // .def("getblock", &Matrix::get_block)
-        .def_property_readonly("nrow", &Matrix::nrow)
-        .def_property_readonly("ncol", &Matrix::ncol);
-
-    // py::class_<Block>(m, "Block")
-    //     .def(pybind11::init<int, int, bool>())
-    //     .def("__getitem__", [](const Block &mat, std::pair<size_t, size_t> idx) { return mat(idx.first, idx.second); });
-
-    m.def("multiply_naive", &multiply_naive);
-    m.def("multiply_tile", &multiply_tile);
-    m.def("multiply_mkl", &multiply_mkl);
-} 
