@@ -18,9 +18,9 @@ SOFILE = _matrix${shell python3-config --extension-suffix}
 
 .PHONY: all
 all: ${SOFILE}
+${SOFILE}: mod.cpp
 
-${SOFILE}: ../mod.cpp
-	${CXX} ${FPIC} ${NUMPY_INCLUDE} $< -o $@ ${CXXFLAGS} 
+	${CXX} ${FPIC} ${NUMPY_INCLUDE} $^ -o $@ ${CXXFLAGS} 
 
 clean:
 	rm -rf *.so .pytest_cache __pycache__
