@@ -4,7 +4,7 @@
 # @file
 # @version 0.1
 
-BLAS=-I /usr/include/mkl -L /usr/lib/x86_64-linux-gnu/mkl -lblas
+BLAS=-I /usr/include/mkl -I./ -L /usr/lib/x86_64-linux-gnu/mkl -lblas
 
 # numpy
 NUMPYROOT=-I $(shell python -c "import numpy; print(numpy.get_include())")
@@ -13,7 +13,7 @@ NUMPYROOT=-I $(shell python -c "import numpy; print(numpy.get_include())")
 PYBUILD=$(shell python3-config --includes) -Iextern/pybind11/include
 
 # In
-SOURCE = _matrix.cpp mod.cpp
+SOURCE = _matrix.cpp ../mod.cpp
 # Out
 MATRIX=_matrix$(shell python3-config --extension-suffix)
 
