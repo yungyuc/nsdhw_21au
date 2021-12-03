@@ -14,24 +14,26 @@ public:
         m_nrow(nrow), m_ncol(ncol), m_buffer(NULL), m_colmajor(colmajor)
     {
         if (m_colmajor)
-            m_buffer=new double[m_nrow*m_ncol];
+            m_buffer=(double*)malloc(m_nrow*m_ncol*sizeof(double));
+            // m_buffer=new double[m_nrow*m_ncol];
     }
     Block(const Block &block):
         m_nrow(block.m_nrow), m_ncol(block.m_ncol), m_buffer(NULL), m_colmajor(block.m_colmajor)
     {
         if (block.m_colmajor)
         {
-            m_buffer=new double[m_nrow*m_ncol];
+            m_buffer=(double*)malloc(m_nrow*m_ncol*sizeof(double));
+            // m_buffer=new double[m_nrow*m_ncol];
             memcpy(m_buffer, block.m_buffer, sizeof(double) * m_nrow * m_ncol);
         }
     }
     ~Block() { 
-        if (m_colmajor) delete[] m_buffer;
+        if (m_colmajor) 
+            free(m_buffer);
+            // delete[] m_buffer;
         m_buffer = NULL;
     }
     double   operator() (size_t row, size_t col) const { // for getitem
-        // if (row > m_nrow) throw std::invalid_argument( "received row exceed nrow" );
-        // if (col > m_ncol) throw std::invalid_argument( "received col exceed ncol" );
         if (m_colmajor)
         {
             return m_buffer[col * m_nrow + row];
@@ -42,13 +44,12 @@ public:
     void setContent(double *ptr, size_t row_stride) {
         m_row_stride = row_stride;
         if (m_colmajor) {
-            for (int i = 0; i < m_nrow; i++) {
-                for (int j = 0; j < m_ncol; j++) {
+            for (unsigned int i = 0; i < m_nrow; i++) {
+                for (unsigned int j = 0; j < m_ncol; j++) {
                     m_buffer[j * m_nrow + i]= ptr[i * m_row_stride + j];
                 }
             }
         } else {
-
             m_buffer = ptr;
         }
     }
@@ -70,7 +71,6 @@ public:
     Matrix(size_t nrow, size_t ncol)
       : m_nrow(nrow), m_ncol(ncol)
     {
-        // cnt+=1;
         size_t nelement = nrow * ncol;
         m_buffer = new double[nelement];
         memset(m_buffer, 0, nelement*sizeof(double));
@@ -101,8 +101,8 @@ public:
     Matrix operator+(const Matrix &mat) const {
         // if (m_nrow != mat.m_nrow || m_ncol != mat.m_ncol) throw std::invalid_argument( "received matrix shape isn't consistent" );
         Matrix result(mat);
-        for (int i=0; i< m_nrow; i+=1) {
-            for (int j=0; j<m_ncol; j+=1) {
+        for (size_t i=0; i< m_nrow; i+=1) {
+            for (size_t j=0; j<m_ncol; j+=1) {
                 result.m_buffer[i*m_ncol+j]+=(*this)(i,j);
             }
         }
@@ -110,8 +110,8 @@ public:
     }
     void operator+=(const Matrix &mat) {
         // if (m_nrow != mat.m_nrow || m_ncol != mat.m_ncol) throw std::invalid_argument( "received matrix shape isn't consistent" );
-        for (int i=0; i< m_nrow; i+=1) {
-            for (int j=0; j<m_ncol; j+=1) {
+        for (size_t i=0; i< m_nrow; i+=1) {
+            for (size_t j=0; j<m_ncol; j+=1) {
                 m_buffer[i*m_ncol+j]+=mat(i,j);
             }
         }
@@ -119,8 +119,8 @@ public:
     Matrix operator-(const Matrix &mat) const {
         // if (m_nrow != mat.m_nrow || m_ncol != mat.m_ncol) throw std::invalid_argument( "received matrix shape isn't consistent" );
         Matrix result(mat);
-        for (int i=0; i< m_nrow; i+=1) {
-            for (int j=0; j<m_ncol; j+=1) {
+        for (size_t i=0; i< m_nrow; i+=1) {
+            for (size_t j=0; j<m_ncol; j+=1) {
                 result.m_buffer[i*m_ncol+j]-=(*this)(i,j);
             }
         }
@@ -128,8 +128,8 @@ public:
     }
     void operator-=(const Matrix &mat) {
         // if (m_nrow != mat.m_nrow || m_ncol != mat.m_ncol) throw std::invalid_argument( "received matrix shape isn't consistent" );
-        for (int i=0; i< m_nrow; i+=1) {
-            for (int j=0; j<m_ncol; j+=1) {
+        for (size_t i=0; i< m_nrow; i+=1) {
+            for (size_t j=0; j<m_ncol; j+=1) {
                 m_buffer[i*m_ncol+j]-=mat(i,j);
             }
         }
@@ -147,8 +147,8 @@ public:
         if (m_nrow != target.m_nrow || m_ncol != target.m_ncol) {
             return false;
         } else {
-            for (int i = 0; i < m_nrow; i++) {
-                for (int j = 0; j < m_ncol; j++) {
+            for (size_t i = 0; i < m_nrow; i++) {
+                for (size_t j = 0; j < m_ncol; j++) {
                     if ((*this)(i,j) != target(i,j)) return false;
                 }
             }
@@ -179,7 +179,7 @@ public:
         size_t bk_row = m_nrow - block_size*row_idx < block_size ? m_nrow - block_size*row_idx : block_size;
         // if (bk_row != mat.m_nrow || bk_col != mat.m_ncol) throw std::invalid_argument( "received block_shape and mat are not consistent" );
 
-        for (int i=0;i<bk_row; i++) {
+        for (size_t i=0;i<bk_row; i++) {
             size_t target_row=(block_size*row_idx+i)*m_ncol;
             size_t target_col=(block_size*col_idx);
             size_t source_row=i*bk_col;
@@ -204,10 +204,10 @@ Matrix multiply_naive_bk(const Block &mat1, const Block &mat2) {
     size_t col=mat2.ncol();
     size_t content=mat1.ncol();
     Matrix tmp(row, col);
-    for (int i=0; i<row; i++) {
-        for (int j=0; j<col; j++) {
+    for (unsigned int i=0; i<row; i++) {
+        for (unsigned int j=0; j<col; j++) {
             double sum=0.0;
-            for (int k=0; k<content; k++) {
+            for (unsigned int k=0; k<content; k++) {
                 sum+=mat1(i,k)*mat2(k,j);
             }
             tmp(i,j)=sum;
@@ -221,10 +221,10 @@ Matrix multiply_naive(const Matrix &mat1, const Matrix &mat2) {
     size_t col=mat2.ncol();
     size_t content=mat1.ncol();
     Matrix tmp(row, col);
-    for (int i=0; i<row; i++) {
-        for (int j=0; j<col; j++) {
+    for (unsigned int i=0; i<row; i++) {
+        for (unsigned int j=0; j<col; j++) {
             double sum=0.0;
-            for (int k=0; k<content; k++) {
+            for (unsigned int k=0; k<content; k++) {
                 sum+=mat1(i,k)*mat2(k,j);
             }
             tmp(i,j)=sum;
