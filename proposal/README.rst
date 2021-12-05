@@ -87,7 +87,7 @@ Project List
 #. `whtang906 <https://github.com/whtang906>`__ for `Selective Search
    <whtang906/README.md>`__: https://github.com/whtang906/cpp-selective-search
 #. `yichi170 <https://github.com/yichi170>`__ for `Related Work Graph
-   <yichi170/README.rst>`__: N/A
+   <yichi170/README.rst>`__: https://github.com/yichi170/RelatedWorkGraph
 
 Presentation
 ============
