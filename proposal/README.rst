@@ -96,11 +96,11 @@ Presentation
 ============
 
 Presenters may sign up for the time slot by opening a PR, starting from 6th
-December, 2021. The PR should start with ``[presentation]``.
+December, 2021. The PR subject line should start with ``[presentation]``.
 
 Each presentation can use at most 18 minutes. Presenters may decide how to use
-their time. A possible arrangement is to uses 15 minutes in the presentation
-itself, and 3 minutes for questions and discussions. Presenters are expected to
+their time. A possible arrangement is to use 15 minutes in the presentation
+itself and 3 minutes for questions and discussions. Presenters are expected to
 prepare their own computer for presentation. The time for setting up the
 computer is included in the allotted presentation time.
 
