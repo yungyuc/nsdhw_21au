@@ -69,9 +69,6 @@ Project List
    <eesss34690/README.rst>`__: https://github.com/eesss34690/Cache_Optimization
 #. `hsjts0u <https://github.com/hsjts0u>`__ for `TermPlot <hsjts0u>`__:
    https://github.com/hsjts0u/TermPlot
-#. `jonathan-liu-0204 <https://github.com/jonathan-liu-0204>`__ for `VRedBlack
-   <jonathan-liu-0204/0716304-Proposal.rst>`__:
-   https://github.com/jonathan-liu-0204/Visualization-of-Red-Black-Tree
 #. `music87 <https://github.com/music87>`__ for `Call Option Pricer
    <music87/proposal.md>`__:
    https://github.com/music87/nsd-project-option-pricer
