@@ -213,8 +213,8 @@ Time Table
     - TBD
   * - C3
     - 07:40 - 07:58
-    - TBD
-    - TBD
+    - Cycatz
+    - Uniramp
   * - C4
     - 08:00 - 08:18
     - TBD
