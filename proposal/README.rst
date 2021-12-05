@@ -98,10 +98,10 @@ Presentation
 Presenters may sign up for the time slot starting from 6th December, 2021 by
 opening a PR. The PR should start with ``[presentation]``.
 
-Each presentation can use at most 20 minutes. Presenters may decide how to use
-their time. A possible arrangement is to uses 15-18 minutes in the presentation
-itself, and 2-5 minutes for questions and discussions. Presenters are expected
-to prepare their own computer for presentation. The time for setting up the
+Each presentation can use at most 18 minutes. Presenters may decide how to use
+their time. A possible arrangement is to uses 15 minutes in the presentation
+itself, and 3 minutes for questions and discussions. Presenters are expected to
+prepare their own computer for presentation. The time for setting up the
 computer is included in the allotted presentation time.
 
 If presenters have difficulty in preparing a computer themselves, they may seek
@@ -119,31 +119,39 @@ Time Table
     - Presenter
     - Project
   * - A1
-    - 07:00 - 07:20 (followed by 5 min break)
+    - 07:00 - 07:18
     - TBD
     - TBD
   * - A2
-    - 07:25 - 07:45 (followed by 5 min break)
+    - 07:20 - 07:38
     - TBD
     - TBD
   * - A3
-    - 07:50 - 08:10 (followed by 5 min break)
+    - 07:40 - 07:58
     - TBD
     - TBD
   * - A4
-    - 08:15 - 08:35 (followed by 5 min break)
+    - 08:00 - 08:18
     - TBD
     - TBD
   * - A5
-    - 08:40 - 09:00 (followed by 5 min break)
+    - 08:20 - 08:38
     - TBD
     - TBD
   * - A6
-    - 09:05 - 09:25 (followed by 5 min break)
+    - 08:40 - 08:58
     - TBD
     - TBD
   * - A7
-    - 09:30 - 09:50
+    - 09:00 - 09:18
+    - TBD
+    - TBD
+  * - A8
+    - 09:20 - 09:38
+    - TBD
+    - TBD
+  * - A9
+    - 09:40 - 09:58
     - TBD
     - TBD
 
@@ -155,31 +163,39 @@ Time Table
     - Presenter
     - Project
   * - B1
-    - 07:00 - 07:20 (followed by 5 min break)
+    - 07:00 - 07:18
     - TBD
     - TBD
   * - B2
-    - 07:25 - 07:45 (followed by 5 min break)
+    - 07:20 - 07:38
     - TBD
     - TBD
   * - B3
-    - 07:50 - 08:10 (followed by 5 min break)
+    - 07:40 - 07:58
     - TBD
     - TBD
   * - B4
-    - 08:15 - 08:35 (followed by 5 min break)
+    - 08:00 - 08:18
     - TBD
     - TBD
   * - B5
-    - 08:40 - 09:00 (followed by 5 min break)
+    - 08:20 - 08:38
     - TBD
     - TBD
   * - B6
-    - 09:05 - 09:25 (followed by 5 min break)
+    - 08:40 - 08:58
     - TBD
     - TBD
   * - B7
-    - 09:30 - 09:50
+    - 09:00 - 09:18
+    - TBD
+    - TBD
+  * - B8
+    - 09:20 - 09:38
+    - TBD
+    - TBD
+  * - B9
+    - 09:40 - 09:58
     - TBD
     - TBD
 
@@ -191,30 +207,38 @@ Time Table
     - Presenter
     - Project
   * - C1
-    - 07:00 - 07:20 (followed by 5 min break)
+    - 07:00 - 07:18
     - TBD
     - TBD
   * - C2
-    - 07:25 - 07:45 (followed by 5 min break)
+    - 07:20 - 07:38
     - TBD
     - TBD
   * - C3
-    - 07:50 - 08:10 (followed by 5 min break)
+    - 07:40 - 07:58
     - TBD
     - TBD
   * - C4
-    - 08:15 - 08:35 (followed by 5 min break)
+    - 08:00 - 08:18
     - TBD
     - TBD
   * - C5
-    - 08:40 - 09:00 (followed by 5 min break)
+    - 08:20 - 08:38
     - TBD
     - TBD
   * - C6
-    - 09:05 - 09:25 (followed by 5 min break)
+    - 08:40 - 07:58
     - TBD
     - TBD
   * - C7
-    - 09:30 - 09:50
+    - 09:00 - 09:18
+    - TBD
+    - TBD
+  * - C8
+    - 09:20 - 09:38
+    - TBD
+    - TBD
+  * - C9
+    - 09:40 - 09:58
     - TBD
     - TBD
