@@ -134,8 +134,8 @@ Time Table
     - TBD
   * - 5
     - 09:00 - 09:25
-    - TBD
-    - TBD
+    - 李茵淇
+    - Fast_Up_FFT
   * - 6
     - 09:30 - 09:55
     - TBD
