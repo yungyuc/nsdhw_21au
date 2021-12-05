@@ -227,7 +227,7 @@ Time Table
     - TBD
     - TBD
   * - C6
-    - 08:40 - 07:58
+    - 08:40 - 08:58
     - TBD
     - TBD
   * - C7
