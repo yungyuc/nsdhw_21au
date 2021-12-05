@@ -149,4 +149,4 @@ Time Table
   * - 6
     - 09:30 - 09:55
     - TBD
-    - TBD
+    - anva-kn
