@@ -221,8 +221,8 @@ Time Table
     - TBD
   * - C5
     - 08:20 - 08:38
-    - TBD
-    - TBD
+    - 黃梓晏
+    - Faster Decision Tree
   * - C6
     - 08:40 - 08:58
     - TBD
