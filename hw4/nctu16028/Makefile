@@ -1,0 +1,24 @@
+CXX = g++
+CFILES = matrix.cpp alloc.cpp
+CFLAGS = -shared --std=c++17 -m64 -fPIC -Wall -Wextra -Werror
+PY_INC = /usr/include/python3.8
+PYFLAGS = `python3 -m pybind11 --includes` -I $(PY_INC)
+
+MKL_INC = /usr/include/mkl
+MKL_LIB_DIR = /usr/lib/x86_64-linux-gnu
+MKLFLAGS = -I $(MKL_INC) -L $(MKL_LIB_DIR)/mkl -lblas
+
+TARGET = _matrix
+OBJ_SUFFIX = `python3-config --extension-suffix`
+.PHONY: default test clean
+
+default: $(TARGET)
+
+$(TARGET): matrix.cpp matrix.hpp alloc.cpp alloc.hpp
+	$(CXX) $(CFILES) -o $@$(OBJ_SUFFIX) $(CFLAGS) $(PYFLAGS) $(MKLFLAGS)
+
+test: $(TARGET)
+	python3 -m pytest
+
+clean:
+	rm -rf $(TARGET).*.so __pycache__/ .pytest_cache/
