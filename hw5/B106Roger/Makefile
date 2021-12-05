@@ -27,9 +27,5 @@ ${MATLIB}: ../mod.cpp
 	${CXX} -I$(PYBIND_INC) -I$(PY_INC) $< -o $@ ${CXXFLAGS} 
 
 
-test: ${MATLIB}
-	python performance_test.py
-	python -m unittest unit_test.py
-
 clean:
 	rm -rf *.so __pycache__ .pytest_cache 
