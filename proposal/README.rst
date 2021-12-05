@@ -130,8 +130,8 @@ Time Table
     - TBD
   * - 4
     - 08:30 - 08:55
-    - TBD
-    - TBD
+    - crystal0523
+    - Fourier Transform for Image Processing
   * - 5
     - 09:00 - 09:25
     - TBD
