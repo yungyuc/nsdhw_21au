@@ -95,8 +95,8 @@ Project List
 Presentation
 ============
 
-Presenters may sign up for the time slot starting from 6th December, 2021 by
-opening a PR. The PR should start with ``[presentation]``.
+Presenters may sign up for the time slot by opening a PR, starting from 6th
+December, 2021. The PR should start with ``[presentation]``.
 
 Each presentation can use at most 18 minutes. Presenters may decide how to use
 their time. A possible arrangement is to uses 15 minutes in the presentation
