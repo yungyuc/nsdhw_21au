@@ -205,8 +205,8 @@ Time Table
     - Project
   * - C1
     - 07:00 - 07:18
-    - TBD
-    - TBD
+    - 楊子侑
+    - Planet Orbit Simulation - My Universe
   * - C2
     - 07:20 - 07:38
     - 劉祐誠
