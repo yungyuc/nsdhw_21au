@@ -237,5 +237,5 @@ Time Table
     - TBD
   * - C9
     - 09:40 - 09:58
-    - TBD
-    - TBD
+    - anva-kn
+    - ramanflow
