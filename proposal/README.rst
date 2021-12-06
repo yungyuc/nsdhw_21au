@@ -181,8 +181,8 @@ Time Table
     - TBD
   * - B6
     - 08:40 - 08:58
-    - TBD
-    - TBD
+    - 廖晊程
+    - Exploring Bezier Curve
   * - B7
     - 09:00 - 09:18
     - TBD
