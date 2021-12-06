@@ -193,8 +193,8 @@ Time Table
     - TBD
   * - B9
     - 09:40 - 09:58
-    - TBD
-    - TBD
+    - 鍾弈言
+    - A-simple-virus-spread-simulation
 
 .. list-table:: 1/10 7:00-10:00
   :header-rows: 1
