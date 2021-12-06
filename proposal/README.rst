@@ -233,8 +233,8 @@ Time Table
     - PolyLower
   * - C8
     - 09:20 - 09:38
-    - TBD
-    - TBD
+    - hsjts0u
+    - TermPlot
   * - C9
     - 09:40 - 09:58
     - anva-kn
