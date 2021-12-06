@@ -133,8 +133,8 @@ Time Table
     - TBD
   * - A5
     - 08:20 - 08:38
-    - TBD
-    - TBD
+    - crystal0523
+    - Fourier Transform for Image Processing
   * - A6
     - 08:40 - 08:58
     - TBD
