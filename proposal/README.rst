@@ -186,8 +186,8 @@ Time Table
     - All That Jazz
   * - B8
     - 09:20 - 09:38
-    - TBD
-    - TBD
+    - 蔡柏毅
+    - Diffusion Maps
   * - B9
     - 09:40 - 09:58
     - 鍾弈言
