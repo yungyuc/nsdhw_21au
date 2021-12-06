@@ -225,8 +225,8 @@ Time Table
     - TBD
   * - C6
     - 08:40 - 08:58
-    - TBD
-    - TBD
+    - 李柏昇
+    - Automatic Differentiation
   * - C7
     - 09:00 - 09:18
     - TBD
