@@ -51,6 +51,6 @@ commands:
 .. code-block:: bash
 
   cd nsdhw_21au/hw1/username
-  ../validate.py | grep "GET POINT"
+  ../validate.sh | grep "GET POINT"
 
 .. vim: set ft=rst ff=unix fenc=utf8 et sw=2 ts=2 sts=2:
