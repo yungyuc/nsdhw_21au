@@ -173,8 +173,8 @@ Time Table
     - Graph visualization
   * - B4
     - 08:00 - 08:18
-    - TBD
-    - TBD
+    - BoWeii
+    - Job shop scheduling
   * - B5
     - 08:20 - 08:38
     - TBD
