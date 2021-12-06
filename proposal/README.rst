@@ -169,8 +169,8 @@ Time Table
     - TBD
   * - B3
     - 07:40 - 07:58
-    - TBD
-    - TBD
+    - BoWeii
+    - Job shop scheduling
   * - B4
     - 08:00 - 08:18
     - TBD
