@@ -193,8 +193,8 @@ Time Table
     - TBD
   * - B9
     - 09:40 - 09:58
-    - TBD
-    - TBD
+    - S413
+    - All That Jazz
 
 .. list-table:: 1/10 7:00-10:00
   :header-rows: 1
