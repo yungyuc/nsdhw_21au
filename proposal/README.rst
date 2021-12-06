@@ -69,9 +69,6 @@ Project List
    <eesss34690/README.rst>`__: https://github.com/eesss34690/Cache_Optimization
 #. `hsjts0u <https://github.com/hsjts0u>`__ for `TermPlot <hsjts0u>`__:
    https://github.com/hsjts0u/TermPlot
-#. `jonathan-liu-0204 <https://github.com/jonathan-liu-0204>`__ for `VRedBlack
-   <jonathan-liu-0204/0716304-Proposal.rst>`__:
-   https://github.com/jonathan-liu-0204/Visualization-of-Red-Black-Tree
 #. `music87 <https://github.com/music87>`__ for `Call Option Pricer
    <music87/proposal.md>`__:
    https://github.com/music87/nsd-project-option-pricer
@@ -90,17 +87,19 @@ Project List
 #. `whtang906 <https://github.com/whtang906>`__ for `Selective Search
    <whtang906/README.md>`__: https://github.com/whtang906/cpp-selective-search
 #. `yichi170 <https://github.com/yichi170>`__ for `Related Work Graph
-   <yichi170/README.rst>`__: N/A
+   <yichi170/README.rst>`__: https://github.com/yichi170/RelatedWorkGraph
 
 Presentation
 ============
 
-Each presentation can use at most 25 minutes (subject to change before the
-schedule is determined). It is suggested that the presentation itself uses
-about 20 minutes. The 5 minutes are left for questions and discussions. But
-presenters may decide how to use their time. Presenters are expect to prepare
-computers for presentation. The time for setting up the computer is included in
-the allotted presentation time.
+Presenters may sign up for the time slot by opening a PR, starting from 6th
+December, 2021. The PR subject line should start with ``[presentation]``.
+
+Each presentation can use at most 18 minutes. Presenters may decide how to use
+their time. A possible arrangement is to use 15 minutes in the presentation
+itself and 3 minutes for questions and discussions. Presenters are expected to
+prepare their own computer for presentation. The time for setting up the
+computer is included in the allotted presentation time.
 
 If presenters have difficulty in preparing a computer themselves, they may seek
 help from the instructor, and resolve the issue one week before their
@@ -116,28 +115,40 @@ Time Table
     - Time
     - Presenter
     - Project
-  * - 1
-    - 07:00 - 07:25
+  * - A1
+    - 07:00 - 07:18
     - TBD
     - TBD
-  * - 2
-    - 07:30 - 07:55
+  * - A2
+    - 07:20 - 07:38
     - TBD
     - TBD
-  * - 3
-    - 08:00 - 08:25
+  * - A3
+    - 07:40 - 07:58
     - TBD
     - TBD
-  * - 4
-    - 08:30 - 08:55
+  * - A4
+    - 08:00 - 08:18
     - TBD
     - TBD
-  * - 5
-    - 09:00 - 09:25
+  * - A5
+    - 08:20 - 08:38
+    - crystal0523
+    - Fourier Transform for Image Processing
+  * - A6
+    - 08:40 - 08:58
+    - TBD
+    - TBD
+  * - A7
+    - 09:00 - 09:18
     - 李茵淇
     - Fast_Up_FFT
-  * - 6
-    - 09:30 - 09:55
+  * - A8
+    - 09:20 - 09:38
+    - TBD
+    - TBD
+  * - A9
+    - 09:40 - 09:58
     - TBD
     - TBD
 
@@ -148,28 +159,40 @@ Time Table
     - Time
     - Presenter
     - Project
-  * - 1
-    - 07:00 - 07:25
+  * - B1
+    - 07:00 - 07:18
     - TBD
     - TBD
-  * - 2
-    - 07:30 - 07:55
+  * - B2
+    - 07:20 - 07:38
     - TBD
     - TBD
-  * - 3
-    - 08:00 - 08:25
+  * - B3
+    - 07:40 - 07:58
     - TBD
     - TBD
-  * - 4
-    - 08:30 - 08:55
+  * - B4
+    - 08:00 - 08:18
     - TBD
     - TBD
-  * - 5
-    - 09:00 - 09:25
+  * - B5
+    - 08:20 - 08:38
     - TBD
     - TBD
-  * - 6
-    - 09:30 - 09:55
+  * - B6
+    - 08:40 - 08:58
+    - TBD
+    - TBD
+  * - B7
+    - 09:00 - 09:18
+    - TBD
+    - TBD
+  * - B8
+    - 09:20 - 09:38
+    - TBD
+    - TBD
+  * - B9
+    - 09:40 - 09:58
     - TBD
     - TBD
 
@@ -180,27 +203,39 @@ Time Table
     - Time
     - Presenter
     - Project
-  * - 1
-    - 07:00 - 07:25
+  * - C1
+    - 07:00 - 07:18
     - TBD
     - TBD
-  * - 2
-    - 07:30 - 07:55
+  * - C2
+    - 07:20 - 07:38
+    - 劉祐誠
+    - SAAF
+  * - C3
+    - 07:40 - 07:58
     - TBD
     - TBD
-  * - 3
-    - 08:00 - 08:25
+  * - C4
+    - 08:00 - 08:18
     - TBD
     - TBD
-  * - 4
-    - 08:30 - 08:55
+  * - C5
+    - 08:20 - 08:38
+    - 黃梓晏
+    - Faster Decision Tree
+  * - C6
+    - 08:40 - 08:58
     - TBD
     - TBD
-  * - 5
-    - 09:00 - 09:25
+  * - C7
+    - 09:00 - 09:18
     - TBD
     - TBD
-  * - 6
-    - 09:30 - 09:55
+  * - C8
+    - 09:20 - 09:38
+    - TBD
+    - TBD
+  * - C9
+    - 09:40 - 09:58
     - TBD
     - TBD
