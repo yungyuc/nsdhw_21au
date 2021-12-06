@@ -76,9 +76,6 @@ Project List
    <nctu16028>`__: https://github.com/nctu16028/Exploring-Bezier-Curve
 #. `psychicalcoder <https://github.com/psychicalcoder>`__ for `PolyLower
    <psychicalcoder/README.org>`__: https://github.com/psychicalcoder/polylower
-#. `ran-ablaze <https://github.com/ran-ablaze>`__ for `Simple Polyhedral
-   Structure <ran-ablaze>`__:
-   https://github.com/ran-ablaze/Simple-Polyhedral-Structure
 #. `sam29309010 <https://github.com/sam29309010>`__ for `Backtesting
    <sam29309010/readme.md>`__: N/A
 #. `secondlevel <https://github.com/secondlevel>`__ for `Social distance
