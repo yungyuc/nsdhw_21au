@@ -209,8 +209,8 @@ Time Table
     - TBD
   * - C2
     - 07:20 - 07:38
-    - TBD
-    - TBD
+    - 劉祐誠
+    - SAAF
   * - C3
     - 07:40 - 07:58
     - TBD
