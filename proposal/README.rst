@@ -141,8 +141,8 @@ Time Table
     - TBD
   * - A7
     - 09:00 - 09:18
-    - TBD
-    - TBD
+    - 李茵淇
+    - Fast_Up_FFT
   * - A8
     - 09:20 - 09:38
     - TBD
