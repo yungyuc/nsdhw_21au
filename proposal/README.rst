@@ -229,8 +229,8 @@ Time Table
     - TBD
   * - C7
     - 09:00 - 09:18
-    - TBD
-    - TBD
+    - psychicalcoder
+    - PolyLower
   * - C8
     - 09:20 - 09:38
     - TBD
