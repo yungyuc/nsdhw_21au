@@ -217,8 +217,8 @@ Time Table
     - TBD
   * - C4
     - 08:00 - 08:18
-    - TBD
-    - TBD
+    - yichi170
+    - RelatedWorkGraph
   * - C5
     - 08:20 - 08:38
     - TBD
