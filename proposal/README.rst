@@ -169,8 +169,8 @@ Time Table
     - TBD
   * - B3
     - 07:40 - 07:58
-    - TBD
-    - TBD
+    - Luke2336
+    - Graph visualization
   * - B4
     - 08:00 - 08:18
     - TBD
