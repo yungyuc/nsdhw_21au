@@ -182,8 +182,8 @@ Time Table
     - Exploring Bezier Curve
   * - B7
     - 09:00 - 09:18
-    - TBD
-    - TBD
+    - S413
+    - All That Jazz
   * - B8
     - 09:20 - 09:38
     - TBD
