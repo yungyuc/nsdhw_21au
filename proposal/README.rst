@@ -185,16 +185,16 @@ Time Table
     - TBD
   * - B7
     - 09:00 - 09:18
-    - TBD
-    - TBD
+    - S413
+    - All That Jazz
   * - B8
     - 09:20 - 09:38
     - TBD
     - TBD
   * - B9
     - 09:40 - 09:58
-    - S413
-    - All That Jazz
+    - TBD
+    - TBD
 
 .. list-table:: 1/10 7:00-10:00
   :header-rows: 1
