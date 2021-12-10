@@ -158,8 +158,8 @@ Time Table
     - Project
   * - B1
     - 07:00 - 07:18
-    - TBD
-    - TBD
+    - B106Roger
+    - Simple-ML-Framework
   * - B2
     - 07:20 - 07:38
     - crystal0523
