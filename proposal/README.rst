@@ -142,8 +142,8 @@ Time Table
     - Fast_Up_FFT
   * - A8
     - 09:20 - 09:38
-    - TBD
-    - TBD
+    - secondlevel
+    - Social distance detector
   * - A9
     - 09:40 - 09:58
     - TBD
