@@ -134,8 +134,8 @@ Time Table
     - TBD
   * - A6
     - 08:40 - 08:58
-    - TBD
-    - TBD
+    - 呂承哲
+    - Backtesting framework for trading strategy
   * - A7
     - 09:00 - 09:18
     - 李茵淇
