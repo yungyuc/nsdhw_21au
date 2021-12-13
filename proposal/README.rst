@@ -77,7 +77,8 @@ Project List
 #. `psychicalcoder <https://github.com/psychicalcoder>`__ for `PolyLower
    <psychicalcoder/README.org>`__: https://github.com/psychicalcoder/polylower
 #. `sam29309010 <https://github.com/sam29309010>`__ for `Backtesting
-   <sam29309010/readme.md>`__: N/A
+   <sam29309010/readme.md>`__:
+   https://github.com/sam29309010/Backtesting-framework-for-trading-strategy
 #. `secondlevel <https://github.com/secondlevel>`__ for `Social distance
    detector <secondlevel/README.md>`__:
    https://github.com/secondlevel/Social-distance-detector
