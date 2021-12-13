@@ -164,8 +164,6 @@ Time Table
     - Project
   * - B1
     - 07:00 - 07:18
-    - B106Roger
-    - Simple-ML-Framework
     - `B106Roger <https://github.com/B106Roger>`__
     - `Simple ML Framework <B106Roger/README.rst>`__
       `(repo) <https://github.com/B106Roger/nsdhw_21au_final_proejct>`__
