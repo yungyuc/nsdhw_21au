@@ -93,12 +93,12 @@ Matrix multiply_mkl(Matrix const & mat1, Matrix const & mat2)
       , mat2.ncol() /* const MKL_INT n */
       , mat1.ncol() /* const MKL_INT k */
       , 1.0 /* const double alpha */
-      , mat1.m_buffer.data() /* const double *a */
+      , mat1.m_buffer /* const double *a */
       , mat1.ncol() /* const MKL_INT lda */
-      , mat2.m_buffer.data() /* const double *b */
+      , mat2.m_buffer /* const double *b */
       , mat2.ncol() /* const MKL_INT ldb */
       , 0.0 /* const double beta */
-      , ret.m_buffer.data() /* double * c */
+      , ret.m_buffer /* double * c */
       , ret.ncol() /* const MKL_INT ldc */
       );
 
@@ -121,11 +121,6 @@ bool operator==(Matrix const &mat1, Matrix const &mat2) {
   return true;
 }
 
-// increse global function for get allocator
-std::size_t bytes() { return matrix_allocator.bytes(); }
-std::size_t allocated() { return matrix_allocator.allocated(); }
-std::size_t deallocated() { return matrix_allocator.deallocated(); }
-
 // pybind11 start
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
@@ -138,15 +133,12 @@ PYBIND11_MODULE(_matrix, m) {
   m.def("multiply_naive", &multiply_naive, "A function which multiply two matrix with naive method.");
   m.def("multiply_tile", &multiply_tile, "A function which multiply two matrix with tile method.");
   m.def("multiply_mkl", &multiply_mkl, "A function which multiply two matrix with mlk method.");
-  m.def("bytes", &bytes);
-  m.def("allocated", &allocated);
-  m.def("deallocated", &deallocated);
   py::class_<Matrix>(m, "Matrix")
     .def(py::init<size_t, size_t>())
-    .def(py::init<size_t, size_t, const std::vector<double> &>())
     .def(py::init<const Matrix &>())
     .def_property_readonly("nrow", &Matrix::nrow)
     .def_property_readonly("ncol", &Matrix::ncol)
+    .def_property("array", &Matrix::array, nullptr)
     .def("__eq__", &operator==)
     .def("__setitem__", [](Matrix &self, std::pair<size_t, size_t> idx, double val) { return self(idx.first, idx.second) = val; })
     .def("__getitem__", [](const Matrix &self, std::pair<size_t, size_t> idx) { return self(idx.first, idx.second); });

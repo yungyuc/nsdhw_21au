@@ -1,57 +1,36 @@
 #pragma once
+#include <pybind11/pybind11.h>
+#include <pybind11/numpy.h>
+#include <pybind11/stl.h>
+
+namespace py = pybind11;
+
 #include <cstring>
 #include <vector>
-
-#include "MyAllocator.hpp"
-
-static MyAllocator<double> matrix_allocator;
 
 class Matrix {
 
   public:
     // Custom constructor
     Matrix(size_t nrow, size_t ncol)
-      : m_nrow(nrow), m_ncol(ncol), m_buffer(matrix_allocator)
+      : m_nrow(nrow), m_ncol(ncol)
     {
       reset_buffer(nrow, ncol);
     }
-    Matrix(size_t nrow, size_t ncol, std::vector<double> const &vec)
-      : m_nrow(nrow), m_ncol(ncol), m_buffer(matrix_allocator) {
-        reset_buffer(nrow, ncol);
-        (*this) = vec;
-      }
     Matrix(const Matrix &m)
-      : m_nrow(m.m_nrow), m_ncol(m.m_ncol), m_buffer(matrix_allocator) {
+      : m_nrow(m.m_nrow), m_ncol(m.m_ncol){
         reset_buffer(m_nrow, m_ncol);
-        for (size_t i = 0; i < m_nrow; ++i) {
-          for (size_t j = 0; j < m_ncol; ++j) {
-            (*this)(i, j) = m(i, j);
-          }
-        }
+        size_t nelement = m_nrow * m_ncol;
+        memcpy(m_buffer, m.m_buffer, nelement*sizeof(double));
       }
 
     Matrix(Matrix &&other)
-      : m_nrow{other.m_nrow}, m_ncol{other.m_ncol}, m_buffer{matrix_allocator} {
+      : m_nrow{other.m_nrow}, m_ncol{other.m_ncol}{
         reset_buffer(0, 0);
         std::swap(m_nrow, other.m_nrow);
         std::swap(m_ncol, other.m_ncol);
         std::swap(m_buffer, other.m_buffer);
       }
-
-    Matrix &operator=(std::vector<double> const &vec) {
-      if (size() != vec.size()) {
-        throw std::out_of_range("different vector size.");
-      }
-
-      size_t index = 0;
-      for (size_t i = 0; i < m_nrow; ++i) {
-        for (size_t j = 0; j < m_ncol; ++j) {
-          (*this)(i, j) = vec[index];
-          ++index;
-        }
-      }
-      return *this;
-    }
 
     Matrix &operator=(Matrix const &other) {
       if (this == &other) {
@@ -85,10 +64,26 @@ class Matrix {
     double &operator() (size_t row, size_t col)      { return m_buffer[row * m_ncol + col]; } // setter (the value of Matrix[row][col])
 
     void reset_buffer(size_t nrow, size_t ncol) {
+      if (m_buffer) {
+        delete[] m_buffer;
+      }
       const size_t nelement = nrow * ncol;
-      m_buffer.reserve(nelement);
+      if (nelement) {
+        m_buffer = new double[nelement];
+      } else {
+        m_buffer = nullptr;
+      }
       m_nrow = nrow;
       m_ncol = ncol;
+    }
+
+    ////Ref: https://stackoverflow.com/questions/44659924/returning-numpy-arrays-via-pybind11
+    py::array_t<double> array() {
+          return py::array_t<double>(
+          {nrow(), ncol()}, // shape
+          {sizeof(double) * ncol(), sizeof(double)}, // C-style contiguous strides for ncol doubles
+          m_buffer, // the data pointer
+          py::cast(this)); // numpy array references this parent
     }
 
 
@@ -102,16 +97,13 @@ class Matrix {
     friend Matrix multiply_mkl(Matrix const & mat1, Matrix const & mat2);
 
   private:
-    size_t m_nrow;
-    size_t m_ncol;
-    std::vector<double, MyAllocator<double>> m_buffer;
+    size_t m_nrow = 0;
+    size_t m_ncol = 0;
+    double *m_buffer = nullptr;
 
 };
 
 bool operator==(const Matrix &mat1, const Matrix &mat2);
-std::size_t bytes();
-std::size_t allocated();
-std::size_t deallocated();
 
 void validate_multiplication(Matrix const &mat1, Matrix const &mat2);
 Matrix multiply_naive(Matrix const &mat1, Matrix const &mat2);

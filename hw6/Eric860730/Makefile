@@ -3,8 +3,13 @@
 CC = clang++-11
 CFLAGS = -Wall -std=c++17 -O3 -m64 -fPIC -shared -Wextra
 
+PYTHON = python3
+
+NUMPY_PATH := $(shell ${PYTHON} -c "import numpy; print(numpy.get_include())")
+
 MKLROOT = /usr/lib/x86_64-linux-gnu
-INCLUDE = -I/usr/include/mkl
+INCLUDE = -I/usr/include/mkl \
+		  -I${NUMPY_PATH}
 
 LDFLAGS=${MKLROOT}/libmkl_def.so \
 		 ${MKLROOT}/libmkl_avx2.so \
@@ -14,7 +19,6 @@ LDFLAGS=${MKLROOT}/libmkl_def.so \
 		 -lpthread -lm -ldl \
 	     -lblas -lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -liomp5
 
-PYTHON = python3
 
 TARGET = _matrix
 
