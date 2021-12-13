@@ -6,13 +6,13 @@
 #include <functional>
 #include <iomanip>
 #include <iostream>
+#include <pybind11/numpy.h>
+#include <pybind11/operators.h>
+#include <pybind11/pybind11.h>
+#include <pybind11/stl.h>
 #include <sstream>
 #include <stdexcept>
 #include <vector>
-#include <pybind11/pybind11.h>
-#include <pybind11/numpy.h>
-#include <pybind11/stl.h>
-#include <pybind11/operators.h>
 
 namespace py = pybind11;
 
@@ -32,8 +32,7 @@ public:
     }
   };
 
-  ~Matrix() {
-  };
+  ~Matrix(){};
 
   Matrix &operator=(const Matrix &other);
   bool operator==(const Matrix &other) const;
@@ -54,14 +53,12 @@ public:
     return data[row * m_col + col];
   }
   double &getpos(size_t row, size_t col) { return data[row * m_col + col]; }
- double operator()(size_t row, size_t col) const {
-        return data[row * m_col + col];
-    }
-    double &operator()(size_t row, size_t col) {
-        return data[row * m_col + col];
-    }
+  double operator()(size_t row, size_t col) const {
+    return data[row * m_col + col];
+  }
+  double &operator()(size_t row, size_t col) { return data[row * m_col + col]; }
 
-py::array_t<double> array();
+  py::array_t<double> array();
   friend Matrix multiply_naive(Matrix &A_mat, Matrix &B_mat);
   friend Matrix multiply_tile(Matrix &A_mat, Matrix &B_mat, size_t tile_size);
   friend Matrix multiply_mkl(Matrix const &A_mat, Matrix const &B_mat);

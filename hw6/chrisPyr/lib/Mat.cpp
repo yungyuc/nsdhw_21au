@@ -2,15 +2,13 @@
 #include <iostream>
 
 namespace py = pybind11;
-
+// ref:
+// https://stackoverflow.com/questions/44659924/returning-numpy-arrays-via-pybind11
 py::array_t<double> Matrix::array() {
-		return py::array_t<double>(
-                {nrow(), ncol()}, // shape
-                {sizeof(double) * ncol(), sizeof(double)}, // C-style contiguous strides for ncol doubles
-                data, // the data pointer
-                py::cast(this) // let handle object reference *this*
-                );
-    }
+  return py::array_t<double>({nrow(), ncol()},
+                             {sizeof(double) * ncol(), sizeof(double)}, data,
+                             py::cast(this));
+}
 Matrix &Matrix::operator=(const Matrix &other) {
   data = other.data;
   return *this;
@@ -114,7 +112,7 @@ PYBIND11_MODULE(_matrix, m) {
       .def_property_readonly("nrow", &Matrix::nrow)
       .def_property_readonly("ncol", &Matrix::ncol)
       .def(py::self == py::self)
-      .def_property("array",&Matrix::array,nullptr)
+      .def_property("array", &Matrix::array, nullptr)
       .def("__setitem__",
            [](Matrix &mat, std::pair<size_t, size_t> id, double val) {
              mat.getpos(id.first, id.second) = val;
