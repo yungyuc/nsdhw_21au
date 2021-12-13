@@ -3,7 +3,7 @@
 
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
-
+#include <pybind11/numpy.h>
 #include <algorithm>
 #include "mkl.h"
 
@@ -152,7 +152,7 @@ PYBIND11_MODULE(_matrix, m) {
             return py::array_t<double>(
                 { m.nrow(), m.ncol() },
                 { sizeof(double) * m.ncol(), sizeof(double) },
-                m.data(),
+                m.buffer(),
                 py::cast(m)
             );
         }, nullptr)

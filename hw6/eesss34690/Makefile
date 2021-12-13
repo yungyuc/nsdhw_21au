@@ -23,7 +23,7 @@ ${SOFILE}: matrix.cpp
 	${CXX} ${FPIC} $< -o $@ ${CXXFLAGS}
 
 test: ${SOFILE}
-	python -m pytest test_matrix.py
+	python -m pytest ../validate.py
 
 clean:
 	rm -rf *.so __pycache__ .pytest_cache performance.txt
