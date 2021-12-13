@@ -146,8 +146,8 @@ Time Table
     - Social distance detector
   * - A9
     - 09:40 - 09:58
-    - TBD
-    - TBD
+    - whtang906
+    - Selective Search
 
 .. list-table:: 1/3 7:00-10:00
   :header-rows: 1
