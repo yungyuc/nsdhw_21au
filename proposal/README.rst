@@ -130,8 +130,8 @@ Time Table
     - TBD
   * - A5
     - 08:20 - 08:38
-    - TBD
-    - TBD
+    - 許珈瑋
+    - Call option pricer
   * - A6
     - 08:40 - 08:58
     - 呂承哲
