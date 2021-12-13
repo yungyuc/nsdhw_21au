@@ -199,8 +199,9 @@ Time Table
       `(repo) <https://github.com/S413/AllThatJazz>`__
   * - B8
     - 09:20 - 09:38
-    - `abt8601 <https://github.com/abt8601>`__ for `Diffusion Maps
-   <abt8601/README.rst>`__: https://github.com/abt8601/diffusion-maps
+    - `abt8601 <https://github.com/abt8601>`__
+    - `Diffusion Maps <abt8601/README.rst>`__
+      `(repo) <https://github.com/abt8601/diffusion-maps>__
   * - B9
     - 09:40 - 09:58
     - `Eric860730 <https://github.com/Eric860730>`__
