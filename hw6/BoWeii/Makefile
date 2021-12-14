@@ -1,7 +1,6 @@
 CXX=clang++
 CXXFLAGS=-std=c++14 -O3  -m64 -shared -fPIC \
 		-I /usr/include/mkl \
-		-I /home/bwwang/.local/lib/python3.6/site-packages/numpy/core/include \
 
 
 PYBIND=`python3 -m pybind11 --includes`
@@ -15,7 +14,7 @@ MKL_LIBS=${MKL_LIB_DIR}/libmkl_def.so \
 		${MKL_LIB_DIR}/libmkl_sequential.so
 
 all:
-	${CXX} $(CXXFLAGS) $(MKL_LIBS) $(PYBIND) _matrix.cpp -o _matrix$(PYCONFIG) -I /usr/include/python3.6
+	${CXX} $(CXXFLAGS) $(MKL_LIBS) $(PYBIND) _matrix.cpp -o _matrix$(PYCONFIG) -I /usr/include/python3.8
 
 clean:
 	rm -rf *.so __pycache__ ../.pytest_cache .pytest_cache ../.vscode performance.txt
