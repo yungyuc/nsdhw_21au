@@ -35,7 +35,7 @@ PYBIND11_MODULE(_matrix, m) {
                     { m.ncol(), m.ncol() }, 
                     { sizeof(double) * m.ncol(), sizeof(double) }, 
                     m.buffer(), 
-                    py::cast<py::none>(m)
+                    py::cast(m)
                 );
             }, py::return_value_policy::move
         );
