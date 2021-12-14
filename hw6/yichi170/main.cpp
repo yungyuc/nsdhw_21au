@@ -30,14 +30,15 @@ PYBIND11_MODULE(_matrix, m) {
                 return mt1 == mt2;
             })
         .def_property(
-            [](Matrix &m) -> py::array_t {
-                return py::array_t<double>(
+            "array", [](Matrix &m) {
+                return py::array_t<double, py::array::c_style | py::array::forcecast>(
                     { m.ncol(), m.ncol() }, 
                     { sizeof(double) * m.ncol(), sizeof(double) }, 
                     m.buffer(), 
                     py::cast(m)
                 );
-            }, py::return_value_policy::move
+            }, 
+            nullptr, py::return_value_policy::move
         );
         
 }
