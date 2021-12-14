@@ -11,17 +11,15 @@
 #include <vector>
 #include <stdexcept>
 #include <functional>
-#include "MyAllocator.cpp"
 
 namespace py = pybind11;
 
-static MyAllocator<double> alloc;
 
 struct Matrix {
 
 public:
     
-    std::vector<double, MyAllocator<double>> m_buffer;
+    std::vector<double> m_buffer;
     //  https://github.com/pybind/pybind11/issues/1042
     py::array<double> array() {
         auto capsule = py::capsule(
@@ -32,14 +30,14 @@ public:
     };
 
     Matrix(size_t nrow, size_t ncol)
-      : m_nrow(nrow), m_ncol(ncol), m_buffer(alloc)
+      : m_nrow(nrow), m_ncol(ncol)
     {
         size_t nelement = nrow * ncol;
         m_buffer.resize(nelement);
     }
 
     Matrix(Matrix &&other)
-      : m_nrow(other.nrow()), m_ncol(other.ncol()), m_buffer(alloc) {
+      : m_nrow(other.nrow()), m_ncol(other.ncol()) {
     reset_buffer(0, 0);
     std::swap(m_buffer, other.m_buffer);
   }
@@ -195,18 +193,6 @@ size_t calc_nflo(Matrix const & mat1, Matrix const & mat2)
     return mat1.nrow() * mat1.ncol() * mat2.ncol();
 }
 
-size_t bytes() {
-    return alloc.counter.bytes();
-}
-
-size_t allocated() {
-    return alloc.counter.allocated();
-}
-
-size_t deallocated() {
-    return alloc.counter.deallocated();
-}
-
 
 
 Matrix multiply_naive(Matrix const & mat1, Matrix const & mat2) {
@@ -225,7 +211,6 @@ Matrix multiply_naive(Matrix const & mat1, Matrix const & mat2) {
             resultingMatrix(rowIdx, columnIdx) = rowColumnResult;
         }
     }
-    std::cout << "Finish multiplication naive: " << allocated() << std::endl;
 
     resultingMatrix.elapsed() = stopWatch.lap();
     resultingMatrix.nflo() = calc_nflo(mat1, mat2);
@@ -292,9 +277,6 @@ PYBIND11_MODULE(_matrix, m) {
     m.def("initialize", &initialize, "Initialize Matrix");
     m.def("multiply_naive", &multiply_naive, "Naive Matrix multiplication");
     m.def("multiply_mkl", &multiply_mkl, "MKL Matrix multiplication");
-    m.def("bytes", &bytes, "Returns allocated bytes for all Matrix instances");
-    m.def("allocated", &allocated, "Returns allocated for all Matrix instances");
-    m.def("deallocated", &deallocated, "Returns deallocated for all Matrix instances");
 
 
     py::class_<Matrix>(m, "Matrix")
