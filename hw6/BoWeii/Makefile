@@ -1,6 +1,6 @@
 CXX=clang++
 CXXFLAGS=-std=c++14 -O3  -m64 -shared -fPIC \
-		--I/usr/include/mkl \
+		-I /usr/include/mkl \
 		-I /home/bwwang/.local/lib/python3.6/site-packages/numpy/core/include \
 
 
