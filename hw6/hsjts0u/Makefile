@@ -11,7 +11,7 @@ OUT = _matrix$(shell python3-config --extension-suffix)
 
 all: target
 
-target: ../mod.cpp 
+target: matrix_pybind.cpp
 	$(CXX) $(CFLAGS) $(SLF_INC) $(NP_INC) $(MKL_INC) $(MKL_LIB) $(PY_INC) $< -o $(OUT) -lblas
 
 test: target

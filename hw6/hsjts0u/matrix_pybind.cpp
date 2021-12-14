@@ -4,7 +4,7 @@
 #include <pybind11/operators.h>
 #include <pybind11/pybind11.h>
 
-namespace pybind11 = py;
+namespace py = pybind11;
 
 PYBIND11_MODULE(_matrix, m)
 {
@@ -12,9 +12,6 @@ PYBIND11_MODULE(_matrix, m)
     m.def("multiply_naive", &multiply_naive);
     m.def("multiply_tile", &multiply_tile);
     m.def("multiply_mkl", &multiply_mkl);
-    m.def("bytes", &bytes);
-    m.def("allocated", &allocated);
-    m.def("deallocated", &deallocated);
 
     py::class_<Matrix>(m, "Matrix")
         .def(py::init<int, int>())
