@@ -29,15 +29,15 @@ PYBIND11_MODULE(_matrix, m) {
         .def("__eq__", [](const Matrix &mt1, const Matrix &mt2) {
                 return mt1 == mt2;
             })
-        .def_buffer([](Matrix &m) -> py::buffer_info {
-            return py::buffer_info(
-                m.data(), 
-                sizeof(double), 
-                py::format_descriptor<double>::format(), 
-                2, 
-                { m.ncol(), m.ncol() }, 
-                { sizeof(double) * m.ncol(), sizeof(double) }
-            );
-        });
+        .def_property(
+            [](Matrix &m) -> py::array_t {
+                return py::array_t<double>(
+                    { m.ncol(), m.ncol() }, 
+                    { sizeof(double) * m.ncol(), sizeof(double) }, 
+                    m.buffer(), 
+                    py::cast<py::none>(m)
+                );
+            }, py::return_value_policy::move
+        );
         
 }

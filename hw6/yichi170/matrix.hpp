@@ -41,7 +41,7 @@ public:
     double & operator[] (size_t idx)       { return m_buffer[idx]; }
     size_t nrow() const { return m_nrow; }
     size_t ncol() const { return m_ncol; }
-    double *data() { return m_buffer; }
+    double *buffer() { return m_buffer; }
     
     bool operator== (Matrix const & mt) const {
         if ((m_ncol != mt.m_ncol) && (m_nrow != mt.m_nrow))
