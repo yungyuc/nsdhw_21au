@@ -12,7 +12,7 @@ TARGET = _matrix
 
 all: $(TARGET)
 
-$(TARGET): ../mod.cpp
+$(TARGET): $(TARGET).cpp
 	$(CXX) $(CFLAG) $(PYINCLUDE) $(MATRIXINCLUDE) $(MKLINCLUDE) $< -o $@$(PYSUFFIX) $(MKLLIBS)
 
 

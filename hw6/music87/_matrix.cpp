@@ -8,9 +8,9 @@
 #include<vector>
 #include<mkl.h>
 #include<functional>
-//#include<pybind11/pybind11.h> // we should remove all the pybind header
-//#include<pybind11/operators.h> 
-//#include<pybind11/stl.h> 
+#include<pybind11/pybind11.h> 
+#include<pybind11/operators.h> 
+#include<pybind11/stl.h> 
 
 class Matrix{
 public:
@@ -234,4 +234,24 @@ Matrix multiply_mkl(Matrix const &mat1, Matrix const &mat2){
     return res;
 }
 
+PYBIND11_MODULE(_matrix, m){
+    m.doc() = "matrix matrix multiplication";
+    m.def("multiply_naive", &multiply_naive);
+    m.def("multiply_tile", &multiply_tile);
+    m.def("multiply_mkl", &multiply_mkl);
+
+    pybind11::class_<Matrix>(m,"Matrix")
+        .def(pybind11::init<size_t, size_t>())
+        .def("__getitem__", [](Matrix &m, std::pair<size_t, size_t> idx) {
+                    return m(idx.first, idx.second);
+        })
+        .def("__setitem__", [](Matrix &m, std::pair<size_t, size_t> idx, double value) {
+                    m(idx.first, idx.second) = value;
+                })
+        .def_property_readonly("nrow", &Matrix::nrow)
+        .def_property_readonly("ncol", &Matrix::ncol)
+    .def("printself", &Matrix::printself)
+        .def(pybind11::self == pybind11::self);
+
+}
 
