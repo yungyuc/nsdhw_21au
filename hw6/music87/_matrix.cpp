@@ -11,6 +11,7 @@
 #include<pybind11/pybind11.h> 
 #include<pybind11/operators.h> 
 #include<pybind11/stl.h> 
+#include<pybind11/numpy.h>
 
 class Matrix{
 public:
@@ -30,6 +31,7 @@ public:
     double & operator()(size_t row, size_t col) const; // indexing operator for const Matrix
         
     // self-defined function
+    pybind11::array_t<double> array();
     size_t nrow() const;
     size_t ncol() const;
     double* buffer() const;
@@ -141,6 +143,14 @@ bool operator==(Matrix const & mat1, Matrix const & mat2){
     }
     return true;
 }
+//https://stackoverflow.com/questions/44659924/returning-numpy-arrays-via-pybind11
+pybind11::array_t<double> Matrix::array(){
+    return pybind11::array_t<double>(
+    {nrow(), ncol()},//shape
+    {sizeof(double)*ncol(), sizeof(double)},// strides
+    dbuffer,//c++ data pointer
+    pybind11::cast(this));//numpy array's reference
+}
 
 size_t Matrix::nrow() const {
     // const after declaration means that this member function won't change any member variables in the class
@@ -250,7 +260,8 @@ PYBIND11_MODULE(_matrix, m){
                 })
         .def_property_readonly("nrow", &Matrix::nrow)
         .def_property_readonly("ncol", &Matrix::ncol)
-    .def("printself", &Matrix::printself)
+	.def_property_readonly("array", &Matrix::array)
+    	.def("printself", &Matrix::printself)
         .def(pybind11::self == pybind11::self);
 
 }
