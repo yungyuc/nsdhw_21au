@@ -19,5 +19,5 @@ ${OUT}: matrix.cpp
 clean:
 	rm -rf *.so __pycache__ .pytest_cache performance.txt
 
-test: ${OUT}
-	python -m pytest test_matrix.py
+test: all
+	python3 -m pytest -v -s

@@ -4,7 +4,7 @@
 #include <vector>
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
-
+#include <pybind11/numpy.h>
 namespace pybind = pybind11;
 using namespace std;
 
@@ -45,6 +45,19 @@ class Matrix {
     double &operator()(size_t row, size_t col) 
     {
       return m_buffer[row * m_ncol + col];
+    }
+
+
+
+    pybind::array_t<double> array(){
+
+      return pybind11::array_t<double>(
+			std::vector<size_t>{nrow(), ncol()},
+			std::vector<size_t>{sizeof(double)*ncol(), sizeof(double)}, 
+			buffer(), 
+			pybind11::cast(this) 
+			);
+      
     }
 
     size_t nrow() const { return m_nrow; }
@@ -148,7 +161,9 @@ PYBIND11_MODULE(_matrix, m) {
       .def_property_readonly("nrow", &Matrix::nrow)
       .def_property_readonly("ncol", &Matrix::ncol)
 
+      .def_property("array", &Matrix::array,nullptr)
+
       .def("__eq__", &Matrix::operator==)
       .def("__getitem__",[](const Matrix &m, array<int, 2> idx) { return m(idx[0], idx[1]); })
       .def("__setitem__", [](Matrix &m, array<int, 2> idx, double val) {m(idx[0], idx[1]) = val;});
-}
+      }
