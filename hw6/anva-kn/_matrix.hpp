@@ -50,8 +50,12 @@ public:
     }
 
     double *data() { return m_buffer.data(); }
+    
     size_t nrow() const { return m_nrow; }
     size_t ncol() const { return m_ncol; }
+
+private:
+
     size_t m_nrow;
     size_t m_ncol;
     std::vector<double> m_buffer;
