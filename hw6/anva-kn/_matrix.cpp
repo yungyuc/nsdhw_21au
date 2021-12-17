@@ -1,8 +1,14 @@
-#include <iostream>
-#include <algorithm>
-#include "mkl.h"
+#include <mkl.h>
+#include <pybind11/pybind11.h>
+#include <pybind11/stl.h>
+#include <pybind11/operators.h>
+#include <pybind11/numpy.h>
 
+#include<vector>
+#include<stdexcept>
 #include "_matrix.hpp"
+
+namespace py = pybind11;
 
 // default contructor
 Matrix::Matrix(size_t nrow, size_t ncol)
@@ -118,4 +124,38 @@ Matrix multiply_tile(Matrix const &mat1, Matrix const &mat2, const int tsize)
         }
     }    
     return ret;
+}
+
+PYBIND11_MODULE(_matrix, m) {
+  m.def("multiply_naive", &multiply_naive);
+  m.def("multiply_tile", &multiply_tile);
+  m.def("multiply_mkl", &multiply_mkl);
+
+  py::class_<Matrix>(m, "Matrix")
+	    .def(py::init<size_t, size_t>())
+            .def_property_readonly("nrow", &Matrix::nrow)
+            .def_property_readonly("ncol", &Matrix::nrow)
+            .def_property("array", [](Matrix &m) {
+                return py::array_t<double>(
+                    {m.nrow(), m.ncol()},
+                    {sizeof(double) * m.ncol(), sizeof(double)},
+                    m.data(),
+                    py::cast(m)
+                );
+            }, nullptr)
+                
+            .def("__eq__", [](Matrix const & self, Matrix const & other) { return self == other; })
+            .def
+            (
+                "__getitem__"
+              , [](Matrix const & self, std::tuple<size_t, size_t> idx)
+                { return self(std::get<0>(idx), std::get<1>(idx)); }
+            )
+            .def
+            (
+                "__setitem__"
+              , [](Matrix & self, std::tuple<size_t, size_t> idx, double value)
+                { return self(std::get<0>(idx), std::get<1>(idx)) = value; }
+            )
+        ;
 }
