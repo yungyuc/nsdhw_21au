@@ -127,8 +127,9 @@ Time Table
     - TBD
   * - A4
     - 08:00 - 08:18
-    - TBD
-    - TBD
+    - `Hydr8O <https://github.com/Hydr8O>`__
+    - `Text Extractor <Hydr8O/README.rst>`__
+      `(repo) <https://github.com/Hydr8O/text-extractor>`__
   * - A5
     - 08:20 - 08:38
     - `music87 <https://github.com/music87>`__
