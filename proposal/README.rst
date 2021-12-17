@@ -42,7 +42,7 @@ Project List
    simulation <Eric860730/README.rst>`__:
    https://github.com/Eric860730/A-simple-virus-spread-simulation
 #. `Hydr8O <https://github.com/Hydr8O>`__ for `Hydr8O <Hydr8O/README.rst>`__:
-   https://github.com/Hydr8O/nsd-project
+   https://github.com/Hydr8O/text-extractor
 #. `LittleLaGi <https://github.com/LittleLaGi>`__ for `OhMyGene
    <LittleLaGi/README.rst>`__: https://github.com/LittleLaGi/OhMyGene
 #. `Luke2336 <https://github.com/Luke2336>`__ for `Graph visualization
@@ -56,8 +56,6 @@ Project List
    https://github.com/YI-CHENG-SHIH645/RecommenderSystem
 #. `abt8601 <https://github.com/abt8601>`__ for `Diffusion Maps
    <abt8601/README.rst>`__: https://github.com/abt8601/diffusion-maps
-#. `aiiuii <https://github.com/aiiuii>`__ for `Xsarms <aiiuii/README.rst>`__:
-   https://github.com/aiiuii/Interbotix_Ros_Xsarms_Toolkits
 #. `anva-kn <https://github.com/anva-kn>`__ for `Ramanflow
    <anva-kn/README.rst>`__: https://github.com/anva-kn/ramanflow
 #. `chrisPyr <https://github.com/chrisPyr>`__ for `My Universe
@@ -115,16 +113,17 @@ Time Table
     - Project
   * - A1
     - 07:00 - 07:18
-    - TBD
-    - TBD
+    - N/A
+    - N/A
   * - A2
     - 07:20 - 07:38
-    - TBD
-    - TBD
+    - N/A
+    - N/A
   * - A3
     - 07:40 - 07:58
-    - TBD
-    - TBD
+    - `YI-CHENG-SHIH645 <https://github.com/YI-CHENG-SHIH645>`__
+    - `Recommender System <YI-CHENG-SHIH645/README.rst>`__
+      `(repo) <https://github.com/YI-CHENG-SHIH645/RecommenderSystem>`__
   * - A4
     - 08:00 - 08:18
     - `Hydr8O <https://github.com/Hydr8O>`__
