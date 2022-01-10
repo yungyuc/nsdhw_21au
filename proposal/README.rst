@@ -167,7 +167,7 @@ Time Table
     - 07:40 - 07:58
     - `CyCatz-nycu <https://github.com/Cycatz-nycu>`__
     - `Uniramp <Cycatz-nycu/README.org>`__
-      `(repo) <https://github.com/Cycatz-nycu/uniramp>`__
+      `(repo) <https://github.com/Cycatz/uniramp>`__
   * - C4
     - 08:00 - 08:18
     - `yichi170 <https://github.com/yichi170>`__
@@ -213,7 +213,7 @@ Project List by Account Name
 #. `BoWeii <https://github.com/BoWeii>`__ for `Job shop scheduling
    <BoWeii/README.rst>`__: https://github.com/BoWeii/job-shop-scheduling
 #. `CyCatz-nycu <https://github.com/Cycatz-nycu>`__ for `Uniramp
-   <Cycatz-nycu/README.org>`__: https://github.com/Cycatz-nycu/uniramp
+   <Cycatz-nycu/README.org>`__: https://github.com/Cycatz/uniramp
 #. `Eric860730 <https://github.com/Eric860730>`__ for `Simple virus spread
    simulation <Eric860730/README.rst>`__:
    https://github.com/Eric860730/A-simple-virus-spread-simulation
