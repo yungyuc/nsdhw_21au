@@ -2,7 +2,7 @@
 ** Basic Information
 Uniramp is a tool for analyzing the gray values of glyphs in a given font; it also provides the image-to-Unicode conversion as a showcase.
 
-Code repository: https://github.com/Cycatz-nycu/uniramp
+Code repository: https://github.com/Cycatz/uniramp
 
 ** Problem to solve
 Ascii-art has been in its place since the 1970s. Nowadays, we still can see this kind of art on BBS (bulletin board systems), emails, etc.
